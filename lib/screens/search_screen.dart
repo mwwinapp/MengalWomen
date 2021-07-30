@@ -99,6 +99,7 @@ class _SearchScreenState extends State<SearchScreen>
                     ),
                     CheckboxListTile(
                       controlAffinity: ListTileControlAffinity.leading,
+                      contentPadding: EdgeInsets.all(0),
                       title: Text(
                         'Barangay',
                         style: TextStyle(fontFamily: 'Aller'),
@@ -106,61 +107,82 @@ class _SearchScreenState extends State<SearchScreen>
                       value: isCheckedBarangay,
                       onChanged: (value) {
                         setState(
-                          () {
+                              () {
                             isCheckedBarangay = value;
                           },
                         );
                       },
                     ),
-                    DropdownButton<String>(
-                      isExpanded: true,
-                      style:
-                          TextStyle(fontFamily: 'Aller', color: Colors.black),
-                      items: barangayList(),
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedBarangay = value;
-                        });
-                      },
-                      value: _selectedBarangay,
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: DropdownButton<String>(
+                        isExpanded: true,
+                        disabledHint: Text(
+                          'Select Barangay',
+                          style: TextStyle(fontFamily: 'Aller'),
+                        ),
+                        style:
+                        TextStyle(fontFamily: 'Aller', color: Colors.black),
+                        items: barangayList(),
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedBarangay = value;
+                          });
+                        },
+                        value: _selectedBarangay,
+                      ),
                     ),
                     CheckboxListTile(
                       controlAffinity: ListTileControlAffinity.leading,
+                      contentPadding: EdgeInsets.all(0),
                       title: Text(
-                        'Filter by Status',
+                        'Status',
                         style: TextStyle(fontFamily: 'Aller'),
                       ),
                       value: isCheckedStatus,
                       onChanged: (value) {
                         setState(
-                          () {
+                              () {
                             isCheckedStatus = value;
                           },
                         );
                       },
                     ),
-                    DropdownButton(
-                      isExpanded: true,
-                      style:
-                          TextStyle(fontFamily: 'Aller', color: Colors.black),
-                      items: statusList(),
-                      value: _selectedStatus,
-                      onChanged: (value) {
-                        setState(() {
-                          _selectedStatus = value;
-                        });
-                      },
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: DropdownButton(
+                        isExpanded: true,
+                          disabledHint: Text(
+                            'Select Status',
+                            style: TextStyle(fontFamily: 'Aller'),
+                          ),
+                        style:
+                        TextStyle(fontFamily: 'Aller', color: Colors.black),
+                        items: statusList(),
+                        value: _selectedStatus,
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedStatus = value;
+                          });
+                        },
+                      ),
                     ),
                   ],
                 ),
                 actions: [
                   FlatButton(
-                    child: Text('OK'),
+                    child: Text('Search'),
                     onPressed: () {
                       if(_searchExecuted) {
                         _scrollToTop();
                       }
                       search(_searchController.text);
+                      Navigator.of(context, rootNavigator: true).pop();
+                    },
+                  ),
+                  FlatButton(
+                    child: Text('Cancel'),
+                    onPressed: () {
                       Navigator.of(context, rootNavigator: true).pop();
                     },
                   ),
