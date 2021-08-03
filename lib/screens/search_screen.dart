@@ -386,7 +386,7 @@ class _SearchScreenState extends State<SearchScreen>
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                       subtitle: Text(
-                                        '${members[index].barangay} • ${members[index].lastrenewal}',
+                                        '${members[index].barangay} • ${members[index].validity}',
                                         style: TextStyle(
                                             fontSize: 12.0,
                                             color: Colors.grey,
