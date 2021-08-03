@@ -9,13 +9,14 @@ class Member {
   String age;
   String occupation;
   String civilstatus;
+  String spousename;
   String barangay;
   String status;
   String insurancestatus;
   String mwkit;
   String validity;
 
-  Member({this.mid, this.membershipdate, this.lastrenewal, this.fullname, this.contactnumber, this.dob, this.age, this.occupation, this.civilstatus, this.barangay, this.status});
+  Member({this.mid, this.membershipdate, this.lastrenewal, this.fullname, this.contactnumber, this.dob, this.age, this.occupation, this.civilstatus, this.spousename, this.barangay, this.status});
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
@@ -28,6 +29,7 @@ class Member {
       'age' : age,
       'occupation' : occupation,
       'civilstatus' : civilstatus,
+      'spousename' : spousename,
       'barangay' : barangay,
       'status' : status,
       'insurancestatus' : insurancestatus,
@@ -47,6 +49,7 @@ class Member {
     age = map['age'];
     occupation = map['occupation'];
     civilstatus = map['civilstatus'];
+    spousename = map['spousename'];
     barangay = map['barangay'];
     status = map['status'];
     insurancestatus = map['insurancestatus'];
