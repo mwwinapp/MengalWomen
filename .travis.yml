@@ -15,6 +15,7 @@ cache:
   directories:
     - $HOME/.pub-cache
 before_deploy:
+  - pip install travis-wait-improved
   - pushd build/ios/iphoneos
   - mkdir Payload
   - cd Payload
@@ -23,10 +24,11 @@ before_deploy:
   - zip -r app.ipa Payload
   - popd
 deploy:
-  provider: releases
+  - provider: script
+      script: travis-wait-improved --timeout 30m packer build packer.json
   api_key:
     secure: #your api key will be here
   file: build/ios/iphoneos/app.ipa
-  skip_cleanup: true #important or your built app would be deleted
+  cleanup: true #important or your built app would be deleted
   on:
     repo: https://github.com/mwwinapp/MengalWomen.git #your repo will be here
