@@ -15,7 +15,7 @@ cache:
   directories:
     - $HOME/.pub-cache
 before_deploy:
-  - pip install travis-wait-improved
+  - pip install travis-wait
   - pushd build/ios/iphoneos
   - mkdir Payload
   - cd Payload
@@ -24,8 +24,7 @@ before_deploy:
   - zip -r app.ipa Payload
   - popd
 deploy:
-  - provider: script
-      script: travis-wait-improved --timeout 30m packer build packer.json
+  provider: releases
   api_key:
     secure: #your api key will be here
   file: build/ios/iphoneos/app.ipa
