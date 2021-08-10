@@ -1,20 +1,9 @@
-import 'dart:convert';
-import 'package:gradient_text/gradient_text.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:mw/functions/custom_dialog.dart';
-import 'package:mw/screens/announcement_screen.dart';
-import 'package:mw/screens/video_screen.dart';
-import 'package:outline_material_icons/outline_material_icons.dart';
-import 'helpers/db_helper.dart';
-import 'models/announcement_model.dart';
-import 'models/member_model.dart';
-import 'screens/home_screen.dart';
-import 'screens/search_screen.dart';
-import 'screens/settings_screen.dart';
+import 'package:mw/helpers/db_helper.dart';
+import 'package:mw/screens/tab_screen.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -31,59 +20,16 @@ class MainApp extends StatefulWidget {
 }
 
 class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-  Future<List<Member>> members;
+
   var dBHelper = DbHelper();
-  TabController _tabController;
+
+  TextEditingController _username = TextEditingController();
+  TextEditingController _password = TextEditingController();
+  bool _passwordVisible = false;
 
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: 4);
-    _tabController.addListener(() => _handleTabSelection());
-    // initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
-    var initializationSettingsAndroid =
-    AndroidInitializationSettings('app_icon');
-    var initializationSettingsIOS = IOSInitializationSettings(onDidReceiveLocalNotification: onDidReceiveLocalNotification);
-    var initializationSettings = InitializationSettings(initializationSettingsAndroid, initializationSettingsIOS);
 
-    flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: selectNotification);
-
-    _showNotification();
-
-    fetchAnnouncements().then((value) {
-      setState(() {
-        _announcement.addAll(value);
-      });
-    });
-
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    super.dispose();
-  }
-
-  List<Announcement> _announcement = List<Announcement>();
-
-  Future<List<Announcement>> fetchAnnouncements() async {
-    var url = 'https://mwapp.imfast.io/announcements/announcements.json';
-    var response = await http.get(url);
-    var announcement = List<Announcement>();
-
-    if (response.statusCode == 200) {
-      var postsJson = json.decode(response.body);
-      for (var postJson in postsJson) {
-        announcement.add(Announcement.fromJson(postJson));
-      }
-    }
-    return announcement;
-  }
-
-  _handleTabSelection() {
-    setState(() {
-      print('${_tabController.index}');
-    });
   }
 
   @override
@@ -98,166 +44,105 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                     Navigator.of(context, rootNavigator: true).pop(),
                 onPressedYes: () => SystemNavigator.pop()),
         child: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            elevation: 0.75,
-            title: GradientText("Mengal Women",
-                gradient: LinearGradient(
-                    colors: [Theme
-                        .of(context)
-                        .primaryColor, Colors.blue[800], Colors.blue[600]]),
-                style: TextStyle(fontFamily: 'AllerBold',
-                    letterSpacing: -1.5,
-                    fontSize: 25.0),
-                textAlign: TextAlign.center),
-            actions: [
-              Stack(
-                children: [
-                  IconButton(
-                    color: Theme
-                        .of(context)
-                        .accentColor,
-                    icon: Icon(OMIcons.chat),
+          backgroundColor: Colors.blue[800],
+          body: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 80.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset('assets/images/mw.logo.png',width: 200.0, height: 200.0,),
+                SizedBox(height: 80.0,),
+                TextFormField(
+                  textInputAction: TextInputAction.done,
+                  onFieldSubmitted: (term) {
+                    //
+                  },
+                  style: TextStyle(fontFamily: 'Aller'),
+                  textCapitalization: TextCapitalization.characters,
+                  controller: _username,
+                  decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
+                    isDense: true,
+                    prefixIcon: Icon(Icons.person),
+                    hintText: 'Username...',
+                    hintStyle: TextStyle(fontFamily: 'Aller'),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(90.0)), borderSide: BorderSide(color: Colors.transparent)),
+                  ),
+                ),
+                SizedBox(height: 20.0,),
+                TextFormField(
+                  textInputAction: TextInputAction.done,
+                  onFieldSubmitted: (term) {
+                    //
+                  },
+                  style: TextStyle(fontFamily: 'Aller'),
+                  textCapitalization: TextCapitalization.characters,
+                  controller: _password,
+                  obscureText: !_passwordVisible,
+                  decoration: InputDecoration(
+                    fillColor: Colors.white,
+                    filled: true,
+                    isDense: true,
+                    prefixIcon: Icon(Icons.lock),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        // Based on passwordVisible state choose the icon
+                        _passwordVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                        color: Theme.of(context).primaryColorDark,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _passwordVisible = !_passwordVisible;
+                        });
+                      },
+                    ),
+                    hintText: 'Password...',
+                    hintStyle: TextStyle(fontFamily: 'Aller'),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(90.0)), borderSide: BorderSide(color: Colors.transparent)),
+                  ),
+                ),
+                SizedBox(height: 40.0,),
+                Container(
+                  width: double.infinity,
+                  child: RaisedButton(
+                    color: Theme.of(context).accentColor,
+                    elevation: 0.0,
                     onPressed: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => AnnouncementScreen()));
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TabScreen(),
+                        ),
+                      );
                     },
-                  ),
-                  _announcement.length > 0
-                      ? Positioned(
-                    top: 6.0,
-                    left: 25.0,
-                    child: CircleAvatar(
-                        radius: 8.0,
-                        backgroundColor: Colors.red,
-                        child: Text(
-                          '${_announcement.length}',
-                          style: TextStyle(
-                              fontSize: 8.0, color: Colors.white),
-                        )),
-                  )
-                      : SizedBox.shrink(),
-                ],
-              ),
-            ],
-            //Image.asset('assets/images/logo.png', width: 150.0,),
-            bottom: TabBar(
-                controller: _tabController,
-                indicatorWeight: 5.0,
-                indicatorColor: Theme
-                    .of(context)
-                    .primaryColor,
-                tabs: [
-                  Tab(
-                    icon: Icon(
-                      OMIcons.home,
-                      color: _tabController.index == 0 ? Theme
-                          .of(context)
-                          .primaryColor : Colors.grey[500],
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(80.0)),
+                    padding: EdgeInsets.all(0.0),
+                    child: Container(
+                      constraints: BoxConstraints(
+                          maxWidth: 300.0, minHeight: 50.0),
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Log in",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'AllerBold',
+                            fontSize: 17.0,),
+                      ),
                     ),
                   ),
-                  Tab(
-                    icon: Icon(
-                      OMIcons.videoLibrary,
-                      color: _tabController.index == 1 ? Theme
-                          .of(context)
-                          .primaryColor : Colors.grey[500],
-                    ),
-                  ),
-                  Tab(
-                    icon: Icon(
-                      Icons.search,
-                      color: _tabController.index == 2 ? Theme
-                          .of(context)
-                          .primaryColor : Colors.grey[500],
-                    ),
-                  ),
-                  Tab(
-                    icon: Icon(
-                      OMIcons.settings,
-                      color: _tabController.index == 3 ? Theme
-                          .of(context)
-                          .primaryColor : Colors.grey[500],
-                    ),
-                  ),
-                ]),
-          ),
-          body: TabBarView(
-            controller: _tabController,
-            children: [
-              HomeScreen(),
-              VideoScreen(),
-              SearchScreen(),
-              SettingsScreen()
-            ],
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
-
-  //==================================================================================================================================================
-
-  Future _showNotification() async {
-    //For instant notification
-    //var androidDetails = AndroidNotificationDetails("Mengal Women Notification", "Mengal Women", "Mengal Women Notification Channel", importance: Importance.Max);
-    //var iosDetails = IOSNotificationDetails();
-    //var generalNotificationDetails = NotificationDetails(androidDetails, iosDetails);
-
-    //await flutterLocalNotificationsPlugin.show(0,"Title", "Content", generalNotificationDetails);
-
-//SCHEDULED NOTIFICATION - DAILY
-    var time = Time(8, 0, 0);
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'Mengal Women Notification',
-        'Mengal Women',
-        'Mengal Women Notification Channel');
-    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
-    var platformChannelSpecifics = NotificationDetails(
-        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.showDailyAtTime(
-        0,
-        'Good morning ka-Mengal Women!',
-        'Have a great day today!',
-        time,
-        platformChannelSpecifics);
-  }
-
-  Future selectNotification(String payload) async {
-    //if (payload != null) {
-    //debugPrint('notification payload: ' + payload);
-    //}
-    //await Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()),);
-  }
-
-  Future onDidReceiveLocalNotification(int id, String title, String body,
-      String payload) async {
-    // display a dialog with the notification details, tap ok to go to another page
-//    showDialog(
-//      context: context,
-//      builder: (BuildContext context) => CupertinoAlertDialog(
-//        title: Text(title),
-//        content: Text(body),
-//        actions: [
-//          CupertinoDialogAction(
-//            isDefaultAction: true,
-//            child: Text('Ok'),
-//            onPressed: () async {
-//             Navigator.of(context, rootNavigator: true).pop();
-//              await Navigator.push(
-//                context,
-//                MaterialPageRoute(
-//                  builder: (context) => HomeScreen(),
-//                ),
-//              );
-//            },
-//          )
-//        ],
-//      ),
-//    );
-  }
-
-//==================================================================================================================================================
 }

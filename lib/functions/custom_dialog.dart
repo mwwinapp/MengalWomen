@@ -18,12 +18,12 @@ Future customDialog(
                   )
                 : Row(children: [
                     FlatButton(
-                      child: Text('No', style: TextStyle(fontFamily: 'Aller')),
-                      onPressed: onPressedNo,
-                    ),
-                    FlatButton(
                       child: Text('Yes', style: TextStyle(fontFamily: 'Aller')),
                       onPressed: onPressedYes,
+                    ),
+                    FlatButton(
+                      child: Text('No', style: TextStyle(fontFamily: 'Aller')),
+                      onPressed: onPressedNo,
                     ),
                   ])
           ],

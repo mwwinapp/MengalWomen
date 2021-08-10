@@ -68,7 +68,7 @@ class _MemberScreenState extends State<MemberScreen> {
                                   child: CachedNetworkImage(
                                     imageUrl: 'https://drv.tw/~mwwinapp@gmail.com/gd/Fast.io/mwapp.imfast.io/images/photo/${members[index].mid}.jpg',
                                     placeholder: (context, url) => CircularProgressIndicator(),
-                                    errorWidget: (context, url, error) => Icon(Icons.error),
+                                    errorWidget: (context, url, error) => Icon(Icons.person, color: Colors.grey, size: 200.0,),
                                   ),
                                 ),
                                 Padding(
@@ -161,34 +161,6 @@ class _MemberScreenState extends State<MemberScreen> {
                                           ),
                                           Text(
                                             '${members[index].insurancestatus}',
-                                            style: TextStyle(
-                                                fontSize: 14.0,
-                                                fontWeight:
-                                                FontWeight.bold,
-                                                fontFamily: 'Aller'),
-                                            overflow:
-                                            TextOverflow.ellipsis,
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: 5.0),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.place,
-                                            color: Colors.grey,
-                                          ),
-                                          Text(
-                                            'From ',
-                                            style: TextStyle(
-                                                color: Colors.grey,
-                                                fontSize: 14.0,
-                                                fontFamily: 'Aller'),
-                                            overflow:
-                                            TextOverflow.ellipsis,
-                                          ),
-                                          Text(
-                                            '${members[index].barangay}, ECHAGUE, ISABELA',
                                             style: TextStyle(
                                                 fontSize: 14.0,
                                                 fontWeight:
@@ -490,6 +462,7 @@ class _MemberScreenState extends State<MemberScreen> {
                                       SizedBox(height: 10.0),
                                       Divider(),
                                       SizedBox(height: 10.0),
+                                      /*
                                       Text(
                                         'Signature:',
                                         style: TextStyle(
@@ -498,11 +471,13 @@ class _MemberScreenState extends State<MemberScreen> {
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                       //'https://drv.tw/~mwwinapp@gmail.com/gd/Fast.io/mwapp.imfast.io/images/signature/${members[index].mid}.png'
+
                                       CachedNetworkImage(
                                         imageUrl: 'https://drv.tw/~mwwinapp@gmail.com/gd/Fast.io/mwapp.imfast.io/images/signature/${members[index].mid}.png',
                                         placeholder: (context, url) => CircularProgressIndicator(),
                                         errorWidget: (context, url, error) => Icon(Icons.error),
                                       ),
+                                       */
                                     ],
                                   ),
                                 )
