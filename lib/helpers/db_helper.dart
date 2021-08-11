@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/services.dart';
+import 'package:mw/models/end_user_model.dart';
 import 'package:mw/models/member_model.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -133,5 +134,18 @@ class DbHelper {
       }
     }
     return members;
+  }
+
+  Future<List<EndUser>> getEndUser(String username, String password) async {
+    var dBClient = await db;
+    List<Map> maps = await dBClient.rawQuery(
+        "SELECT * FROM tblenduser WHERE username='$username' AND password='$password'");
+    List<EndUser> enduser = [];
+    if (maps.length > 0) {
+      for (int i = 0; i < maps.length; i++) {
+        enduser.add(EndUser.fromMap(maps[i]));
+      }
+    }
+    return enduser;
   }
 }

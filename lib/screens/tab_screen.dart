@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:mw/functions/custom_dialog.dart';
+import 'package:mw/functions/downloader.dart';
+import 'package:mw/functions/network_ping.dart';
 import 'package:mw/helpers/db_helper.dart';
 import 'package:mw/models/announcement_model.dart';
 import 'package:mw/models/member_model.dart';
@@ -46,7 +48,8 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
         _announcement.addAll(value);
       });
     });
-
+    //
+    //dlDB();
   }
 
   @override
@@ -190,6 +193,15 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
   }
 
   //==================================================================================================================================================
+
+  void dlDB() async {
+    await hasInternetConnection().then((value) {
+      print(value);
+      value
+          ? downloadDatabase(context)
+          : print('no network connection.');
+    });
+  }
 
   Future _showNotification() async {
     //For instant notification

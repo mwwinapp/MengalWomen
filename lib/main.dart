@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:mw/functions/cryptography.dart';
 import 'package:mw/functions/custom_dialog.dart';
 import 'package:mw/helpers/db_helper.dart';
+import 'package:mw/models/end_user_model.dart';
 import 'package:mw/screens/tab_screen.dart';
 
 void main() {
@@ -22,6 +24,7 @@ class MainApp extends StatefulWidget {
 class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
 
   var dBHelper = DbHelper();
+  Future<List<EndUser>> enduser;
 
   TextEditingController _username = TextEditingController();
   TextEditingController _password = TextEditingController();
@@ -46,7 +49,7 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
         child: Scaffold(
           backgroundColor: Colors.blue[800],
           body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 80.0),
+            padding: EdgeInsets.symmetric(horizontal: 50.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -55,10 +58,10 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                 TextFormField(
                   textInputAction: TextInputAction.done,
                   onFieldSubmitted: (term) {
-                    //
+                    doLogin();
                   },
                   style: TextStyle(fontFamily: 'Aller'),
-                  textCapitalization: TextCapitalization.characters,
+                  //textCapitalization: TextCapitalization.characters,
                   controller: _username,
                   decoration: InputDecoration(
                     fillColor: Colors.white,
@@ -75,10 +78,10 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                 TextFormField(
                   textInputAction: TextInputAction.done,
                   onFieldSubmitted: (term) {
-                    //
+                    doLogin();
                   },
                   style: TextStyle(fontFamily: 'Aller'),
-                  textCapitalization: TextCapitalization.characters,
+                  //textCapitalization: TextCapitalization.characters,
                   controller: _password,
                   obscureText: !_passwordVisible,
                   decoration: InputDecoration(
@@ -106,20 +109,15 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                         borderRadius: BorderRadius.all(Radius.circular(90.0)), borderSide: BorderSide(color: Colors.transparent)),
                   ),
                 ),
-                SizedBox(height: 40.0,),
+                SizedBox(height: 50.0,),
                 Container(
                   width: double.infinity,
                   child: RaisedButton(
                     color: Theme.of(context).accentColor,
                     elevation: 0.0,
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => TabScreen(),
-                        ),
-                      );
-                    },
+                      doLogin();
+                      },
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(80.0)),
                     padding: EdgeInsets.all(0.0),
@@ -145,4 +143,24 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
       ),
     );
   }
+
+  void doLogin() {
+    cryptString(_password.text).then((value) async {
+      enduser = dBHelper.getEndUser(_username.text, value);
+      List list = await enduser;
+      setState(() {
+        if (list.length > 0){
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => TabScreen(),
+            ),
+          );
+        } else {
+          customDialog(context, 'Log in Failed', 'Username/password did not match or not found.', true, onPressedOk: () =>Navigator.of(context, rootNavigator: true).pop());
+        }
+      });
+    });
+  }
+
 }
