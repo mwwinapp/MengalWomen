@@ -7,6 +7,8 @@ import 'package:mw/helpers/db_helper.dart';
 import 'package:mw/models/end_user_model.dart';
 import 'package:mw/screens/tab_screen.dart';
 
+import 'functions/global_variables.dart';
+
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
@@ -136,6 +138,34 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                     ),
                   ),
                 ),
+                SizedBox(height: 20.0,),
+                Container(
+                  width: double.infinity,
+                  child: RaisedButton(
+                    color: Colors.white,
+                    elevation: 0.0,
+                    onPressed: () {
+                      usertype = 'guest';
+                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TabScreen(),),);
+                    },
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(80.0)),
+                    padding: EdgeInsets.all(0.0),
+                    child: Container(
+                      constraints: BoxConstraints(
+                          maxWidth: 300.0, minHeight: 50.0),
+                      alignment: Alignment.center,
+                      child: Text(
+                        "Log in as Guest",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Theme.of(context).accentColor,
+                          fontFamily: 'AllerBold',
+                          fontSize: 17.0,),
+                      ),
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -150,7 +180,8 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
       List list = await enduser;
       setState(() {
         if (list.length > 0){
-          Navigator.push(
+          usertype = 'admin';
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (context) => TabScreen(),

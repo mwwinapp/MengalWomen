@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:mw/functions/custom_dialog.dart';
+import 'package:mw/functions/global_variables.dart';
 import 'package:mw/helpers/db_helper.dart';
 import 'package:mw/models/member_model.dart';
 import 'package:mw/strings/strings.dart';
@@ -276,7 +278,7 @@ class _SearchScreenState extends State<SearchScreen>
                             child: RaisedButton(
                               elevation: 0.0,
                               onPressed: () {
-                                searchOptionsDialog();
+                                usertype == 'admin' ? searchOptionsDialog() : customDialog(context, 'ACCESS DENIED', 'Access for guest user is limited.', true, onPressedOk: () {Navigator.of(context, rootNavigator: true).pop();});
                               },
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(80.0)),
@@ -386,7 +388,7 @@ class _SearchScreenState extends State<SearchScreen>
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                       subtitle: Text(
-                                        '${members[index].barangay} • ${members[index].validity}',
+                                        usertype == 'admin' ? '${members[index].barangay} • ${members[index].validity}' : 'VALIDITY: ${members[index].validity}',
                                         style: TextStyle(
                                             fontSize: 12.0,
                                             color: Colors.grey,

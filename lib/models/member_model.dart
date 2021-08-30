@@ -15,8 +15,9 @@ class Member {
   String insurancestatus;
   String mwkit;
   String validity;
+  String remarks;
 
-  Member({this.mid, this.membershipdate, this.lastrenewal, this.fullname, this.contactnumber, this.dob, this.age, this.occupation, this.civilstatus, this.spousename, this.barangay, this.status});
+  Member({this.mid, this.membershipdate, this.lastrenewal, this.fullname, this.contactnumber, this.dob, this.age, this.occupation, this.civilstatus, this.spousename, this.barangay, this.status, this.remarks});
 
   Map<String, dynamic> toMap() {
     var map = <String, dynamic>{
@@ -34,7 +35,8 @@ class Member {
       'status' : status,
       'insurancestatus' : insurancestatus,
       'mwkit' : mwkit,
-      'validity' : validity
+      'validity' : validity,
+      'remarks' : remarks
     };
     return map;
   }
@@ -55,5 +57,6 @@ class Member {
     insurancestatus = map['insurancestatus'];
     mwkit = map['mwkit'];
     validity = map['validity'];
+    remarks = map['remarks'];
   }
 }

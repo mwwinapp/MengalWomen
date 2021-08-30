@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mw/functions/global_variables.dart';
 import 'package:mw/helpers/db_helper.dart';
 import 'package:mw/models/member_model.dart';
 
@@ -80,7 +81,7 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
                                   maxLines: 1,
                                 ),
                                 Text(
-                                  '${members[index].barangay}',
+                                  usertype == 'admin' ? '${members[index].barangay}' : '',
                                   style: TextStyle(
                                       color: Colors.grey,
                                       fontSize: 10.0,

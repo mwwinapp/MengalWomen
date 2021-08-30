@@ -20,5 +20,5 @@ downloadDatabase(BuildContext context) async {
     showNotification: false, // show download progress in status bar (for Android)
     openFileFromNotification: false, // click on notification to open downloaded file (for Android)
   );
-  customDialog(context, 'Download complete.', 'Database successfully downloaded and updated.', true,onPressedOk: () => Navigator.of(context, rootNavigator: true).pop());
+  //customDialog(context, 'Download complete.', 'Database successfully downloaded and updated.', true,onPressedOk: () => Navigator.of(context, rootNavigator: true).pop());
 }

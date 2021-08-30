@@ -49,7 +49,8 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
       });
     });
     //
-    //dlDB();
+    downloaderInit();
+    dlDB();             //REMINDER: Remove this only if database is updated and tblenduser is added
   }
 
   @override
@@ -196,10 +197,11 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
 
   void dlDB() async {
     await hasInternetConnection().then((value) {
-      print(value);
-      value
-          ? downloadDatabase(context)
-          : print('no network connection.');
+      if(value) {
+        print('database download initiated...');
+        downloadDatabase(context);
+        //customDialog(context, 'Download complete.', 'Database successfully downloaded and updated.', true,onPressedOk: () => Navigator.of(context, rootNavigator: true).pop());
+      }
     });
   }
 

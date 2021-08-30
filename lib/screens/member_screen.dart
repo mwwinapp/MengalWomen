@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:mw/functions/global_variables.dart';
 import 'package:mw/helpers/db_helper.dart';
 import 'package:mw/models/member_model.dart';
 
@@ -66,7 +67,7 @@ class _MemberScreenState extends State<MemberScreen> {
                                 Container(
                                   //'https://drv.tw/~mwwinapp@gmail.com/gd/Fast.io/mwapp.imfast.io/images/photo/${members[index].mid}.jpg'
                                   child: CachedNetworkImage(
-                                    imageUrl: 'https://drv.tw/~mwwinapp@gmail.com/gd/Fast.io/mwapp.imfast.io/images/photo/${members[index].mid}.jpg',
+                                    imageUrl: usertype == 'admin' ? 'https://drv.tw/~mwwinapp@gmail.com/gd/Fast.io/mwapp.imfast.io/images/photo/${members[index].mid}.jpg' : '',
                                     placeholder: (context, url) => CircularProgressIndicator(),
                                     errorWidget: (context, url, error) => Icon(Icons.person, color: Colors.grey, size: 200.0,),
                                   ),
@@ -292,177 +293,179 @@ class _MemberScreenState extends State<MemberScreen> {
                                       SizedBox(height: 10.0),
                                       Divider(),
                                       SizedBox(height: 10.0),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                              Icons.place,
-                                            color: Colors.grey,
-                                          ),
-                                          Text(
-                                            'From ',
-                                            style: TextStyle(
-                                              color: Colors.grey,
-                                                fontSize: 14.0,
-                                                fontFamily: 'Aller'),
-                                            overflow:
-                                            TextOverflow.ellipsis,
-                                          ),
-                                          Text(
-                                            '${members[index].barangay}, ECHAGUE, ISABELA',
-                                            style: TextStyle(
-                                                fontSize: 14.0,
-                                                fontWeight:
-                                                FontWeight.bold,
-                                                fontFamily: 'Aller'),
-                                            overflow:
-                                            TextOverflow.ellipsis,
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: 5.0),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.favorite,
-                                            color: Colors.grey,
-                                          ),
-                                          Text(
-                                            'Civil Status ',
-                                            style: TextStyle(
-                                                color: Colors.grey,
-                                                fontSize: 14.0,
-                                                fontFamily: 'Aller'),
-                                            overflow:
-                                            TextOverflow.ellipsis,
-                                          ),
-                                          Text(
-                                            members[index].civilstatus != 'MARRIED' ? '${members[index].civilstatus}' : spousename,
-                                            style: TextStyle(
-                                                fontSize: 14.0,
-                                                fontWeight:
-                                                FontWeight.bold,
-                                                fontFamily: 'Aller'),
-                                            overflow:
-                                            TextOverflow.ellipsis,
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.cake,
-                                            color: Colors.grey,
-                                          ),
-                                          Text(
-                                            'Born ',
-                                            style: TextStyle(
-                                                color: Colors.grey,
-                                                fontSize: 14.0,
-                                                fontFamily: 'Aller'),
-                                            overflow:
-                                            TextOverflow.ellipsis,
-                                          ),
-                                          Text(
-                                            '${members[index].dob}',
-                                            style: TextStyle(
-                                                fontSize: 14.0,
-                                                fontWeight:
-                                                FontWeight.bold,
-                                                fontFamily: 'Aller'),
-                                            overflow:
-                                            TextOverflow.ellipsis,
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: 5.0),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.cake_outlined,
-                                            color: Colors.grey,
-                                          ),
-                                          Text(
-                                            'Age ',
-                                            style: TextStyle(
-                                                color: Colors.grey,
-                                                fontSize: 14.0,
-                                                fontFamily: 'Aller'),
-                                            overflow:
-                                            TextOverflow.ellipsis,
-                                          ),
-                                          Text(
-                                            '${members[index].age}',
-                                            style: TextStyle(
-                                                fontSize: 14.0,
-                                                fontWeight:
-                                                FontWeight.bold,
-                                                fontFamily: 'Aller'),
-                                            overflow:
-                                            TextOverflow.ellipsis,
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: 5.0),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.phone,
-                                            color: Colors.grey,
-                                          ),
-                                          Text(
-                                            'Contact No. ',
-                                            style: TextStyle(
-                                                color: Colors.grey,
-                                                fontSize: 14.0,
-                                                fontFamily: 'Aller'),
-                                            overflow:
-                                            TextOverflow.ellipsis,
-                                          ),
-                                          Text(
-                                            members[index].contactnumber != '' ? '${members[index].contactnumber}' : 'N/A',
-                                            style: TextStyle(
-                                                fontSize: 14.0,
-                                                fontWeight:
-                                                FontWeight.bold,
-                                                fontFamily: 'Aller'),
-                                            overflow:
-                                            TextOverflow.ellipsis,
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: 5.0),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.work,
-                                            color: Colors.grey,
-                                          ),
-                                          Text(
-                                            'Occupation. ',
-                                            style: TextStyle(
-                                                color: Colors.grey,
-                                                fontSize: 14.0,
-                                                fontFamily: 'Aller'),
-                                            overflow:
-                                            TextOverflow.ellipsis,
-                                          ),
-                                          Text(
-                                            members[index].occupation != '' ? '${members[index].occupation}' : 'N/A',
-                                            style: TextStyle(
-                                                fontSize: 14.0,
-                                                fontWeight:
-                                                FontWeight.bold,
-                                                fontFamily: 'Aller'),
-                                            overflow:
-                                            TextOverflow.ellipsis,
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: 5.0),
-                                      SizedBox(height: 10.0),
-                                      Divider(),
-                                      SizedBox(height: 10.0),
-                                      /*
+                                      usertype == 'admin' ?
+                                          Column(
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Icon(
+                                                    Icons.place,
+                                                    color: Colors.grey,
+                                                  ),
+                                                  Text(
+                                                    'From ',
+                                                    style: TextStyle(
+                                                        color: Colors.grey,
+                                                        fontSize: 14.0,
+                                                        fontFamily: 'Aller'),
+                                                    overflow:
+                                                    TextOverflow.ellipsis,
+                                                  ),
+                                                  Text(
+                                                    '${members[index].barangay}, ECHAGUE, ISABELA',
+                                                    style: TextStyle(
+                                                        fontSize: 14.0,
+                                                        fontWeight:
+                                                        FontWeight.bold,
+                                                        fontFamily: 'Aller'),
+                                                    overflow:
+                                                    TextOverflow.ellipsis,
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(height: 5.0),
+                                              Row(
+                                                children: [
+                                                  Icon(
+                                                    Icons.favorite,
+                                                    color: Colors.grey,
+                                                  ),
+                                                  Text(
+                                                    'Civil Status ',
+                                                    style: TextStyle(
+                                                        color: Colors.grey,
+                                                        fontSize: 14.0,
+                                                        fontFamily: 'Aller'),
+                                                    overflow:
+                                                    TextOverflow.ellipsis,
+                                                  ),
+                                                  Text(
+                                                    members[index].civilstatus != 'MARRIED' ? '${members[index].civilstatus}' : spousename,
+                                                    style: TextStyle(
+                                                        fontSize: 14.0,
+                                                        fontWeight:
+                                                        FontWeight.bold,
+                                                        fontFamily: 'Aller'),
+                                                    overflow:
+                                                    TextOverflow.ellipsis,
+                                                  ),
+                                                ],
+                                              ),
+                                              Row(
+                                                children: [
+                                                  Icon(
+                                                    Icons.cake,
+                                                    color: Colors.grey,
+                                                  ),
+                                                  Text(
+                                                    'Born ',
+                                                    style: TextStyle(
+                                                        color: Colors.grey,
+                                                        fontSize: 14.0,
+                                                        fontFamily: 'Aller'),
+                                                    overflow:
+                                                    TextOverflow.ellipsis,
+                                                  ),
+                                                  Text(
+                                                    '${members[index].dob}',
+                                                    style: TextStyle(
+                                                        fontSize: 14.0,
+                                                        fontWeight:
+                                                        FontWeight.bold,
+                                                        fontFamily: 'Aller'),
+                                                    overflow:
+                                                    TextOverflow.ellipsis,
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(height: 5.0),
+                                              Row(
+                                                children: [
+                                                  Icon(
+                                                    Icons.cake_outlined,
+                                                    color: Colors.grey,
+                                                  ),
+                                                  Text(
+                                                    'Age ',
+                                                    style: TextStyle(
+                                                        color: Colors.grey,
+                                                        fontSize: 14.0,
+                                                        fontFamily: 'Aller'),
+                                                    overflow:
+                                                    TextOverflow.ellipsis,
+                                                  ),
+                                                  Text(
+                                                    '${members[index].age}',
+                                                    style: TextStyle(
+                                                        fontSize: 14.0,
+                                                        fontWeight:
+                                                        FontWeight.bold,
+                                                        fontFamily: 'Aller'),
+                                                    overflow:
+                                                    TextOverflow.ellipsis,
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(height: 5.0),
+                                              Row(
+                                                children: [
+                                                  Icon(
+                                                    Icons.phone,
+                                                    color: Colors.grey,
+                                                  ),
+                                                  Text(
+                                                    'Contact No. ',
+                                                    style: TextStyle(
+                                                        color: Colors.grey,
+                                                        fontSize: 14.0,
+                                                        fontFamily: 'Aller'),
+                                                    overflow:
+                                                    TextOverflow.ellipsis,
+                                                  ),
+                                                  Text(
+                                                    members[index].contactnumber != '' ? '${members[index].contactnumber}' : 'N/A',
+                                                    style: TextStyle(
+                                                        fontSize: 14.0,
+                                                        fontWeight:
+                                                        FontWeight.bold,
+                                                        fontFamily: 'Aller'),
+                                                    overflow:
+                                                    TextOverflow.ellipsis,
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(height: 5.0),
+                                              Row(
+                                                children: [
+                                                  Icon(
+                                                    Icons.work,
+                                                    color: Colors.grey,
+                                                  ),
+                                                  Text(
+                                                    'Occupation. ',
+                                                    style: TextStyle(
+                                                        color: Colors.grey,
+                                                        fontSize: 14.0,
+                                                        fontFamily: 'Aller'),
+                                                    overflow:
+                                                    TextOverflow.ellipsis,
+                                                  ),
+                                                  Text(
+                                                    members[index].occupation != '' ? '${members[index].occupation}' : 'N/A',
+                                                    style: TextStyle(
+                                                        fontSize: 14.0,
+                                                        fontWeight:
+                                                        FontWeight.bold,
+                                                        fontFamily: 'Aller'),
+                                                    overflow:
+                                                    TextOverflow.ellipsis,
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(height: 5.0),
+                                              SizedBox(height: 10.0),
+                                              Divider(),
+                                              SizedBox(height: 10.0), /*
                                       Text(
                                         'Signature:',
                                         style: TextStyle(
@@ -478,6 +481,35 @@ class _MemberScreenState extends State<MemberScreen> {
                                         errorWidget: (context, url, error) => Icon(Icons.error),
                                       ),
                                        */
+                                            ],
+                                          ) : SizedBox.shrink(),
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.edit,
+                                            color: Colors.grey,
+                                          ),
+                                          Text(
+                                            'Remarks: ',
+                                            style: TextStyle(
+                                                color: Colors.grey,
+                                                fontSize: 14.0,
+                                                fontFamily: 'Aller'),
+                                            overflow:
+                                            TextOverflow.ellipsis,
+                                          ),
+                                          Text(
+                                            members[index].remarks != '' ? '${members[index].remarks}' : 'N/A',
+                                            style: TextStyle(
+                                                fontSize: 14.0,
+                                                fontWeight:
+                                                FontWeight.bold,
+                                                fontFamily: 'Aller'),
+                                            overflow:
+                                            TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      ),
                                     ],
                                   ),
                                 )

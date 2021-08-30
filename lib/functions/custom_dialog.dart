@@ -9,13 +9,17 @@ Future customDialog(
       builder: (context) {
         return AlertDialog(
           title: Text(title, style: TextStyle(fontFamily: 'Aller')),
-          content: Text(content, style: TextStyle(fontFamily: 'Aller')),
+          content: Text(content, style: TextStyle(fontFamily: 'Aller',color: Colors.grey)),
           actions: [
             isOkOnly
-                ? FlatButton(
-                    child: Text('Ok', style: TextStyle(fontFamily: 'Aller')),
-                    onPressed: onPressedOk,
-                  )
+                ? Row(
+                  children: [
+                    FlatButton(
+                        child: Text('Ok', style: TextStyle(fontFamily: 'Aller')),
+                        onPressed: onPressedOk,
+                      ),
+                  ],
+                )
                 : Row(children: [
                     FlatButton(
                       child: Text('Yes', style: TextStyle(fontFamily: 'Aller')),

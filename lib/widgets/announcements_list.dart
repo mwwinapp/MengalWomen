@@ -28,11 +28,13 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
     var announcement = List<Announcement>();
 
     if (response.statusCode == 200) {
-      print('Status Code: OK');
+      print('Status Code: ${response.statusCode}');
       var postsJson = json.decode(response.body);
       for (var postJson in postsJson) {
         announcement.add(Announcement.fromJson(postJson));
       }
+    } else {
+      print('Status Code: ${response.statusCode}');
     }
     return announcement;
   }

@@ -33,13 +33,12 @@ class _SettingsScreenState extends State<SettingsScreen>
                 onTap: () async {
                   await hasInternetConnection().then((value) {
                     print(value);
-                    value
-                        ? downloadDatabase(context)
-                        : customDialog(context, 'Internet required.',
-                            'Failed to download and update database.', true,
-                            onPressedOk: () =>
-                                Navigator.of(context, rootNavigator: true)
-                                    .pop()); //_noInternetConnection(context);
+                    if(value) {
+                      downloadDatabase(context);
+                      customDialog(context, 'Download complete.', 'Database successfully downloaded and updated.', true,onPressedOk: () => Navigator.of(context, rootNavigator: true).pop());
+                    } else {
+                      customDialog(context, 'Internet required.', 'Failed to download and update database.', true, onPressedOk: () => Navigator.of(context, rootNavigator: true).pop()); //_noInternetConnection(context);
+                    }
                   });
                 },
                 leading: FaIcon(FontAwesomeIcons.database),
