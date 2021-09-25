@@ -94,6 +94,7 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
                 onPressedYes: () => SystemNavigator.pop()),
         child: Scaffold(
           appBar: AppBar(
+            automaticallyImplyLeading: false,
             backgroundColor: Colors.white,
             elevation: 0.75,
             title: GradientText("Mengal Women",

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:gradient_text/gradient_text.dart';
 import 'package:mw/functions/cryptography.dart';
 import 'package:mw/functions/custom_dialog.dart';
 import 'package:mw/helpers/db_helper.dart';
@@ -49,124 +50,149 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                     Navigator.of(context, rootNavigator: true).pop(),
                 onPressedYes: () => SystemNavigator.pop()),
         child: Scaffold(
-          backgroundColor: Colors.blue[800],
-          body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 50.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset('assets/images/mw.logo.png',width: 200.0, height: 200.0,),
-                SizedBox(height: 80.0,),
-                TextFormField(
-                  textInputAction: TextInputAction.done,
-                  onFieldSubmitted: (term) {
-                    doLogin();
-                  },
-                  style: TextStyle(fontFamily: 'Aller'),
-                  //textCapitalization: TextCapitalization.characters,
-                  controller: _username,
-                  decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    filled: true,
-                    isDense: true,
-                    prefixIcon: Icon(Icons.person),
-                    hintText: 'Username...',
-                    hintStyle: TextStyle(fontFamily: 'Aller'),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(90.0)), borderSide: BorderSide(color: Colors.transparent)),
+          backgroundColor: Colors.white,
+          body: Container(
+            decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/bg.jpg"),
+              fit: BoxFit.cover,
+              ),
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 30.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  //Image(image: AssetImage("assets/images/mw.logo.png"), width: 100.0, height: 100.0,),
+                  GradientText("Mengal Women",
+                      gradient: LinearGradient(
+                          colors: [Theme
+                              .of(context)
+                              .primaryColor, Colors.blue[800], Colors.blue[600]]),
+                      style: TextStyle(
+                          fontFamily: 'AllerBold',
+                          letterSpacing: -1.5,
+                          fontSize: 40.0),
+                      textAlign: TextAlign.center),
+                  Text('Organization Inc.',
+                      style: TextStyle(
+                          color: Colors.blue[600],
+                          fontFamily: 'AllerBold',
+                          letterSpacing: 5.0,
+                          fontSize: 15.0),
                   ),
-                ),
-                SizedBox(height: 20.0,),
-                TextFormField(
-                  textInputAction: TextInputAction.done,
-                  onFieldSubmitted: (term) {
-                    doLogin();
-                  },
-                  style: TextStyle(fontFamily: 'Aller'),
-                  //textCapitalization: TextCapitalization.characters,
-                  controller: _password,
-                  obscureText: !_passwordVisible,
-                  decoration: InputDecoration(
-                    fillColor: Colors.white,
-                    filled: true,
-                    isDense: true,
-                    prefixIcon: Icon(Icons.lock),
-                    suffixIcon: IconButton(
-                      icon: Icon(
-                        // Based on passwordVisible state choose the icon
-                        _passwordVisible
-                            ? Icons.visibility
-                            : Icons.visibility_off,
-                        color: Theme.of(context).primaryColorDark,
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          _passwordVisible = !_passwordVisible;
-                        });
-                      },
-                    ),
-                    hintText: 'Password...',
-                    hintStyle: TextStyle(fontFamily: 'Aller'),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(90.0)), borderSide: BorderSide(color: Colors.transparent)),
-                  ),
-                ),
-                SizedBox(height: 50.0,),
-                Container(
-                  width: double.infinity,
-                  child: RaisedButton(
-                    color: Theme.of(context).accentColor,
-                    elevation: 0.0,
-                    onPressed: () {
+                  SizedBox(height: 80.0,),
+                  TextFormField(
+                    textInputAction: TextInputAction.done,
+                    onFieldSubmitted: (term) {
                       doLogin();
+                    },
+                    style: TextStyle(fontFamily: 'Aller'),
+                    //textCapitalization: TextCapitalization.characters,
+                    controller: _username,
+                    decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
+                      isDense: true,
+                      prefixIcon: Icon(Icons.person),
+                      hintText: 'Username...',
+                      hintStyle: TextStyle(fontFamily: 'Aller'),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(90.0)), borderSide: BorderSide(color: Colors.transparent)),
+                    ),
+                  ),
+                  SizedBox(height: 20.0,),
+                  TextFormField(
+                    textInputAction: TextInputAction.done,
+                    onFieldSubmitted: (term) {
+                      doLogin();
+                    },
+                    style: TextStyle(fontFamily: 'Aller'),
+                    //textCapitalization: TextCapitalization.characters,
+                    controller: _password,
+                    obscureText: !_passwordVisible,
+                    decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
+                      isDense: true,
+                      prefixIcon: Icon(Icons.lock),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          // Based on passwordVisible state choose the icon
+                          _passwordVisible
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                          color: Theme.of(context).primaryColorDark,
+                        ),
+                        onPressed: () {
+                          setState(() {
+                            _passwordVisible = !_passwordVisible;
+                          });
+                        },
+                      ),
+                      hintText: 'Password...',
+                      hintStyle: TextStyle(fontFamily: 'Aller'),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(90.0)), borderSide: BorderSide(color: Colors.transparent)),
+                    ),
+                  ),
+                  SizedBox(height: 50.0,),
+                  Container(
+                    width: double.infinity,
+                    child: RaisedButton(
+                      color: Theme.of(context).primaryColor,
+                      elevation: 0.0,
+                      onPressed: () {
+                        doLogin();
+                        },
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(80.0)),
+                      padding: EdgeInsets.all(0.0),
+                      child: Container(
+                        constraints: BoxConstraints(
+                            maxWidth: 300.0, minHeight: 50.0),
+                        alignment: Alignment.center,
+                        child: Text(
+                          "Log in",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontFamily: 'AllerBold',
+                              fontSize: 17.0,),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20.0,),
+                  Container(
+                    width: double.infinity,
+                    child: RaisedButton(
+                      color: Colors.white,
+                      elevation: 0.0,
+                      onPressed: () {
+                        usertype = 'guest';
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TabScreen(),),);
                       },
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(80.0)),
-                    padding: EdgeInsets.all(0.0),
-                    child: Container(
-                      constraints: BoxConstraints(
-                          maxWidth: 300.0, minHeight: 50.0),
-                      alignment: Alignment.center,
-                      child: Text(
-                        "Log in",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.white,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(80.0)),
+                      padding: EdgeInsets.all(0.0),
+                      child: Container(
+                        constraints: BoxConstraints(
+                            maxWidth: 300.0, minHeight: 50.0),
+                        alignment: Alignment.center,
+                        child: Text(
+                          "Log in as Guest",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Theme.of(context).accentColor,
                             fontFamily: 'AllerBold',
                             fontSize: 17.0,),
+                        ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(height: 20.0,),
-                Container(
-                  width: double.infinity,
-                  child: RaisedButton(
-                    color: Colors.white,
-                    elevation: 0.0,
-                    onPressed: () {
-                      usertype = 'guest';
-                      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TabScreen(),),);
-                    },
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(80.0)),
-                    padding: EdgeInsets.all(0.0),
-                    child: Container(
-                      constraints: BoxConstraints(
-                          maxWidth: 300.0, minHeight: 50.0),
-                      alignment: Alignment.center,
-                      child: Text(
-                        "Log in as Guest",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Theme.of(context).accentColor,
-                          fontFamily: 'AllerBold',
-                          fontSize: 17.0,),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

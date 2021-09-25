@@ -85,6 +85,7 @@ class _SearchScreenState extends State<SearchScreen>
           return StatefulBuilder(
             builder: (context, setState) {
               return AlertDialog(
+                actionsPadding: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 10.0),
                 titleTextStyle: TextStyle(fontFamily: 'Aller'),
                 contentTextStyle: TextStyle(fontFamily: 'Aller'),
                 scrollable: true,
@@ -172,21 +173,68 @@ class _SearchScreenState extends State<SearchScreen>
                   ],
                 ),
                 actions: [
-                  FlatButton(
-                    child: Text('Search'),
-                    onPressed: () {
-                      if(_searchExecuted) {
-                        _scrollToTop();
-                      }
-                      search(_searchController.text);
-                      Navigator.of(context, rootNavigator: true).pop();
-                    },
-                  ),
-                  FlatButton(
-                    child: Text('Cancel'),
-                    onPressed: () {
-                      Navigator.of(context, rootNavigator: true).pop();
-                    },
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          height: 50.0,
+                          child: RaisedButton(
+                            color: Colors.green,
+                            elevation: 0.0,
+                            onPressed: () {
+                              if(_searchExecuted) {
+                                _scrollToTop();
+                              }
+                              search(_searchController.text);
+                              Navigator.of(context, rootNavigator: true).pop();
+                            },
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(80.0)),
+                            padding: EdgeInsets.all(0.0),
+                            child: Container(
+                              constraints: BoxConstraints(
+                                  maxWidth: 300.0, minHeight: 50.0),
+                              alignment: Alignment.center,
+                              child: Text(
+                                "Search",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'AllerBold'),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 4.0),
+                      Expanded(
+                        child: Container(
+                          height: 50.0,
+                          child: RaisedButton(
+                            color: Colors.red,
+                            elevation: 0.0,
+                            onPressed: () {
+                              Navigator.of(context, rootNavigator: true).pop();
+                            },
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(80.0)),
+                            padding: EdgeInsets.all(0.0),
+                            child: Container(
+                              constraints: BoxConstraints(
+                                  maxWidth: 300.0, minHeight: 50.0),
+                              alignment: Alignment.center,
+                              child: Text(
+                                "Cancel",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'AllerBold'),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               );
@@ -379,21 +427,69 @@ class _SearchScreenState extends State<SearchScreen>
                                     //
                                     ListTile(
                                       dense: true,
-                                      title: Text(
-                                        '${members[index].fullname}',
-                                        style: TextStyle(
-                                            fontSize: 15.0,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: 'Aller'),
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                      subtitle: Text(
-                                        usertype == 'admin' ? '${members[index].barangay} • ${members[index].validity}' : 'VALIDITY: ${members[index].validity}',
-                                        style: TextStyle(
-                                            fontSize: 12.0,
+                                      title: Row(
+                                        children: [
+                                          Icon(
+                                            Icons.person,
                                             color: Colors.grey,
-                                            fontFamily: 'Aller'),
-                                        overflow: TextOverflow.ellipsis,
+                                            size: 15.0,
+                                          ),
+                                          Text(
+                                            '${members[index].fullname}',
+                                            style: TextStyle(
+                                                fontSize: 15.0,
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: 'Aller'),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      ),
+                                      subtitle: usertype == 'admin' ? Row(
+                                        children: [
+                                          Icon(
+                                            Icons.place,
+                                            color: Colors.grey,
+                                            size: 12.0,
+                                          ),
+                                          Text(
+                                            '${members[index].barangay}',
+                                            style: TextStyle(
+                                                fontSize: 12.0,
+                                                color: Colors.grey,
+                                                fontFamily: 'Aller'),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          SizedBox(width: 2.0),
+                                          Icon(
+                                            Icons.update,
+                                            color: Colors.grey,
+                                            size: 12.0,
+                                          ),
+                                          Text(
+                                            '${members[index].validity}',
+                                            style: TextStyle(
+                                                fontSize: 12.0,
+                                                color: Colors.grey,
+                                                fontFamily: 'Aller'),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ]
+                                      ) : Row(
+                                          children: [
+                                            Icon(
+                                              Icons.update,
+                                              color: Colors.grey,
+                                              size: 12.0,
+                                            ),
+                                            Text(
+                                              '${members[index].validity}',
+                                              style: TextStyle(
+                                                  fontSize: 12.0,
+                                                  color: Colors.grey,
+                                                  fontFamily: 'Aller'),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ]
                                       ),
                                       trailing: Icon(
                                         Icons.brightness_1,
