@@ -18,23 +18,22 @@ Future customDialog(
                     Expanded(
                       child: Container(
                         height: 50.0,
-                        child: RaisedButton(
-                          color: Theme.of(context).primaryColor,
-                          elevation: 0.0,
+                        child: TextButton(
                           onPressed: onPressedOk,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(80.0)),
-                          padding: EdgeInsets.all(0.0),
-                          child: Container(
-                            constraints: BoxConstraints(
-                                maxWidth: 300.0, minHeight: 50.0),
-                            alignment: Alignment.center,
-                            child: Text(
-                              "Okay",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: 'AllerBold'),
+                          child: Text(
+                            "Okay",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontFamily: 'AllerBold'),
+                          ),
+                          style: ButtonStyle(
+                            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                            backgroundColor: MaterialStateProperty.all<Color>(Colors.blue[800]),
+                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25.0),
+                                side: BorderSide(color: Colors.blue[800]),
+                              ),
                             ),
                           ),
                         ),
@@ -46,23 +45,22 @@ Future customDialog(
               Expanded(
                 child: Container(
                   height: 50.0,
-                  child: RaisedButton(
-                    color: Colors.green,
-                    elevation: 0.0,
+                  child: TextButton(
                     onPressed: onPressedYes,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(80.0)),
-                    padding: EdgeInsets.all(0.0),
-                    child: Container(
-                      constraints: BoxConstraints(
-                          maxWidth: 300.0, minHeight: 50.0),
-                      alignment: Alignment.center,
-                      child: Text(
-                        "Yes",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'AllerBold'),
+                    child: Text(
+                      "Yes",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontFamily: 'AllerBold'),
+                    ),
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                          side: BorderSide(color: Colors.green),
+                        ),
                       ),
                     ),
                   ),
@@ -72,23 +70,22 @@ Future customDialog(
               Expanded(
                 child: Container(
                   height: 50.0,
-                  child: RaisedButton(
-                    color: Colors.red,
-                    elevation: 0.0,
+                  child: TextButton(
                     onPressed: onPressedNo,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(80.0)),
-                    padding: EdgeInsets.all(0.0),
-                    child: Container(
-                      constraints: BoxConstraints(
-                          maxWidth: 300.0, minHeight: 50.0),
-                      alignment: Alignment.center,
-                      child: Text(
-                        "No",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'AllerBold'),
+                    child: Text(
+                      "No",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontFamily: 'AllerBold'),
+                    ),
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                          side: BorderSide(color: Colors.red),
+                        ),
                       ),
                     ),
                   ),

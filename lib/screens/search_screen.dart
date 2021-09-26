@@ -76,6 +76,7 @@ class _SearchScreenState extends State<SearchScreen>
   bool isCheckedStatus = false;
   String _selectedBarangay = 'ANGOLUAN';
   String _selectedStatus = 'ACTIVE';
+  int results;
 
   Future searchOptionsDialog() {
     return showDialog(
@@ -178,9 +179,7 @@ class _SearchScreenState extends State<SearchScreen>
                       Expanded(
                         child: Container(
                           height: 50.0,
-                          child: RaisedButton(
-                            color: Colors.green,
-                            elevation: 0.0,
+                          child: TextButton(
                             onPressed: () {
                               if(_searchExecuted) {
                                 _scrollToTop();
@@ -188,19 +187,20 @@ class _SearchScreenState extends State<SearchScreen>
                               search(_searchController.text);
                               Navigator.of(context, rootNavigator: true).pop();
                             },
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(80.0)),
-                            padding: EdgeInsets.all(0.0),
-                            child: Container(
-                              constraints: BoxConstraints(
-                                  maxWidth: 300.0, minHeight: 50.0),
-                              alignment: Alignment.center,
-                              child: Text(
-                                "Search",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'AllerBold'),
+                            child: Text(
+                              "Search",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontFamily: 'AllerBold'),
+                            ),
+                            style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                              backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25.0),
+                                  side: BorderSide(color: Colors.green),
+                                ),
                               ),
                             ),
                           ),
@@ -210,25 +210,24 @@ class _SearchScreenState extends State<SearchScreen>
                       Expanded(
                         child: Container(
                           height: 50.0,
-                          child: RaisedButton(
-                            color: Colors.red,
-                            elevation: 0.0,
+                          child: TextButton(
                             onPressed: () {
                               Navigator.of(context, rootNavigator: true).pop();
                             },
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(80.0)),
-                            padding: EdgeInsets.all(0.0),
-                            child: Container(
-                              constraints: BoxConstraints(
-                                  maxWidth: 300.0, minHeight: 50.0),
-                              alignment: Alignment.center,
-                              child: Text(
-                                "Cancel",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: 'AllerBold'),
+                            child: Text(
+                              "No",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontFamily: 'AllerBold'),
+                            ),
+                            style: ButtonStyle(
+                              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                              backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25.0),
+                                  side: BorderSide(color: Colors.red),
+                                ),
                               ),
                             ),
                           ),
@@ -245,6 +244,7 @@ class _SearchScreenState extends State<SearchScreen>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Stack(
       children: [
         Column(
@@ -277,6 +277,50 @@ class _SearchScreenState extends State<SearchScreen>
                 ),
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  isCheckedBarangay || isCheckedStatus ?
+                      Text('Filtered by: ',
+                          style: TextStyle(
+                          fontFamily: 'Aller',
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey,
+                          fontSize: 12.0)) :
+                  SizedBox.shrink(),
+                  isCheckedBarangay
+                      ? Text(
+                        'Barangay: $_selectedBarangay',
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontFamily: 'Aller',
+                            color: Colors.grey,
+                            fontSize: 12.0),
+                      )
+                      : SizedBox.shrink(),
+                  isCheckedBarangay && isCheckedStatus ?
+                  Text(', ',
+                      style: TextStyle(
+                          fontFamily: 'Aller',
+                          color: Colors.grey,
+                          fontSize: 12.0)) :
+                  SizedBox.shrink(),
+                  isCheckedStatus
+                      ? Text(
+                        'Status: $_selectedStatus',
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontFamily: 'Aller',
+                            color: Colors.grey,
+                            fontSize: 12.0),
+                      )
+                      : SizedBox.shrink(),
+                ],
+              ),
+            ),
+            SizedBox(height: 10.0),
             Expanded(
               child: Container(
                 child: FutureBuilder(

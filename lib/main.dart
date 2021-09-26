@@ -135,55 +135,53 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                   ),
                   SizedBox(height: 50.0,),
                   Container(
+                    height: 50.0,
                     width: double.infinity,
-                    child: RaisedButton(
-                      color: Theme.of(context).primaryColor,
-                      elevation: 0.0,
+                    child: TextButton(
                       onPressed: () {
                         doLogin();
-                        },
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(80.0)),
-                      padding: EdgeInsets.all(0.0),
-                      child: Container(
-                        constraints: BoxConstraints(
-                            maxWidth: 300.0, minHeight: 50.0),
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Log in",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'AllerBold',
-                              fontSize: 17.0,),
+                      },
+                      child: Text(
+                        "Log in",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontFamily: 'AllerBold'),
+                      ),
+                      style: ButtonStyle(
+                        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                        backgroundColor: MaterialStateProperty.all<Color>(Colors.blue[800]),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25.0),
+                            side: BorderSide(color: Colors.blue[800]),
+                          ),
                         ),
                       ),
                     ),
                   ),
                   SizedBox(height: 20.0,),
                   Container(
+                    height: 50.0,
                     width: double.infinity,
-                    child: RaisedButton(
-                      color: Colors.white,
-                      elevation: 0.0,
+                    child: TextButton(
                       onPressed: () {
                         usertype = 'guest';
                         Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TabScreen(),),);
                       },
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(80.0)),
-                      padding: EdgeInsets.all(0.0),
-                      child: Container(
-                        constraints: BoxConstraints(
-                            maxWidth: 300.0, minHeight: 50.0),
-                        alignment: Alignment.center,
-                        child: Text(
-                          "Log in as Guest",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                            color: Theme.of(context).accentColor,
-                            fontFamily: 'AllerBold',
-                            fontSize: 17.0,),
+                      child: Text(
+                        "Log in as Guest",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontFamily: 'AllerBold'),
+                      ),
+                      style: ButtonStyle(
+                        foregroundColor: MaterialStateProperty.all<Color>(Colors.blue[800]),
+                        //backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                          RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25.0),
+                            side: BorderSide(color: Colors.blue[800]),
+                          ),
                         ),
                       ),
                     ),
