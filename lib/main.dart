@@ -83,10 +83,7 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                   ),
                   SizedBox(height: 80.0,),
                   TextFormField(
-                    textInputAction: TextInputAction.done,
-                    onFieldSubmitted: (term) {
-                      doLogin();
-                    },
+                    textInputAction: TextInputAction.next,
                     style: TextStyle(fontFamily: 'Aller'),
                     //textCapitalization: TextCapitalization.characters,
                     controller: _username,

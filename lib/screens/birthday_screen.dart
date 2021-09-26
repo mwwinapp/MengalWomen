@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mw/functions/global_variables.dart';
 import 'package:mw/helpers/db_helper.dart';
 import 'package:mw/models/member_model.dart';
+import 'package:mw/screens/member_screen.dart';
 
 class BirthdayScreen extends StatefulWidget {
 
@@ -52,49 +53,87 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
               itemBuilder: (context, index) {
                 return Column(
                   children: [
-                    Container(
-                      margin: EdgeInsets.all(5.0),
-                      child: Padding(
-                        padding: EdgeInsets.all(10.0),
-                        child: Row(
-                          children: [
-                            CircleAvatar(
-                              child:
-                              Icon(Icons.person),
-                              backgroundColor: Colors
-                                  .grey
-                                  .withOpacity(0.25),
-                              foregroundColor:
-                              Colors.white,
-                            ),
-                            SizedBox(width: 10.0),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  '${members[index].fullname}',
-                                  style: TextStyle(
-                                      fontFamily:  'AllerBold',
-                                    fontSize: 18.0,
-                                  ),
-                                  overflow: TextOverflow.ellipsis,
-                                  maxLines: 1,
-                                ),
-                                Text(
-                                  usertype == 'admin' ? '${members[index].barangay}' : '',
-                                  style: TextStyle(
-                                      color: Colors.grey,
-                                      fontSize: 10.0,
-                                      fontFamily:
-                                      'AllerBold'),
-                                  textAlign: TextAlign.center,
-                                  maxLines: 1,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+                    ListTile(
+                      dense: true,
+                      title: Row(
+                        children: [
+                          Icon(
+                            Icons.person,
+                            color: Colors.blue,
+                            size: 17.0,
+                          ),
+                          Text(
+                            '${members[index].fullname}',
+                            style: TextStyle(
+                                fontSize: 17.0,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'Aller'),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
                       ),
+                      subtitle: usertype == 'admin' ? Row(
+                          children: [
+                            Icon(
+                              Icons.place,
+                              color: Colors.grey,
+                              size: 12.0,
+                            ),
+                            Text(
+                              '${members[index].barangay}',
+                              style: TextStyle(
+                                  fontSize: 12.0,
+                                  color: Colors.grey,
+                                  fontFamily: 'Aller'),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            SizedBox(width: 2.0),
+                            Icon(
+                              Icons.update,
+                              color: Colors.grey,
+                              size: 12.0,
+                            ),
+                            Text(
+                              '${members[index].validity}',
+                              style: TextStyle(
+                                  fontSize: 12.0,
+                                  color: Colors.grey,
+                                  fontFamily: 'Aller'),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ]
+                      ) : Row(
+                          children: [
+                            Icon(
+                              Icons.update,
+                              color: Colors.grey,
+                              size: 12.0,
+                            ),
+                            Text(
+                              '${members[index].validity}',
+                              style: TextStyle(
+                                  fontSize: 12.0,
+                                  color: Colors.grey,
+                                  fontFamily: 'Aller'),
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ]
+                      ),
+                      trailing: Icon(
+                        Icons.brightness_1,
+                        color: members[index].status == 'ACTIVE'
+                            ? Colors.green
+                            : Colors.red,
+                        size: 10.0,
+                      ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MemberScreen(mid: members[index].mid),
+                          ),
+                        );
+                      },
                     ),
                     Divider(),
                   ],

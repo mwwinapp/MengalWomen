@@ -10,7 +10,7 @@ Future customDialog(
         return AlertDialog(
           actionsPadding: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 10.0),
           title: Center(child: Text(title, style: TextStyle(fontFamily: 'Aller'))),
-          content: Center(child: Text(content, style: TextStyle(fontFamily: 'Aller',color: Colors.grey))),
+          content: Center(child: Text(content, textAlign:TextAlign.center, style: TextStyle(fontFamily: 'Aller',color: Colors.grey))),
           actions: [
             isOkOnly
                 ? Row(

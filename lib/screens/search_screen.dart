@@ -247,219 +247,146 @@ class _SearchScreenState extends State<SearchScreen>
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
-          child: Column(
-            children: [
-              Container(
-                color: Colors.white,
-                child: Column(
-                  children: [
-                    SizedBox(height: 15.0),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 25.0),
-                      child: TextFormField(
-                        textInputAction: TextInputAction.search,
-                        onFieldSubmitted: (term) {
-                          search(_searchController.text);
-                        },
-                        style: TextStyle(fontFamily: 'Aller'),
-                        textCapitalization: TextCapitalization.characters,
-                        controller: _searchController,
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          filled: true,
-                          isDense: true,
-                          prefixIcon: Icon(Icons.search),
-                          suffixIcon: IconButton(
-                            icon: Icon(Icons.close),
-                            onPressed: () {
-                              setState(() {
-                                _searchController.text = '';
-                              });
-                            },
-                          ),
-                          hintText: 'Type keyword here',
-                          hintStyle: TextStyle(fontFamily: 'Aller'),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(35.0)),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 10.0),
-                    Container(
-                      padding: EdgeInsets.symmetric(horizontal: 25.0),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Container(
-                              height: 50.0,
-                              child: RaisedButton(
-                                color: Theme.of(context).primaryColor,
-                                elevation: 0.0,
-                                onPressed: () {
-                                  if(_searchExecuted) {
-                                    _scrollToTop();
-                                  }
-                                  search(_searchController.text);
-                                  FocusScope.of(context).unfocus();
-                                },
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(80.0)),
-                                padding: EdgeInsets.all(0.0),
-                                child: Container(
-                                  constraints: BoxConstraints(
-                                      maxWidth: 300.0, minHeight: 50.0),
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    "Search",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontFamily: 'AllerBold'),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(width: 10.0),
-                          Expanded(
-                            child: RaisedButton(
-                              elevation: 0.0,
-                              onPressed: () {
-                                usertype == 'admin' ? searchOptionsDialog() : customDialog(context, 'ACCESS DENIED', 'Access for guest user is limited.', true, onPressedOk: () {Navigator.of(context, rootNavigator: true).pop();});
-                              },
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(80.0)),
-                              padding: EdgeInsets.all(0.0),
-                              child: Ink(
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(30.0),
-                                    border: Border.all(color: Colors.grey)),
-                                child: Container(
-                                  constraints: BoxConstraints(
-                                      maxWidth: 300.0, minHeight: 50.0),
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    "Search Options",
-                                    textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        color: Colors.grey,
-                                        fontFamily: 'Aller'),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 30.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          isCheckedBarangay
-                              ? Padding(
-                                  padding: EdgeInsets.only(top: 15.0),
-                                  child: Text(
-                                    'Barangay: $_selectedBarangay',
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        fontFamily: 'Aller',
-                                        color: Colors.grey,
-                                        fontSize: 12.0),
-                                  ),
-                                )
-                              : SizedBox.shrink(),
-                          isCheckedStatus
-                              ? Padding(
-                                  padding: EdgeInsets.only(top: 15.0),
-                                  child: Text(
-                                    'Status: $_selectedStatus',
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        fontFamily: 'Aller',
-                                        color: Colors.grey,
-                                        fontSize: 12.0),
-                                  ),
-                                )
-                              : SizedBox.shrink(),
-                        ],
-                      ),
-                    ),
-                    SizedBox(height: 20.0),
-                  ],
+        Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: TextFormField(
+                textInputAction: TextInputAction.search,
+                onFieldSubmitted: (term) {
+                  search(_searchController.text);
+                },
+                style: TextStyle(fontFamily: 'Aller'),
+                textCapitalization: TextCapitalization.characters,
+                controller: _searchController,
+                decoration: InputDecoration(
+                  fillColor: Colors.white,
+                  filled: true,
+                  isDense: true,
+                  prefixIcon: Icon(Icons.search),
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.more_vert),
+                    onPressed: () {
+                      usertype == 'admin' ? searchOptionsDialog() : customDialog(context, 'Access Denied', 'Guest users have limited access.', true, onPressedOk: () {Navigator.of(context, rootNavigator: true).pop();});
+                    },
+                  ),
+                  hintText: 'Type keyword here',
+                  hintStyle: TextStyle(fontFamily: 'Aller'),
+                  border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(35.0)),
                 ),
               ),
-              Expanded(
-                child: Container(
-                  child: FutureBuilder(
-                    future: members,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        List<Member> members = snapshot.data;
-                        return ListView.builder(
-                          controller: _scrollController,
-                          physics: BouncingScrollPhysics(),
-                          itemCount: snapshot.data.length,
-                          itemBuilder: (context, index) {
-                            if (snapshot.hasData) {
-                              return Padding(
-                                padding:
-                                    EdgeInsets.only(left: 20.0, right: 20.0),
-                                child: Column(
-                                  children: [
-                                    index == 0
-                                        ? Container(
-                                            margin: EdgeInsets.symmetric(
-                                                vertical: 20.0),
-                                            child: Text(
-                                              'Results: ${members.length} members found.',
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                  color: Colors.grey,
-                                                  fontSize: 15.0,
-                                                  fontFamily: 'Aller'),
-                                            ),
-                                          )
-                                        : SizedBox.shrink(),
-                                    //
-                                    ListTile(
-                                      dense: true,
-                                      title: Row(
+            ),
+            Expanded(
+              child: Container(
+                child: FutureBuilder(
+                  future: members,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      List<Member> members = snapshot.data;
+                      return ListView.builder(
+                        controller: _scrollController,
+                        physics: BouncingScrollPhysics(),
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (context, index) {
+                          if (snapshot.hasData) {
+                            return Padding(
+                              padding:
+                                  EdgeInsets.only(left: 20.0, right: 20.0),
+                              child: Column(
+                                children: [
+                                  index == 0
+                                      ? Container(
+                                          margin: EdgeInsets.symmetric(
+                                              vertical: 20.0),
+                                          child: Column(
+                                            children: [
+                                              Row(
+                                                mainAxisAlignment: MainAxisAlignment.center,
+                                                children: [
+                                                  Text(
+                                                    'Result: ',
+                                                    overflow: TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                        color: Colors.grey,
+                                                        fontSize: 15.0,
+                                                        fontFamily: 'Aller'),
+                                                  ),
+                                                  Text(
+                                                    '${members.length}',
+                                                    overflow: TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 15.0,
+                                                        fontFamily: 'Aller'),
+                                                  ),
+                                                  Text(
+                                                    ' member(s) found.',
+                                                    overflow: TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                        color: Colors.grey,
+                                                        fontSize: 15.0,
+                                                        fontFamily: 'Aller'),
+                                                  ),
+                                                ],
+                                              ),
+                                              Divider(),
+                                            ],
+                                          ),
+                                        )
+                                      : SizedBox.shrink(),
+                                  ListTile(
+                                    dense: true,
+                                    title: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.person,
+                                          color: Colors.blue,
+                                          size: 17.0,
+                                        ),
+                                        Text(
+                                          '${members[index].fullname}',
+                                          style: TextStyle(
+                                              fontSize: 17.0,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: 'Aller'),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ],
+                                    ),
+                                    subtitle: usertype == 'admin' ? Row(
+                                      children: [
+                                        Icon(
+                                          Icons.place,
+                                          color: Colors.grey,
+                                          size: 12.0,
+                                        ),
+                                        Text(
+                                          '${members[index].barangay}',
+                                          style: TextStyle(
+                                              fontSize: 12.0,
+                                              color: Colors.grey,
+                                              fontFamily: 'Aller'),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                        SizedBox(width: 2.0),
+                                        Icon(
+                                          Icons.update,
+                                          color: Colors.grey,
+                                          size: 12.0,
+                                        ),
+                                        Text(
+                                          '${members[index].validity}',
+                                          style: TextStyle(
+                                              fontSize: 12.0,
+                                              color: Colors.grey,
+                                              fontFamily: 'Aller'),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ]
+                                    ) : Row(
                                         children: [
-                                          Icon(
-                                            Icons.person,
-                                            color: Colors.grey,
-                                            size: 15.0,
-                                          ),
-                                          Text(
-                                            '${members[index].fullname}',
-                                            style: TextStyle(
-                                                fontSize: 15.0,
-                                                fontWeight: FontWeight.bold,
-                                                fontFamily: 'Aller'),
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ],
-                                      ),
-                                      subtitle: usertype == 'admin' ? Row(
-                                        children: [
-                                          Icon(
-                                            Icons.place,
-                                            color: Colors.grey,
-                                            size: 12.0,
-                                          ),
-                                          Text(
-                                            '${members[index].barangay}',
-                                            style: TextStyle(
-                                                fontSize: 12.0,
-                                                color: Colors.grey,
-                                                fontFamily: 'Aller'),
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                          SizedBox(width: 2.0),
                                           Icon(
                                             Icons.update,
                                             color: Colors.grey,
@@ -474,66 +401,49 @@ class _SearchScreenState extends State<SearchScreen>
                                             overflow: TextOverflow.ellipsis,
                                           ),
                                         ]
-                                      ) : Row(
-                                          children: [
-                                            Icon(
-                                              Icons.update,
-                                              color: Colors.grey,
-                                              size: 12.0,
-                                            ),
-                                            Text(
-                                              '${members[index].validity}',
-                                              style: TextStyle(
-                                                  fontSize: 12.0,
-                                                  color: Colors.grey,
-                                                  fontFamily: 'Aller'),
-                                              overflow: TextOverflow.ellipsis,
-                                            ),
-                                          ]
-                                      ),
-                                      trailing: Icon(
-                                        Icons.brightness_1,
-                                        color: members[index].status == 'ACTIVE'
-                                            ? Colors.green
-                                            : Colors.red,
-                                        size: 15.0,
-                                      ),
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => MemberScreen(mid: members[index].mid),
-                                          ),
-                                        );
-                                      },
                                     ),
-                                    Divider(),
-                                  ],
-                                ),
-                              );
-                            }
-                            return Text('No results found.');
-                          },
-                        );
-                      }
+                                    trailing: Icon(
+                                      Icons.brightness_1,
+                                      color: members[index].status == 'ACTIVE'
+                                          ? Colors.green
+                                          : Colors.red,
+                                      size: 10.0,
+                                    ),
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => MemberScreen(mid: members[index].mid),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  Divider(),
+                                ],
+                              ),
+                            );
+                          }
+                          return Text('No results found.');
+                        },
+                      );
+                    }
 
-                      if (snapshot.data == null || snapshot.data.length == 0) {
-                        return Center(
-                          child: Text(
-                            'Type keyword to start searching...',
-                            style: TextStyle(
-                                color: Colors.grey, fontFamily: 'Aller'),
-                          ),
-                        );
-                      }
+                    if (snapshot.data == null || snapshot.data.length == 0) {
+                      return Center(
+                        child: Text(
+                          'Type keyword to start searching...',
+                          style: TextStyle(
+                              color: Colors.grey, fontFamily: 'Aller'),
+                        ),
+                      );
+                    }
 
-                      return CircularProgressIndicator();
-                    },
-                  ),
+                    return CircularProgressIndicator();
+                  },
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
         _searchExecuted
             ? Positioned(
