@@ -101,7 +101,7 @@ class _SearchScreenState extends State<SearchScreen>
                       'Filter by:',
                       style: TextStyle(color: Colors.grey, fontFamily: 'Aller'),
                     ),
-                    CheckboxListTile(
+                    SwitchListTile(
                       controlAffinity: ListTileControlAffinity.leading,
                       contentPadding: EdgeInsets.all(0),
                       title: Text(
@@ -136,7 +136,7 @@ class _SearchScreenState extends State<SearchScreen>
                         value: _selectedBarangay,
                       ),
                     ),
-                    CheckboxListTile(
+                    SwitchListTile(
                       controlAffinity: ListTileControlAffinity.leading,
                       contentPadding: EdgeInsets.all(0),
                       title: Text(
