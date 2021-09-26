@@ -215,7 +215,7 @@ class _SearchScreenState extends State<SearchScreen>
                               Navigator.of(context, rootNavigator: true).pop();
                             },
                             child: Text(
-                              "No",
+                              "Cancel",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontFamily: 'AllerBold'),

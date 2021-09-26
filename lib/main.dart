@@ -7,6 +7,7 @@ import 'package:mw/functions/custom_dialog.dart';
 import 'package:mw/helpers/db_helper.dart';
 import 'package:mw/models/end_user_model.dart';
 import 'package:mw/screens/tab_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'functions/global_variables.dart';
 
@@ -14,7 +15,7 @@ void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     title: 'Mengal Women',
-    theme: ThemeData(primaryColor: Colors.blue[800], accentColor: Colors.blue),
+    theme: ThemeData(primaryColor: Colors.blue[800]),
     home: MainApp(),
   ));
 }
@@ -32,10 +33,11 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
   TextEditingController _username = TextEditingController();
   TextEditingController _password = TextEditingController();
   bool _passwordVisible = false;
+  bool _isChecked = false;
 
   void initState() {
+    _loadUsernamePassword();
     super.initState();
-
   }
 
   @override
@@ -133,6 +135,23 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                           borderRadius: BorderRadius.all(Radius.circular(90.0)), borderSide: BorderSide(color: Colors.transparent)),
                     ),
                   ),
+                  SizedBox(height: 20.0,),
+                  CheckboxListTile(
+                    controlAffinity: ListTileControlAffinity.leading,
+                    contentPadding: EdgeInsets.all(0),
+                    title: Text(
+                      'Remember Me',
+                      style: TextStyle(fontFamily: 'Aller'),
+                    ),
+                    value: _isChecked,
+                    onChanged: (value) {
+                      setState(
+                            () {
+                          _rememberMe(value);
+                        },
+                      );
+                    },
+                  ),
                   SizedBox(height: 50.0,),
                   Container(
                     height: 50.0,
@@ -193,6 +212,41 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
         ),
       ),
     );
+  }
+
+  void _rememberMe(bool value) {
+
+    print(_isChecked);
+
+    SharedPreferences.getInstance().then(
+        (prefs) {
+          prefs.setBool('remember_me', value);
+          prefs.setString('username', _username.text);
+          prefs.setString('password', _password.text);
+        }
+    );
+    setState(() {
+      _isChecked = value;
+    });
+  }
+
+  void _loadUsernamePassword() async {
+      SharedPreferences _prefs = await SharedPreferences.getInstance();
+      var username = _prefs.getString('username');
+      var password = _prefs.getString('password');
+      var rememberMe = _prefs.getBool('remember_me');
+
+      print(username);
+      print(password);
+      print(rememberMe);
+
+      if (rememberMe) {
+        setState((){
+          _isChecked = true;
+          _username.text = username ?? '';
+          _password.text = password ?? '';
+        });
+    }
   }
 
   void doLogin() {
