@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:gradient_text/gradient_text.dart';
@@ -140,8 +141,8 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                     controlAffinity: ListTileControlAffinity.leading,
                     contentPadding: EdgeInsets.all(0),
                     title: Text(
-                      'Remember Me',
-                      style: TextStyle(fontFamily: 'Aller'),
+                      'Save my Credentials',
+                      style: TextStyle(fontFamily: 'AllerBold', color: Colors.grey[700]),
                     ),
                     value: _isChecked,
                     onChanged: (value) {
@@ -168,33 +169,6 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                       ),
                       style: ButtonStyle(
                         foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                        backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25.0),
-                            side: BorderSide(color: Colors.green),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 20.0,),
-                  Container(
-                    height: 50.0,
-                    width: double.infinity,
-                    child: TextButton(
-                      onPressed: () {
-                        usertype = 'guest';
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TabScreen(),),);
-                      },
-                      child: Text(
-                        "Log in as Guest",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontFamily: 'AllerBold'),
-                      ),
-                      style: ButtonStyle(
-                        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
                         backgroundColor: MaterialStateProperty.all<Color>(Colors.blue[800]),
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
@@ -202,6 +176,23 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                             side: BorderSide(color: Colors.blue[800]),
                           ),
                         ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 20.0,),
+                  Center(
+                    child: RichText(
+                      text: TextSpan(
+                        text: 'Log in as Guest?',
+                        style: TextStyle(
+                          fontFamily: 'AllerBold',
+                          color: Colors.blue[600],
+                          decoration: TextDecoration.underline,
+                        ),
+                        recognizer: TapGestureRecognizer()..onTap = ((){
+                          usertype = 'guest';
+                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TabScreen(),),);
+                        }),
                       ),
                     ),
                   ),
