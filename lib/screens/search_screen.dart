@@ -76,7 +76,6 @@ class _SearchScreenState extends State<SearchScreen>
   bool isCheckedStatus = false;
   String _selectedBarangay = 'ANGOLUAN';
   String _selectedStatus = 'ACTIVE';
-  int results;
 
   Future searchOptionsDialog() {
     return showDialog(
@@ -508,6 +507,7 @@ class _SearchScreenState extends State<SearchScreen>
       ],
     );
   }
+
   void _scrollToTop() {
     SchedulerBinding.instance.addPostFrameCallback((_) {
       _scrollController.animateTo(

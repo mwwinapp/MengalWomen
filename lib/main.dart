@@ -168,11 +168,11 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                       ),
                       style: ButtonStyle(
                         foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                        backgroundColor: MaterialStateProperty.all<Color>(Colors.blue[800]),
+                        backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(25.0),
-                            side: BorderSide(color: Colors.blue[800]),
+                            side: BorderSide(color: Colors.green),
                           ),
                         ),
                       ),
@@ -194,8 +194,8 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                             fontFamily: 'AllerBold'),
                       ),
                       style: ButtonStyle(
-                        foregroundColor: MaterialStateProperty.all<Color>(Colors.blue[800]),
-                        //backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                        backgroundColor: MaterialStateProperty.all<Color>(Colors.blue[800]),
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(25.0),

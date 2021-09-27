@@ -31,7 +31,7 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
 
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: 4);
+    _tabController = TabController(vsync: this, length: 4, initialIndex: 2);
     _tabController.addListener(() => _handleTabSelection());
     // initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
     var initializationSettingsAndroid =
@@ -59,12 +59,12 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  List<Announcement> _announcement = List<Announcement>();
+  List<Announcement> _announcement = <Announcement>[];
 
   Future<List<Announcement>> fetchAnnouncements() async {
     var url = 'https://mwapp.imfast.io/announcements/announcements.json';
     var response = await http.get(url);
-    var announcement = List<Announcement>();
+    var announcement = <Announcement>[];
 
     if (response.statusCode == 200) {
       var postsJson = json.decode(response.body);
@@ -110,9 +110,7 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
               Stack(
                 children: [
                   IconButton(
-                    color: Theme
-                        .of(context)
-                        .accentColor,
+                    color: Colors.blue[800],
                     icon: Icon(OMIcons.chat),
                     onPressed: () {
                       Navigator.push(
