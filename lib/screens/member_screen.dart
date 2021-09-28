@@ -1,8 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:mw/functions/global_variables.dart';
 import 'package:mw/helpers/db_helper.dart';
 import 'package:mw/models/member_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MemberScreen extends StatefulWidget {
   final String mid;
@@ -64,6 +66,7 @@ class _MemberScreenState extends State<MemberScreen> {
                             spousename = members[index].spousename != null && members[index].spousename != '' ? 'MARRIED to ${members[index].spousename}' : 'MARRIED';
                             return Column(
                               children: [
+                                SizedBox(height: 10.0),
                                 CachedNetworkImage(
                                   fit: BoxFit.cover,
                                   imageUrl: usertype == 'admin' ? 'https://drv.tw/~mwwinapp@gmail.com/gd/Fast.io/mwapp.imfast.io/images/photo/${members[index].mid}.jpg' : '',
@@ -431,15 +434,20 @@ class _MemberScreenState extends State<MemberScreen> {
                                                     overflow:
                                                     TextOverflow.ellipsis,
                                                   ),
-                                                  Text(
-                                                    members[index].contactnumber != '' ? '${members[index].contactnumber}' : 'N/A',
-                                                    style: TextStyle(
-                                                        fontSize: 14.0,
-                                                        fontWeight:
-                                                        FontWeight.bold,
-                                                        fontFamily: 'Aller'),
-                                                    overflow:
-                                                    TextOverflow.ellipsis,
+                                                  RichText(
+                                                    text: TextSpan(
+                                                      text: members[index].contactnumber != '' ? '${members[index].contactnumber}' : 'N/A',
+                                                      style: TextStyle(
+                                                        fontFamily: 'AllerBold',
+                                                        color: Colors.blue[600],
+                                                        decoration: TextDecoration.underline,
+                                                      ),
+                                                      recognizer: TapGestureRecognizer()..onTap = ((){
+                                                        if(members[index].contactnumber != '') {
+                                                          launch('tel://${members[index].contactnumber}');
+                                                        }
+                                                      }),
+                                                    ),
                                                   ),
                                                 ],
                                               ),
