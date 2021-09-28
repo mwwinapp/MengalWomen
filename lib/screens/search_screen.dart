@@ -402,7 +402,7 @@ class _SearchScreenState extends State<SearchScreen>
                                     title: Text(
                                       '${members[index].fullname}',
                                       style: TextStyle(
-                                          fontSize: 17.0,
+                                          fontSize: 15.0,
                                           fontWeight: FontWeight.bold,
                                           fontFamily: 'Aller'),
                                       overflow: TextOverflow.ellipsis,
