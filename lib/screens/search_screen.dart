@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:mw/functions/custom_dialog.dart';
@@ -187,7 +188,7 @@ class _SearchScreenState extends State<SearchScreen>
                               Navigator.of(context, rootNavigator: true).pop();
                             },
                             child: Text(
-                              "Search",
+                              "Apply",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontFamily: 'AllerBold'),
@@ -380,23 +381,31 @@ class _SearchScreenState extends State<SearchScreen>
                                         )
                                       : SizedBox.shrink(),
                                   ListTile(
+                                    leading: CachedNetworkImage(
+                                      fit: BoxFit.cover,
+                                      imageUrl: usertype == 'admin' ? 'https://drv.tw/~mwwinapp@gmail.com/gd/Fast.io/mwapp.imfast.io/images/photo/${members[index].mid}.jpg' : '',
+                                      imageBuilder: (context, imageProvider) => Container(
+                                        width: 40.0,
+                                        height: 40.0,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          image: DecorationImage(
+                                            image: imageProvider,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                      placeholder: (context, url) => CircularProgressIndicator(),
+                                      errorWidget: (context, url, error) => Icon(Icons.person, color: Colors.grey, size: 40.0,),
+                                    ),
                                     dense: true,
-                                    title: Row(
-                                      children: [
-                                        Icon(
-                                          Icons.person,
-                                          color: Colors.blue,
-                                          size: 17.0,
-                                        ),
-                                        Text(
-                                          '${members[index].fullname}',
-                                          style: TextStyle(
-                                              fontSize: 17.0,
-                                              fontWeight: FontWeight.bold,
-                                              fontFamily: 'Aller'),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ],
+                                    title: Text(
+                                      '${members[index].fullname}',
+                                      style: TextStyle(
+                                          fontSize: 17.0,
+                                          fontWeight: FontWeight.bold,
+                                          fontFamily: 'Aller'),
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                     subtitle: usertype == 'admin' ? Row(
                                       children: [

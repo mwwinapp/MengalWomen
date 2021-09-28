@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:mw/functions/global_variables.dart';
 import 'package:mw/helpers/db_helper.dart';
@@ -54,23 +55,31 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
                 return Column(
                   children: [
                     ListTile(
+                      leading: CachedNetworkImage(
+                        fit: BoxFit.cover,
+                        imageUrl: usertype == 'admin' ? 'https://drv.tw/~mwwinapp@gmail.com/gd/Fast.io/mwapp.imfast.io/images/photo/${members[index].mid}.jpg' : '',
+                        imageBuilder: (context, imageProvider) => Container(
+                          width: 40.0,
+                          height: 40.0,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            image: DecorationImage(
+                              image: imageProvider,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                        placeholder: (context, url) => CircularProgressIndicator(),
+                        errorWidget: (context, url, error) => Icon(Icons.person, color: Colors.grey, size: 40.0,),
+                      ),
                       dense: true,
-                      title: Row(
-                        children: [
-                          Icon(
-                            Icons.person,
-                            color: Colors.blue,
-                            size: 17.0,
-                          ),
-                          Text(
-                            '${members[index].fullname}',
-                            style: TextStyle(
-                                fontSize: 17.0,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Aller'),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
+                      title: Text(
+                        '${members[index].fullname}',
+                        style: TextStyle(
+                            fontSize: 17.0,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: 'Aller'),
+                        overflow: TextOverflow.ellipsis,
                       ),
                       subtitle: usertype == 'admin' ? Row(
                           children: [

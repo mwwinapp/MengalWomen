@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
@@ -153,11 +154,22 @@ class _BirthdayListState extends State<BirthdayList> {
                               padding: EdgeInsets.all(10.0),
                               child: Column(
                                 children: [
-                                  CircleAvatar(
-                                    child: Icon(Icons.person),
-                                    backgroundColor:
-                                        Colors.grey.withOpacity(0.25),
-                                    foregroundColor: Colors.white,
+                                  CachedNetworkImage(
+                                    fit: BoxFit.cover,
+                                    imageUrl: usertype == 'admin' ? 'https://drv.tw/~mwwinapp@gmail.com/gd/Fast.io/mwapp.imfast.io/images/photo/${members[index].mid}.jpg' : '',
+                                    imageBuilder: (context, imageProvider) => Container(
+                                      width: 40.0,
+                                      height: 40.0,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    placeholder: (context, url) => CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) => Icon(Icons.person, color: Colors.grey, size: 40.0,),
                                   ),
                                   SizedBox(height: 5.0),
                                   Text(
