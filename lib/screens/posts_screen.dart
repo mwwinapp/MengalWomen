@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mw/functions/globals.dart';
 import 'package:mw/functions/utf8_convert.dart';
 
 class PostScreen extends StatelessWidget {
@@ -15,6 +16,11 @@ class PostScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
           flexibleSpace: Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -22,13 +28,13 @@ class PostScreen extends StatelessWidget {
                 end: Alignment.bottomRight,
                 colors: [
 
-                  Colors.blueAccent,
+                  Colors.blue,
                   Theme.of(context).primaryColor,
                 ],
               ),
             ),
           ),
-        title: Text('${utf8convert(title)}'),
+        title: Text('${utf8convert(title)}', style: customTextStyle(fontFamily: appFontBold, color: Colors.white, fontSize: 18),),
       ),
       body: ListView(
         physics: BouncingScrollPhysics(),
@@ -40,7 +46,7 @@ class PostScreen extends StatelessWidget {
             margin: EdgeInsets.only(left: 25.0, right: 25.0, top: 10.0),
             child: Text(
               '${utf8convert(title)}',
-              style: TextStyle(fontSize: 25.0, fontFamily: 'AllerBold'),
+              style: customTextStyle(fontSize: 25.0, fontFamily: appFontBold),
             ),
           ),
           Container(
@@ -51,8 +57,8 @@ class PostScreen extends StatelessWidget {
                 SizedBox(width: 5.0,),
                 Text(
                   '$postDate',
-                  style: TextStyle(
-                      fontSize: 14.0, fontFamily: 'Aller', color: Colors.grey),
+                  style: customTextStyle(
+                      fontSize: 14.0, fontFamily: appFont, color: appFontColorSecondary),
                 )
               ],
             ),
@@ -62,8 +68,8 @@ class PostScreen extends StatelessWidget {
             margin: EdgeInsets.symmetric(horizontal: 25.0, vertical: 15.0),
             child: Text(
               '${utf8convert(content)}',
-              style: TextStyle(
-                  fontSize: 18.0, fontFamily: 'Aller', color: Colors.black54),
+              style: customTextStyle(
+                  fontSize: 18.0, fontFamily: appFont, color: Colors.black54, overflow: TextOverflow.visible),
             ),
           ),
           SizedBox(height: 25.0),

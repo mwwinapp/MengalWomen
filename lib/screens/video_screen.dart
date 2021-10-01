@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:mw/functions/globals.dart';
 import 'package:mw/functions/network_ping.dart';
 import 'package:mw/models/channel_model.dart';
 import 'package:mw/models/video_model.dart';
@@ -59,11 +60,11 @@ class _VideoScreenState extends State<VideoScreen>
               children: [
                 Text(
                   _channel.title,
-                  style: TextStyle(
+                  style: customTextStyle(
                       color: Colors.black,
                       fontSize: 20.0,
                       fontWeight: FontWeight.w600,
-                      fontFamily: 'AllerBold'),
+                      fontFamily: appFontBold),
                   overflow: TextOverflow.ellipsis,
                 ),
                 /*
@@ -114,10 +115,9 @@ class _VideoScreenState extends State<VideoScreen>
                     children: [
                       Text(
                         video.title,
-                        style: TextStyle(
-                            color: Colors.black,
+                        style: customTextStyle(
                             fontSize: 18.0,
-                            fontFamily: 'AllerBold'),
+                            fontFamily: appFontBold),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                       ),
@@ -126,10 +126,10 @@ class _VideoScreenState extends State<VideoScreen>
                           Icon(Icons.access_time, color: Colors.grey, size: 12.0,),
                           Text(
                             ' ${video.publishedAt.substring(0, 10)}',
-                            style: TextStyle(
-                                color: Colors.grey,
+                            style: customTextStyle(
+                                color: appFontColorSecondary,
                                 fontSize: 15.0,
-                                fontFamily: 'AllerBold'),
+                                fontFamily: appFontBold),
                             overflow: TextOverflow.ellipsis,
                             maxLines: 2,
                           ),
@@ -138,10 +138,10 @@ class _VideoScreenState extends State<VideoScreen>
                       SizedBox(height: 10.0),
                       Text(
                         video.description,
-                        style: TextStyle(
-                            color: Colors.grey,
+                        style: customTextStyle(
+                            color: appFontColorSecondary,
                             fontSize: 15.0,
-                            fontFamily: 'Aller'),
+                            fontFamily: appFont),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
                       ),
@@ -189,8 +189,8 @@ class _VideoScreenState extends State<VideoScreen>
                       ),
                       Text(
                         'Tap to Reload.',
-                        style: TextStyle(
-                            fontFamily: 'Aller', color: Colors.grey),
+                        style: customTextStyle(
+                            fontFamily: appFont, color: appFontColorSecondary),
                       ),
                     ],
                   ),

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:mw/functions/globals.dart';
 import 'package:mw/models/announcement_model.dart';
 import 'package:mw/functions/utf8_convert.dart';
 import 'package:http/http.dart' as http;
@@ -20,12 +21,12 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
     });
   }
 
-  List<Announcement> _announcement = List<Announcement>();
+  List<Announcement> _announcement = <Announcement>[];
 
   Future<List<Announcement>> fetchPosts() async {
     var url = 'https://drive.google.com/uc?export=download&id=1Wno_h7_U481E8aR4y7bR-CY1ZuHYpnnO';
     var response = await http.get(url);
-    var announcement = List<Announcement>();
+    var announcement = <Announcement>[];
 
     if (response.statusCode == 200) {
       print('Status Code: ${response.statusCode}');
@@ -71,8 +72,8 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
                         left: 15.0, top: 20.0),
                     child: Text(
                       '${utf8convert(_announcement[index].title)}',
-                      style: TextStyle(
-                          fontSize: 20.0, fontFamily: 'AllerBold'),
+                      style: customTextStyle(
+                          fontSize: 20.0, fontFamily: appFontBold),
                     ),
                   ),
                   Container(
@@ -84,8 +85,8 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
                         SizedBox(width: 5.0,),
                         Text(
                           '${_announcement[index].postDate}',
-                          style: TextStyle(
-                              fontSize: 14.0, fontFamily: 'Aller', color: Colors.grey),
+                          style: customTextStyle(
+                              fontSize: 14.0, fontFamily: appFont, color: appFontColorSecondary),
                         )
                       ],
                     ),
@@ -107,10 +108,10 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
                       '${utf8convert(_announcement[index].content)}',
                       overflow: TextOverflow.ellipsis,
                       maxLines: 100,
-                      style: TextStyle(
+                      style: customTextStyle(
                         color: Colors.grey[600],
                         fontSize: 18.0,
-                        fontFamily: 'Aller',
+                        fontFamily: appFont,
                       ),
                     ),
                   ),

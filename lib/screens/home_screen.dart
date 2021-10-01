@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:mw/functions/globals.dart';
 import 'package:mw/functions/network_ping.dart';
 import 'package:mw/widgets/birthday_list.dart';
 import 'package:mw/widgets/posts_list.dart';
@@ -37,8 +38,8 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                                 ),
                                 Text(
                                   'Tap to Reload.',
-                                  style: TextStyle(
-                                      fontFamily: 'Aller', color: Colors.grey),
+                                  style: customTextStyle(
+                                      fontFamily: appFont, color: appFontColorSecondary),
                                 ),
                               ],
                             ),

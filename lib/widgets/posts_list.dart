@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:mw/functions/globals.dart';
 import 'package:mw/functions/utf8_convert.dart';
 import 'package:mw/models/post_model.dart';
 import 'package:http/http.dart' as http;
@@ -21,12 +22,12 @@ class _PostsListState extends State<PostsList> {
     });
   }
 
-  List<Post> _posts = List<Post>();
+  List<Post> _posts = <Post>[];
 
   Future<List<Post>> fetchPosts() async {
     var url = 'https://drive.google.com/uc?export=download&id=1fOf3pxsZgrmNL-vLF14-GZRPQzeY5MFE';
     var response = await http.get(url);
-    var post = List<Post>();
+    var post = <Post>[];
 
     if (response.statusCode == 200) {
       print('Status Code: OK');
@@ -73,8 +74,8 @@ class _PostsListState extends State<PostsList> {
                           left: 15.0, top: 20.0),
                       child: Text(
                         '${utf8convert(_posts[index].title)}',
-                        style: TextStyle(
-                            fontSize: 20.0, fontFamily: 'AllerBold'),
+                        style: customTextStyle(
+                            fontSize: 20.0, fontFamily: appFontBold),
                       ),
                     ),
                     Container(
@@ -86,8 +87,8 @@ class _PostsListState extends State<PostsList> {
                           SizedBox(width: 5.0,),
                           Text(
                             '${_posts[index].postDate}',
-                            style: TextStyle(
-                                fontSize: 14.0, fontFamily: 'Aller', color: Colors.grey),
+                            style: customTextStyle(
+                                fontSize: 14.0, fontFamily: appFont, color: appFontColorSecondary),
                           )
                         ],
                       ),
@@ -109,10 +110,10 @@ class _PostsListState extends State<PostsList> {
                         '${utf8convert(_posts[index].content)}',
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
-                        style: TextStyle(
-                          color: Colors.grey,
+                        style: customTextStyle(
+                          color: appFontColorSecondary,
                           fontSize: 14.0,
-                          fontFamily: 'Aller',
+                          fontFamily: appFont,
                         ),
                       ),
                     ),
@@ -128,7 +129,7 @@ class _PostsListState extends State<PostsList> {
                         },
                         child: Text(
                           'Read more...',
-                          style: TextStyle(fontSize: 15.0,fontFamily: 'AllerBold', color: Theme.of(context).accentColor),
+                          style: customTextStyle(fontSize: 15.0,fontFamily: appFontBold, color: appFontColorSecondary),
                         ),
                       ),
                     ),

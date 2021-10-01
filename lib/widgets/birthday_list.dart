@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
-import 'package:mw/functions/global_variables.dart';
+import 'package:mw/functions/globals.dart';
 import 'package:mw/helpers/db_helper.dart';
 import 'package:mw/models/member_model.dart';
 import 'package:mw/screens/birthday_screen.dart';
@@ -106,7 +106,7 @@ class _BirthdayListState extends State<BirthdayList> {
                     Text(
                       '${DateFormat("MM/dd/yyy").format(DateTime.now())} • 🎂 Today\'s birthdays',
                       // ${DateFormat("MM/dd/yyy").format(DateTime.now())}
-                      style: TextStyle(color: Colors.grey, fontFamily: 'Aller'),
+                      style: customTextStyle(color: appFontColorSecondary, fontFamily: appFont),
                     ),
                     GestureDetector(
                       onTap: () {
@@ -116,9 +116,9 @@ class _BirthdayListState extends State<BirthdayList> {
                       },
                       child: Text(
                         'Hide',
-                        style: TextStyle(
-                            color: Theme.of(context).accentColor,
-                            fontFamily: 'AllerBold'),
+                        style: customTextStyle(
+                            color: Colors.blue,
+                            fontFamily: appFontBold),
                       ),
                     ),
                   ],
@@ -154,9 +154,9 @@ class _BirthdayListState extends State<BirthdayList> {
                               padding: EdgeInsets.all(10.0),
                               child: Column(
                                 children: [
-                                  CachedNetworkImage(
+                                  usertype == 'admin' ? CachedNetworkImage(
                                     fit: BoxFit.cover,
-                                    imageUrl: usertype == 'admin' ? 'https://drv.tw/~mwwinapp@gmail.com/gd/Fast.io/mwapp.imfast.io/images/photo/${members[index].mid}.jpg' : '',
+                                    imageUrl: 'https://drv.tw/~mwwinapp@gmail.com/gd/Fast.io/mwapp.imfast.io/images/photo/${members[index].mid}.jpg',
                                     imageBuilder: (context, imageProvider) => Container(
                                       width: 40.0,
                                       height: 40.0,
@@ -170,20 +170,20 @@ class _BirthdayListState extends State<BirthdayList> {
                                     ),
                                     placeholder: (context, url) => CircularProgressIndicator(),
                                     errorWidget: (context, url, error) => Icon(Icons.person, color: Colors.grey, size: 40.0,),
-                                  ),
+                                  ) : Icon(Icons.person, color: Colors.grey, size: 40.0,),
                                   SizedBox(height: 5.0),
                                   Text(
                                     '${members[index].fullname}',
-                                    style: TextStyle(fontFamily: 'AllerBold'),
+                                    style: customTextStyle(fontFamily: appFontBold),
                                     textAlign: TextAlign.center,
                                     maxLines: 2,
                                   ),
                                   Text(
                                     usertype == 'admin' ? '${members[index].barangay}' : '',
-                                    style: TextStyle(
-                                        color: Colors.grey,
+                                    style: customTextStyle(
+                                        color: appFontColorSecondary,
                                         fontSize: 10.0,
-                                        fontFamily: 'AllerBold'),
+                                        fontFamily: appFontBold),
                                     textAlign: TextAlign.center,
                                     maxLines: 1,
                                   ),
@@ -210,7 +210,7 @@ class _BirthdayListState extends State<BirthdayList> {
         children: [
           Text(
             '${DateFormat("MM/dd/yyy").format(DateTime.now())} • 🎂 Today\' birthdays',
-            style: TextStyle(color: Colors.grey, fontFamily: 'Aller'),
+            style: customTextStyle(color: appFontColorSecondary, fontFamily: appFont),
           ),
           GestureDetector(
             onTap: () {
@@ -220,9 +220,9 @@ class _BirthdayListState extends State<BirthdayList> {
             },
             child: Text(
               'Show All',
-              style: TextStyle(
-                  color: Theme.of(context).accentColor,
-                  fontFamily: 'AllerBold'),
+              style: customTextStyle(
+                  color: Colors.blue,
+                  fontFamily: appFontBold),
             ),
           ),
         ],

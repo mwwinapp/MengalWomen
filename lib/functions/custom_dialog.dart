@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mw/functions/globals.dart';
 
 Future customDialog(
     BuildContext context, String title, String content, bool isOkOnly,
@@ -9,8 +10,8 @@ Future customDialog(
       builder: (context) {
         return AlertDialog(
           actionsPadding: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 10.0),
-          title: Center(child: Text(title, style: TextStyle(fontFamily: 'Aller'))),
-          content: Center(child: Text(content, textAlign:TextAlign.center, style: TextStyle(fontFamily: 'Aller',color: Colors.grey))),
+          title: Center(child: Text(title, style: customTextStyle(fontFamily: appFont))),
+          content: Center(child: Text(content, textAlign:TextAlign.center, style: customTextStyle(fontFamily: appFont,color: appFontColorSecondary))),
           actions: [
             isOkOnly
                 ? Row(
@@ -23,16 +24,15 @@ Future customDialog(
                           child: Text(
                             "Okay",
                             textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontFamily: 'AllerBold'),
+                            style: customTextStyle(fontFamily: appFontBold, color: Colors.white),
                           ),
                           style: ButtonStyle(
                             foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                            backgroundColor: MaterialStateProperty.all<Color>(Colors.blue[800]),
+                            backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
                             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(25.0),
-                                side: BorderSide(color: Colors.blue[800]),
+                                side: BorderSide(color: Colors.blue),
                               ),
                             ),
                           ),
@@ -50,16 +50,15 @@ Future customDialog(
                     child: Text(
                       "Yes",
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontFamily: 'AllerBold'),
+                      style: customTextStyle(fontFamily: appFontBold, color: Colors.white),
                     ),
                     style: ButtonStyle(
                       foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                      backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25.0),
-                          side: BorderSide(color: Colors.green),
+                          side: BorderSide(color: Colors.blue),
                         ),
                       ),
                     ),
@@ -75,16 +74,15 @@ Future customDialog(
                     child: Text(
                       "No",
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontFamily: 'AllerBold'),
+                      style: customTextStyle(fontFamily: appFontBold, color: Colors.blue),
                     ),
                     style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                      backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                      foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25.0),
-                          side: BorderSide(color: Colors.red),
+                          side: BorderSide(color: Colors.blue),
                         ),
                       ),
                     ),

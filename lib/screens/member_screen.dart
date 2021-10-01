@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:mw/functions/global_variables.dart';
+import 'package:mw/functions/globals.dart';
 import 'package:mw/helpers/db_helper.dart';
 import 'package:mw/models/member_model.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -29,9 +28,14 @@ class _MemberScreenState extends State<MemberScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         title: Text(
-          'Member Details',
-          style: TextStyle(fontFamily: 'AllerBold'),
+          'Member Info',
+          style: customTextStyle(fontFamily: appFontBold, color: Colors.white, fontSize: 18),
         ),
         flexibleSpace: Container(
           decoration: BoxDecoration(
@@ -39,7 +43,7 @@ class _MemberScreenState extends State<MemberScreen> {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                Colors.blueAccent,
+                Colors.blue,
                 Theme.of(context).primaryColor,
               ],
             ),
@@ -67,9 +71,9 @@ class _MemberScreenState extends State<MemberScreen> {
                             return Column(
                               children: [
                                 SizedBox(height: 10.0),
-                                CachedNetworkImage(
+                                usertype == 'admin' ? CachedNetworkImage(
                                   fit: BoxFit.cover,
-                                  imageUrl: usertype == 'admin' ? 'https://drv.tw/~mwwinapp@gmail.com/gd/Fast.io/mwapp.imfast.io/images/photo/${members[index].mid}.jpg' : '',
+                                  imageUrl: 'https://drv.tw/~mwwinapp@gmail.com/gd/Fast.io/mwapp.imfast.io/images/photo/${members[index].mid}.jpg',
                                   imageBuilder: (context, imageProvider) => Container(
                                     width: 200.0,
                                     height: 200.0,
@@ -83,24 +87,90 @@ class _MemberScreenState extends State<MemberScreen> {
                                   ),
                                   placeholder: (context, url) => CircularProgressIndicator(),
                                   errorWidget: (context, url, error) => Icon(Icons.person, color: Colors.grey, size: 200.0,),
-                                ),
+                                ) : Icon(Icons.person, color: Colors.grey, size: 200.0,),
+                                SizedBox(height: 10.0),
                                 Padding(
                                   padding:
                                   EdgeInsets.only(left: 20.0, right: 20.0),
                                   child: Column(
                                     children: [
-                                      //SizedBox(height: 20.0),
-                                      Divider(),
+                                      SizedBox(height: 10.0),
                                       Text(
                                         '${members[index].fullname}',
-                                        style: TextStyle(
+                                        style: customTextStyle(
                                             fontSize: 20.0,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: 'Aller'),
+                                            fontFamily: appFontBold),
                                         overflow: TextOverflow.ellipsis,
                                       ),
-                                      Divider(),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Icon(Icons.brightness_1,
+                                            size: 10.0,
+                                            color: members[index].status == 'ACTIVE' ? Colors.green : Colors.red,
+                                          ),
+                                          Text(
+                                            '  ${members[index].status} MEMBER',
+                                            style: customTextStyle(
+                                                color: appFontColorSecondary,
+                                                fontSize: 12.0,
+                                                fontFamily: appFont),
+                                            overflow:
+                                            TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      ),
                                       SizedBox(height: 10.0),
+                                      Divider(),
+                                      //1----------------------------------------------------------------------------------------------------------
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Text(
+                                            'Member Type',
+                                            style: customTextStyle(
+                                                color: appFontColorSecondary,
+                                                fontSize: 14.0,
+                                                fontFamily: appFont),
+                                            overflow:
+                                            TextOverflow.ellipsis,
+                                          ),
+                                          Text(
+                                            'Validity',
+                                            style: customTextStyle(
+                                                color: appFontColorSecondary,
+                                                fontSize: 14.0,
+                                                fontFamily: appFont),
+                                            overflow:
+                                            TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                        children: [
+                                          Text(
+                                            '${members[index].insurancestatus}',
+                                            style: customTextStyle(
+                                                fontSize: 14.0,
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: appFont),
+                                            overflow:
+                                            TextOverflow.ellipsis,
+                                          ),
+                                          Text(
+                                            '  ${members[index].validity}',
+                                            style: customTextStyle(
+                                                fontSize: 14.0,
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: appFont),
+                                            overflow:
+                                            TextOverflow.ellipsis,
+                                          ),
+                                        ],
+                                      ),
+                                      Divider(),
+                                      //2----------------------------------------------------------------------------------------------------------
                                       Row(
                                         children: [
                                           Icon(
@@ -109,20 +179,19 @@ class _MemberScreenState extends State<MemberScreen> {
                                           ),
                                           Text(
                                             'Id Number ',
-                                            style: TextStyle(
-                                                color: Colors.grey,
+                                            style: customTextStyle(
+                                                color: appFontColorSecondary,
                                                 fontSize: 14.0,
-                                                fontFamily: 'Aller'),
+                                                fontFamily: appFont),
                                             overflow:
                                             TextOverflow.ellipsis,
                                           ),
                                           Text(
                                             '${members[index].mid}',
-                                            style: TextStyle(
+                                            style: customTextStyle(
                                                 fontSize: 14.0,
-                                                fontWeight:
-                                                FontWeight.bold,
-                                                fontFamily: 'Aller'),
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: appFont),
                                             overflow:
                                             TextOverflow.ellipsis,
                                           ),
@@ -137,48 +206,19 @@ class _MemberScreenState extends State<MemberScreen> {
                                           ),
                                           Text(
                                             'Id ',
-                                            style: TextStyle(
-                                                color: Colors.grey,
+                                            style: customTextStyle(
+                                                color: appFontColorSecondary,
                                                 fontSize: 14.0,
-                                                fontFamily: 'Aller'),
+                                                fontFamily: appFont),
                                             overflow:
                                             TextOverflow.ellipsis,
                                           ),
                                           Text(
                                             '${members[index].mwkit}',
-                                            style: TextStyle(
+                                            style: customTextStyle(
                                                 fontSize: 14.0,
-                                                fontWeight:
-                                                FontWeight.bold,
-                                                fontFamily: 'Aller'),
-                                            overflow:
-                                            TextOverflow.ellipsis,
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: 5.0),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.flourescent,
-                                            color: Colors.grey,
-                                          ),
-                                          Text(
-                                            'Member Type ',
-                                            style: TextStyle(
-                                                color: Colors.grey,
-                                                fontSize: 14.0,
-                                                fontFamily: 'Aller'),
-                                            overflow:
-                                            TextOverflow.ellipsis,
-                                          ),
-                                          Text(
-                                            '${members[index].insurancestatus}',
-                                            style: TextStyle(
-                                                fontSize: 14.0,
-                                                fontWeight:
-                                                FontWeight.bold,
-                                                fontFamily: 'Aller'),
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: appFont),
                                             overflow:
                                             TextOverflow.ellipsis,
                                           ),
@@ -193,10 +233,10 @@ class _MemberScreenState extends State<MemberScreen> {
                                           ),
                                           Text(
                                             'Joined ',
-                                            style: TextStyle(
-                                                color: Colors.grey,
+                                            style: customTextStyle(
+                                                color: appFontColorSecondary,
                                                 fontSize: 14.0,
-                                                fontFamily: 'Aller'),
+                                                fontFamily: appFont),
                                             overflow:
                                             TextOverflow.ellipsis,
                                           ),
@@ -204,9 +244,8 @@ class _MemberScreenState extends State<MemberScreen> {
                                             '${members[index].membershipdate}',
                                             style: TextStyle(
                                                 fontSize: 14.0,
-                                                fontWeight:
-                                                FontWeight.bold,
-                                                fontFamily: 'Aller'),
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: appFont),
                                             overflow:
                                             TextOverflow.ellipsis,
                                           ),
@@ -221,93 +260,45 @@ class _MemberScreenState extends State<MemberScreen> {
                                           ),
                                           Text(
                                             'Last Renewed ',
-                                            style: TextStyle(
-                                                color: Colors.grey,
+                                            style: customTextStyle(
+                                                color: appFontColorSecondary,
                                                 fontSize: 14.0,
-                                                fontFamily: 'Aller'),
+                                                fontFamily: appFont),
                                             overflow:
                                             TextOverflow.ellipsis,
                                           ),
                                           Text(
                                             '${members[index].lastrenewal}',
-                                            style: TextStyle(
+                                            style: customTextStyle(
                                                 fontSize: 14.0,
-                                                fontWeight:
-                                                FontWeight.bold,
-                                                fontFamily: 'Aller'),
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: appFont),
                                             overflow:
                                             TextOverflow.ellipsis,
                                           ),
                                         ],
                                       ),
-                                      SizedBox(height: 5.0),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.update,
-                                            color: Colors.grey,
-                                          ),
-                                          Text(
-                                            'Validity ',
-                                            style: TextStyle(
-                                                color: Colors.grey,
-                                                fontSize: 14.0,
-                                                fontFamily: 'Aller'),
-                                            overflow:
-                                            TextOverflow.ellipsis,
-                                          ),
-                                          Text(
-                                            '${members[index].validity}',
-                                            style: TextStyle(
-                                                fontSize: 14.0,
-                                                fontWeight:
-                                                FontWeight.bold,
-                                                fontFamily: 'Aller'),
-                                            overflow:
-                                            TextOverflow.ellipsis,
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            members[index]
-                                                .status ==
-                                                'ACTIVE' ? Icons.check : Icons.circle,
-                                            color: Colors.grey,
-                                          ),
-                                          Text(
-                                            'Status ',
-                                            style: TextStyle(
-                                                color: Colors.grey,
-                                                fontSize: 14.0,
-                                                fontFamily: 'Aller'),
-                                            overflow:
-                                            TextOverflow.ellipsis,
-                                          ),
-                                          Text(
-                                            '${members[index].status}',
-                                            style: TextStyle(
-                                                color: members[index]
-                                                    .status ==
-                                                    'ACTIVE'
-                                                    ? Colors.green
-                                                    : Colors.red,
-                                                fontSize: 14.0,
-                                                fontWeight:
-                                                FontWeight.bold,
-                                                fontFamily: 'Aller'),
-                                            overflow:
-                                            TextOverflow.ellipsis,
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(height: 10.0),
-                                      Divider(),
                                       SizedBox(height: 10.0),
                                       usertype == 'admin' ?
                                           Column(
                                             children: [
+                                              Container(
+                                                color: Colors.blue,
+                                                height: 40.0,
+                                                child: Center(
+                                                  child: Text(
+                                                    'Personal Info',
+                                                    style: customTextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 14.0,
+                                                        fontWeight: FontWeight.bold,
+                                                        fontFamily: appFont),
+                                                    overflow:
+                                                    TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(height: 10.0),
                                               Row(
                                                 children: [
                                                   Icon(
@@ -316,20 +307,19 @@ class _MemberScreenState extends State<MemberScreen> {
                                                   ),
                                                   Text(
                                                     'From ',
-                                                    style: TextStyle(
-                                                        color: Colors.grey,
+                                                    style: customTextStyle(
+                                                        color: appFontColorSecondary,
                                                         fontSize: 14.0,
-                                                        fontFamily: 'Aller'),
+                                                        fontFamily: appFont),
                                                     overflow:
                                                     TextOverflow.ellipsis,
                                                   ),
                                                   Text(
                                                     '${members[index].barangay}, ECHAGUE, ISABELA',
-                                                    style: TextStyle(
+                                                    style: customTextStyle(
                                                         fontSize: 14.0,
-                                                        fontWeight:
-                                                        FontWeight.bold,
-                                                        fontFamily: 'Aller'),
+                                                        fontWeight: FontWeight.bold,
+                                                        fontFamily: appFont),
                                                     overflow:
                                                     TextOverflow.ellipsis,
                                                   ),
@@ -344,20 +334,19 @@ class _MemberScreenState extends State<MemberScreen> {
                                                   ),
                                                   Text(
                                                     'Civil Status ',
-                                                    style: TextStyle(
-                                                        color: Colors.grey,
+                                                    style: customTextStyle(
+                                                        color: appFontColorSecondary,
                                                         fontSize: 14.0,
-                                                        fontFamily: 'Aller'),
+                                                        fontFamily: appFont),
                                                     overflow:
                                                     TextOverflow.ellipsis,
                                                   ),
                                                   Text(
                                                     members[index].civilstatus != 'MARRIED' ? '${members[index].civilstatus}' : spousename,
-                                                    style: TextStyle(
+                                                    style: customTextStyle(
                                                         fontSize: 14.0,
-                                                        fontWeight:
-                                                        FontWeight.bold,
-                                                        fontFamily: 'Aller'),
+                                                        fontWeight: FontWeight.bold,
+                                                        fontFamily: appFont),
                                                     overflow:
                                                     TextOverflow.ellipsis,
                                                   ),
@@ -371,20 +360,19 @@ class _MemberScreenState extends State<MemberScreen> {
                                                   ),
                                                   Text(
                                                     'Born ',
-                                                    style: TextStyle(
-                                                        color: Colors.grey,
+                                                    style: customTextStyle(
+                                                        color: appFontColorSecondary,
                                                         fontSize: 14.0,
-                                                        fontFamily: 'Aller'),
+                                                        fontFamily: appFont),
                                                     overflow:
                                                     TextOverflow.ellipsis,
                                                   ),
                                                   Text(
                                                     '${members[index].dob}',
-                                                    style: TextStyle(
+                                                    style: customTextStyle(
                                                         fontSize: 14.0,
-                                                        fontWeight:
-                                                        FontWeight.bold,
-                                                        fontFamily: 'Aller'),
+                                                        fontWeight: FontWeight.bold,
+                                                        fontFamily: appFont),
                                                     overflow:
                                                     TextOverflow.ellipsis,
                                                   ),
@@ -399,20 +387,19 @@ class _MemberScreenState extends State<MemberScreen> {
                                                   ),
                                                   Text(
                                                     'Age ',
-                                                    style: TextStyle(
-                                                        color: Colors.grey,
+                                                    style: customTextStyle(
+                                                        color: appFontColorSecondary,
                                                         fontSize: 14.0,
-                                                        fontFamily: 'Aller'),
+                                                        fontFamily: appFont),
                                                     overflow:
                                                     TextOverflow.ellipsis,
                                                   ),
                                                   Text(
                                                     '${members[index].age}',
-                                                    style: TextStyle(
+                                                    style: customTextStyle(
                                                         fontSize: 14.0,
-                                                        fontWeight:
-                                                        FontWeight.bold,
-                                                        fontFamily: 'Aller'),
+                                                        fontWeight: FontWeight.bold,
+                                                        fontFamily: appFont),
                                                     overflow:
                                                     TextOverflow.ellipsis,
                                                   ),
@@ -427,28 +414,43 @@ class _MemberScreenState extends State<MemberScreen> {
                                                   ),
                                                   Text(
                                                     'Contact No. ',
-                                                    style: TextStyle(
-                                                        color: Colors.grey,
+                                                    style: customTextStyle(
+                                                        color: appFontColorSecondary,
                                                         fontSize: 14.0,
-                                                        fontFamily: 'Aller'),
+                                                        fontFamily: appFont),
                                                     overflow:
                                                     TextOverflow.ellipsis,
                                                   ),
-                                                  RichText(
-                                                    text: TextSpan(
-                                                      text: members[index].contactnumber != '' ? '${members[index].contactnumber}' : 'N/A',
-                                                      style: TextStyle(
-                                                        fontFamily: 'AllerBold',
-                                                        color: Colors.blue[600],
-                                                        decoration: TextDecoration.underline,
+                                                  Text(members[index].contactnumber != '' ? '${members[index].contactnumber}' : 'N/A',
+                                                    style: customTextStyle(
+                                                        fontFamily: appFontBold,
+                                                        overflow: TextOverflow.ellipsis,
                                                       ),
-                                                      recognizer: TapGestureRecognizer()..onTap = ((){
-                                                        if(members[index].contactnumber != '') {
-                                                          launch('tel://${members[index].contactnumber}');
-                                                        }
-                                                      }),
                                                     ),
-                                                  ),
+                                                  SizedBox(width: 5.0),
+                                                  members[index].contactnumber != '' ? CircleAvatar(
+                                                    backgroundColor: Colors.green,
+                                                    child: IconButton(
+                                                      color: Colors.white,
+                                                      iconSize: 18.0,
+                                                      icon: Icon(Icons.call_rounded),
+                                                      onPressed: () {
+                                                        launch('tel:${members[index].contactnumber}');
+                                                      },
+                                                    ),
+                                                  ) : SizedBox.shrink(),
+                                                  SizedBox(width: 5.0),
+                                                  members[index].contactnumber != '' ? CircleAvatar(
+                                                    backgroundColor: Colors.yellow[800],
+                                                    child: IconButton(
+                                                      color: Colors.white,
+                                                      iconSize: 18.0,
+                                                      icon: Icon(Icons.sms_outlined),
+                                                      onPressed: () {
+                                                        launch('sms:${members[index].contactnumber}');
+                                                      },
+                                                    ),
+                                                  ) : SizedBox.shrink(),
                                                 ],
                                               ),
                                               SizedBox(height: 5.0),
@@ -460,20 +462,19 @@ class _MemberScreenState extends State<MemberScreen> {
                                                   ),
                                                   Text(
                                                     'Occupation. ',
-                                                    style: TextStyle(
-                                                        color: Colors.grey,
+                                                    style: customTextStyle(
+                                                        color: appFontColorSecondary,
                                                         fontSize: 14.0,
-                                                        fontFamily: 'Aller'),
+                                                        fontFamily: appFont),
                                                     overflow:
                                                     TextOverflow.ellipsis,
                                                   ),
                                                   Text(
                                                     members[index].occupation != '' ? '${members[index].occupation}' : 'N/A',
-                                                    style: TextStyle(
+                                                    style: customTextStyle(
                                                         fontSize: 14.0,
-                                                        fontWeight:
-                                                        FontWeight.bold,
-                                                        fontFamily: 'Aller'),
+                                                        fontWeight: FontWeight.bold,
+                                                        fontFamily: appFont),
                                                     overflow:
                                                     TextOverflow.ellipsis,
                                                   ),
@@ -501,6 +502,7 @@ class _MemberScreenState extends State<MemberScreen> {
                                             ],
                                           ) : SizedBox.shrink(),
                                       Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Icon(
                                             Icons.edit,
@@ -508,20 +510,19 @@ class _MemberScreenState extends State<MemberScreen> {
                                           ),
                                           Text(
                                             'Remarks: ',
-                                            style: TextStyle(
-                                                color: Colors.grey,
+                                            style: customTextStyle(
+                                                color: appFontColorSecondary,
                                                 fontSize: 14.0,
-                                                fontFamily: 'Aller'),
+                                                fontFamily: appFont),
                                             overflow:
                                             TextOverflow.ellipsis,
                                           ),
                                           Text(
                                             members[index].remarks != '' ? '${members[index].remarks}' : 'N/A',
-                                            style: TextStyle(
+                                            style: customTextStyle(
                                                 fontSize: 14.0,
-                                                fontWeight:
-                                                FontWeight.bold,
-                                                fontFamily: 'Aller'),
+                                                fontWeight: FontWeight.bold,
+                                                fontFamily: appFont),
                                             overflow:
                                             TextOverflow.ellipsis,
                                           ),

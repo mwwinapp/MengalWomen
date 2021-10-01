@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:mw/functions/custom_dialog.dart';
-import 'package:mw/functions/global_variables.dart';
+import 'package:mw/functions/globals.dart';
 import 'package:mw/helpers/db_helper.dart';
 import 'package:mw/models/member_model.dart';
 import 'package:mw/strings/strings.dart';
@@ -87,26 +87,26 @@ class _SearchScreenState extends State<SearchScreen>
             builder: (context, setState) {
               return AlertDialog(
                 actionsPadding: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 10.0),
-                titleTextStyle: TextStyle(fontFamily: 'Aller'),
-                contentTextStyle: TextStyle(fontFamily: 'Aller'),
+                titleTextStyle: customTextStyle(fontFamily: appFont),
+                contentTextStyle: customTextStyle(fontFamily: appFont),
                 scrollable: true,
                 title: Text(
                   'Search Options:',
-                  style: TextStyle(
-                      color: Colors.grey, fontFamily: 'Aller', fontSize: 18.0),
+                  style: customTextStyle(
+                      color: appFontColorSecondary, fontFamily: appFont, fontSize: 18.0),
                 ),
                 content: ListBody(
                   children: [
                     Text(
                       'Filter by:',
-                      style: TextStyle(color: Colors.grey, fontFamily: 'Aller'),
+                      style: customTextStyle(color: appFontColorSecondary, fontFamily: appFont),
                     ),
                     SwitchListTile(
                       controlAffinity: ListTileControlAffinity.leading,
                       contentPadding: EdgeInsets.all(0),
                       title: Text(
                         'Barangay',
-                        style: TextStyle(fontFamily: 'Aller'),
+                        style: customTextStyle(fontFamily: appFont),
                       ),
                       value: isCheckedBarangay,
                       onChanged: (value) {
@@ -123,10 +123,9 @@ class _SearchScreenState extends State<SearchScreen>
                         isExpanded: true,
                         disabledHint: Text(
                           'Select Barangay',
-                          style: TextStyle(fontFamily: 'Aller'),
+                          style: customTextStyle(fontFamily: appFont, color: appFontColorSecondary),
                         ),
-                        style:
-                        TextStyle(fontFamily: 'Aller', color: Colors.black),
+                        style: customTextStyle(fontFamily: appFont),
                         items: barangayList(),
                         onChanged: (value) {
                           setState(() {
@@ -141,7 +140,7 @@ class _SearchScreenState extends State<SearchScreen>
                       contentPadding: EdgeInsets.all(0),
                       title: Text(
                         'Status',
-                        style: TextStyle(fontFamily: 'Aller'),
+                        style: customTextStyle(fontFamily: appFont),
                       ),
                       value: isCheckedStatus,
                       onChanged: (value) {
@@ -158,10 +157,9 @@ class _SearchScreenState extends State<SearchScreen>
                         isExpanded: true,
                           disabledHint: Text(
                             'Select Status',
-                            style: TextStyle(fontFamily: 'Aller'),
+                            style: customTextStyle(fontFamily: appFont, color: appFontColorSecondary),
                           ),
-                        style:
-                        TextStyle(fontFamily: 'Aller', color: Colors.black),
+                        style: customTextStyle(fontFamily: appFont),
                         items: statusList(),
                         value: _selectedStatus,
                         onChanged: (value) {
@@ -190,16 +188,15 @@ class _SearchScreenState extends State<SearchScreen>
                             child: Text(
                               "Apply",
                               textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontFamily: 'AllerBold'),
+                              style: customTextStyle(fontFamily: appFontBold, color: Colors.white),
                             ),
                             style: ButtonStyle(
                               foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                              backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
+                              backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
                               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(25.0),
-                                  side: BorderSide(color: Colors.green),
+                                  side: BorderSide(color: Colors.blue),
                                 ),
                               ),
                             ),
@@ -217,16 +214,15 @@ class _SearchScreenState extends State<SearchScreen>
                             child: Text(
                               "Cancel",
                               textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  fontFamily: 'AllerBold'),
+                              style: customTextStyle(fontFamily: appFontBold, color: Colors.blue),
                             ),
                             style: ButtonStyle(
-                              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                              backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
+                              foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                              backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
                               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(25.0),
-                                  side: BorderSide(color: Colors.red),
+                                  side: BorderSide(color: Colors.blue),
                                 ),
                               ),
                             ),
@@ -256,7 +252,7 @@ class _SearchScreenState extends State<SearchScreen>
                 onFieldSubmitted: (term) {
                   search(_searchController.text);
                 },
-                style: TextStyle(fontFamily: 'Aller'),
+                style: customTextStyle(fontFamily: appFont),
                 textCapitalization: TextCapitalization.characters,
                 controller: _searchController,
                 decoration: InputDecoration(
@@ -271,7 +267,7 @@ class _SearchScreenState extends State<SearchScreen>
                     },
                   ),
                   hintText: 'Type keyword here',
-                  hintStyle: TextStyle(fontFamily: 'Aller'),
+                  hintStyle: customTextStyle(fontFamily: appFont, color: appFontColorSecondary),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(35.0)),
                 ),
@@ -284,36 +280,36 @@ class _SearchScreenState extends State<SearchScreen>
                 children: [
                   isCheckedBarangay || isCheckedStatus ?
                       Text('Filtered by: ',
-                          style: TextStyle(
-                          fontFamily: 'Aller',
+                          style: customTextStyle(
+                          fontFamily: appFont,
                           fontWeight: FontWeight.bold,
-                          color: Colors.grey,
+                          color: appFontColorSecondary,
                           fontSize: 12.0)) :
                   SizedBox.shrink(),
                   isCheckedBarangay
                       ? Text(
                         'Barangay: $_selectedBarangay',
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontFamily: 'Aller',
-                            color: Colors.grey,
+                        style: customTextStyle(
+                            fontFamily: appFont,
+                            color: appFontColorSecondary,
                             fontSize: 12.0),
                       )
                       : SizedBox.shrink(),
                   isCheckedBarangay && isCheckedStatus ?
                   Text(', ',
-                      style: TextStyle(
-                          fontFamily: 'Aller',
-                          color: Colors.grey,
+                      style: customTextStyle(
+                          fontFamily: appFont,
+                          color: appFontColorSecondary,
                           fontSize: 12.0)) :
                   SizedBox.shrink(),
                   isCheckedStatus
                       ? Text(
                         'Status: $_selectedStatus',
                         overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontFamily: 'Aller',
-                            color: Colors.grey,
+                        style: customTextStyle(
+                            fontFamily: appFont,
+                            color: appFontColorSecondary,
                             fontSize: 12.0),
                       )
                       : SizedBox.shrink(),
@@ -351,27 +347,26 @@ class _SearchScreenState extends State<SearchScreen>
                                                   Text(
                                                     'Result: ',
                                                     overflow: TextOverflow.ellipsis,
-                                                    style: TextStyle(
-                                                        color: Colors.grey,
+                                                    style: customTextStyle(
+                                                        color: appFontColorSecondary,
                                                         fontSize: 15.0,
-                                                        fontFamily: 'Aller'),
+                                                        fontFamily: appFont),
                                                   ),
                                                   Text(
                                                     '${members.length}',
                                                     overflow: TextOverflow.ellipsis,
-                                                    style: TextStyle(
-                                                        color: Colors.black,
+                                                    style: customTextStyle(
                                                         fontWeight: FontWeight.bold,
                                                         fontSize: 15.0,
-                                                        fontFamily: 'Aller'),
+                                                        fontFamily: appFont),
                                                   ),
                                                   Text(
                                                     ' member(s) found.',
                                                     overflow: TextOverflow.ellipsis,
-                                                    style: TextStyle(
-                                                        color: Colors.grey,
+                                                    style: customTextStyle(
+                                                        color: appFontColorSecondary,
                                                         fontSize: 15.0,
-                                                        fontFamily: 'Aller'),
+                                                        fontFamily: appFont),
                                                   ),
                                                 ],
                                               ),
@@ -381,9 +376,9 @@ class _SearchScreenState extends State<SearchScreen>
                                         )
                                       : SizedBox.shrink(),
                                   ListTile(
-                                    leading: CachedNetworkImage(
+                                    leading: usertype == 'admin' ? CachedNetworkImage(
                                       fit: BoxFit.cover,
-                                      imageUrl: usertype == 'admin' ? 'https://drv.tw/~mwwinapp@gmail.com/gd/Fast.io/mwapp.imfast.io/images/photo/${members[index].mid}.jpg' : '',
+                                      imageUrl: 'https://drv.tw/~mwwinapp@gmail.com/gd/Fast.io/mwapp.imfast.io/images/photo/${members[index].mid}.jpg',
                                       imageBuilder: (context, imageProvider) => Container(
                                         width: 40.0,
                                         height: 40.0,
@@ -397,14 +392,14 @@ class _SearchScreenState extends State<SearchScreen>
                                       ),
                                       placeholder: (context, url) => CircularProgressIndicator(),
                                       errorWidget: (context, url, error) => Icon(Icons.person, color: Colors.grey, size: 40.0,),
-                                    ),
+                                    ) : Icon(Icons.person, color: Colors.grey, size: 40.0,),
                                     dense: true,
                                     title: Text(
                                       '${members[index].fullname}',
-                                      style: TextStyle(
+                                      style: customTextStyle(
                                           fontSize: 15.0,
                                           fontWeight: FontWeight.bold,
-                                          fontFamily: 'Aller'),
+                                          fontFamily: appFont),
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                     subtitle: usertype == 'admin' ? Row(
@@ -416,10 +411,10 @@ class _SearchScreenState extends State<SearchScreen>
                                         ),
                                         Text(
                                           '${members[index].barangay}',
-                                          style: TextStyle(
+                                          style: customTextStyle(
                                               fontSize: 12.0,
-                                              color: Colors.grey,
-                                              fontFamily: 'Aller'),
+                                              color: appFontColorSecondary,
+                                              fontFamily: appFont),
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                         SizedBox(width: 2.0),
@@ -430,10 +425,10 @@ class _SearchScreenState extends State<SearchScreen>
                                         ),
                                         Text(
                                           '${members[index].validity}',
-                                          style: TextStyle(
+                                          style: customTextStyle(
                                               fontSize: 12.0,
-                                              color: Colors.grey,
-                                              fontFamily: 'Aller'),
+                                              color: appFontColorSecondary,
+                                              fontFamily: appFont),
                                           overflow: TextOverflow.ellipsis,
                                         ),
                                       ]
@@ -446,10 +441,10 @@ class _SearchScreenState extends State<SearchScreen>
                                           ),
                                           Text(
                                             '${members[index].validity}',
-                                            style: TextStyle(
+                                            style: customTextStyle(
                                                 fontSize: 12.0,
-                                                color: Colors.grey,
-                                                fontFamily: 'Aller'),
+                                                color: appFontColorSecondary,
+                                                fontFamily: appFont),
                                             overflow: TextOverflow.ellipsis,
                                           ),
                                         ]
@@ -484,8 +479,8 @@ class _SearchScreenState extends State<SearchScreen>
                       return Center(
                         child: Text(
                           'Type keyword to start searching...',
-                          style: TextStyle(
-                              color: Colors.grey, fontFamily: 'Aller'),
+                          style: customTextStyle(
+                              color: appFontColorSecondary, fontFamily: appFont),
                         ),
                       );
                     }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mw/functions/globals.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class VideoPlayScreen extends StatefulWidget {
@@ -39,14 +40,19 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
       builder: (context, player) {
         return Scaffold(
           appBar: AppBar(
-            title: Text(widget.title),
+            centerTitle: true,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back_ios),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            title: Text(widget.title, style: customTextStyle(fontFamily: appFontBold, color: Colors.white, fontSize: 18)),
             flexibleSpace: Container(
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    Colors.blueAccent,
+                    Colors.blue,
                     Theme.of(context).primaryColor,
                   ],
                 ),
@@ -61,7 +67,7 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
                 padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0,),
                 child: Text(
                   widget.title,
-                  style: TextStyle(fontFamily: 'AllerBold', fontSize: 20.0),
+                  style: customTextStyle(fontFamily: appFontBold, fontSize: 20.0),
                 ),
               ),
               Padding(
@@ -75,10 +81,10 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
                     ),
                     Text(
                       widget.publishedAt,
-                      style: TextStyle(
-                          color: Colors.grey,
+                      style: customTextStyle(
+                          color: appFontColorSecondary,
                           fontSize: 15.0,
-                          fontFamily: 'AllerBold'),
+                          fontFamily: appFontBold),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
                     ),
@@ -89,8 +95,8 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
                 padding: EdgeInsets.all(20.0),
                 child: Text(
                   widget.description,
-                  style: TextStyle(
-                      fontFamily: 'Aller', fontSize: 18.0, color: Colors.grey),
+                  style: customTextStyle(
+                      fontFamily: appFont, fontSize: 18.0, color: appFontColorSecondary, overflow: TextOverflow.visible),
                 ),
               )
             ],

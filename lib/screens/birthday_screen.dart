@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:mw/functions/global_variables.dart';
+import 'package:mw/functions/globals.dart';
 import 'package:mw/helpers/db_helper.dart';
 import 'package:mw/models/member_model.dart';
 import 'package:mw/screens/member_screen.dart';
@@ -28,14 +28,19 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('🎂  Today\'s birthdays', style: TextStyle(fontFamily: 'AllerBold'),),
+        centerTitle: true,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        title: Text('🎂  Today\'s birthdays', style: customTextStyle(fontFamily: appFontBold, color: Colors.white, fontSize: 18),),
         flexibleSpace: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                Colors.blueAccent,
+                Colors.blue,
                 Theme.of(context).primaryColor,
               ],
             ),
@@ -55,9 +60,9 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
                 return Column(
                   children: [
                     ListTile(
-                      leading: CachedNetworkImage(
+                      leading:                                 usertype == 'admin' ? CachedNetworkImage(
                         fit: BoxFit.cover,
-                        imageUrl: usertype == 'admin' ? 'https://drv.tw/~mwwinapp@gmail.com/gd/Fast.io/mwapp.imfast.io/images/photo/${members[index].mid}.jpg' : '',
+                        imageUrl: 'https://drv.tw/~mwwinapp@gmail.com/gd/Fast.io/mwapp.imfast.io/images/photo/${members[index].mid}.jpg',
                         imageBuilder: (context, imageProvider) => Container(
                           width: 40.0,
                           height: 40.0,
@@ -71,14 +76,14 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
                         ),
                         placeholder: (context, url) => CircularProgressIndicator(),
                         errorWidget: (context, url, error) => Icon(Icons.person, color: Colors.grey, size: 40.0,),
-                      ),
+                      ) : Icon(Icons.person, color: Colors.grey, size: 40.0,),
                       dense: true,
                       title: Text(
                         '${members[index].fullname}',
-                        style: TextStyle(
+                        style: customTextStyle(
                             fontSize: 17.0,
                             fontWeight: FontWeight.bold,
-                            fontFamily: 'Aller'),
+                            fontFamily: appFont),
                         overflow: TextOverflow.ellipsis,
                       ),
                       subtitle: usertype == 'admin' ? Row(
@@ -90,10 +95,10 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
                             ),
                             Text(
                               '${members[index].barangay}',
-                              style: TextStyle(
+                              style: customTextStyle(
                                   fontSize: 12.0,
-                                  color: Colors.grey,
-                                  fontFamily: 'Aller'),
+                                  color: appFontColorSecondary,
+                                  fontFamily: appFont),
                               overflow: TextOverflow.ellipsis,
                             ),
                             SizedBox(width: 2.0),
@@ -104,10 +109,10 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
                             ),
                             Text(
                               '${members[index].validity}',
-                              style: TextStyle(
+                              style: customTextStyle(
                                   fontSize: 12.0,
-                                  color: Colors.grey,
-                                  fontFamily: 'Aller'),
+                                  color: appFontColorSecondary,
+                                  fontFamily: appFont),
                               overflow: TextOverflow.ellipsis,
                             ),
                           ]
@@ -120,10 +125,10 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
                             ),
                             Text(
                               '${members[index].validity}',
-                              style: TextStyle(
+                              style: customTextStyle(
                                   fontSize: 12.0,
-                                  color: Colors.grey,
-                                  fontFamily: 'Aller'),
+                                  color: appFontColorSecondary,
+                                  fontFamily: appFont),
                               overflow: TextOverflow.ellipsis,
                             ),
                           ]

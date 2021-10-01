@@ -10,13 +10,13 @@ import 'package:mw/models/end_user_model.dart';
 import 'package:mw/screens/tab_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'functions/global_variables.dart';
+import 'functions/globals.dart';
 
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     title: 'Mengal Women',
-    theme: ThemeData(primaryColor: Colors.blue[800]),
+    theme: ThemeData(primaryColor: Colors.blue),
     home: MainApp(),
   ));
 }
@@ -56,10 +56,10 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
           backgroundColor: Colors.white,
           body: Container(
             decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/images/bg.jpg"),
-              fit: BoxFit.cover,
-              ),
+            //image: DecorationImage(
+              //image: AssetImage("assets/images/bg.jpg"),
+              //fit: BoxFit.cover,
+              //),
             ),
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: 30.0),
@@ -72,22 +72,22 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                           colors: [Theme
                               .of(context)
                               .primaryColor, Colors.blue[800], Colors.blue[600]]),
-                      style: TextStyle(
-                          fontFamily: 'AllerBold',
+                      style: customTextStyle(
+                          fontFamily: appFontBold,
                           letterSpacing: -1.5,
                           fontSize: 40.0),
                       textAlign: TextAlign.center),
                   Text('Organization Inc.',
-                      style: TextStyle(
+                      style: customTextStyle(
                           color: Colors.blue[600],
-                          fontFamily: 'AllerBold',
+                          fontFamily: appFontBold,
                           letterSpacing: 5.0,
                           fontSize: 15.0),
                   ),
                   SizedBox(height: 80.0,),
                   TextFormField(
                     textInputAction: TextInputAction.next,
-                    style: TextStyle(fontFamily: 'Aller'),
+                    style: TextStyle(fontFamily: appFont),
                     //textCapitalization: TextCapitalization.characters,
                     controller: _username,
                     decoration: InputDecoration(
@@ -96,7 +96,7 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                       isDense: true,
                       prefixIcon: Icon(Icons.person),
                       hintText: 'Username...',
-                      hintStyle: TextStyle(fontFamily: 'Aller'),
+                      hintStyle: TextStyle(fontFamily: appFont),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(90.0)), borderSide: BorderSide(color: Colors.transparent)),
                     ),
@@ -107,7 +107,7 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                     onFieldSubmitted: (term) {
                       doLogin();
                     },
-                    style: TextStyle(fontFamily: 'Aller'),
+                    style: TextStyle(fontFamily: appFont),
                     //textCapitalization: TextCapitalization.characters,
                     controller: _password,
                     obscureText: !_passwordVisible,
@@ -122,7 +122,7 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                           _passwordVisible
                               ? Icons.visibility
                               : Icons.visibility_off,
-                          color: Theme.of(context).primaryColorDark,
+                          color: Colors.blue,
                         ),
                         onPressed: () {
                           setState(() {
@@ -131,7 +131,7 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                         },
                       ),
                       hintText: 'Password...',
-                      hintStyle: TextStyle(fontFamily: 'Aller'),
+                      hintStyle: TextStyle(fontFamily: appFont),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(90.0)), borderSide: BorderSide(color: Colors.transparent)),
                     ),
@@ -142,13 +142,13 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                     contentPadding: EdgeInsets.all(0),
                     title: Text(
                       'Save my Credentials',
-                      style: TextStyle(fontFamily: 'AllerBold', color: Colors.grey[700]),
+                      style: customTextStyle(fontFamily: appFontBold, color: Colors.grey[700]),
                     ),
                     value: _isChecked,
                     onChanged: (value) {
                       setState(
                             () {
-                          _rememberMe(value);
+                          _isChecked = value;
                         },
                       );
                     },
@@ -159,21 +159,21 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                     width: double.infinity,
                     child: TextButton(
                       onPressed: () {
+                        _rememberMe(_isChecked);
                         doLogin();
                       },
                       child: Text(
                         "Log in",
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontFamily: 'AllerBold'),
+                        style: TextStyle(fontFamily: appFont),
                       ),
                       style: ButtonStyle(
                         foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                        backgroundColor: MaterialStateProperty.all<Color>(Colors.blue[800]),
+                        backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(25.0),
-                            side: BorderSide(color: Colors.blue[800]),
+                            side: BorderSide(color: Colors.blue),
                           ),
                         ),
                       ),
@@ -184,8 +184,8 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                     child: RichText(
                       text: TextSpan(
                         text: 'Log in as Guest?',
-                        style: TextStyle(
-                          fontFamily: 'AllerBold',
+                        style: customTextStyle(
+                          fontFamily: appFontBold,
                           color: Colors.blue[600],
                           decoration: TextDecoration.underline,
                         ),
@@ -216,9 +216,6 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
           prefs.setString('password', _password.text);
         }
     );
-    setState(() {
-      _isChecked = value;
-    });
   }
 
   void _loadUsernamePassword() async {

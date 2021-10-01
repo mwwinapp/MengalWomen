@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mw/functions/globals.dart';
 import 'package:mw/widgets/announcements_list.dart';
 
 class AnnouncementScreen extends StatefulWidget {
@@ -12,7 +13,12 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Announcements', style: TextStyle(fontFamily: 'AllerBold'),),
+          centerTitle: true,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          title: Text('Announcements', style: customTextStyle(fontFamily: appFontBold, color: Colors.white, fontSize: 18)),
           flexibleSpace: Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -20,7 +26,7 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                 end: Alignment.bottomRight,
                 colors: [
 
-                  Colors.blueAccent,
+                  Colors.blue,
                   Theme.of(context).primaryColor,
                 ],
               ),

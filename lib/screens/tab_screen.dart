@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:mw/functions/custom_dialog.dart';
 import 'package:mw/functions/downloader.dart';
+import 'package:mw/functions/globals.dart';
 import 'package:mw/functions/network_ping.dart';
 import 'package:mw/helpers/db_helper.dart';
 import 'package:mw/models/announcement_model.dart';
@@ -50,7 +51,7 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
     });
     //
     downloaderInit();
-    dlDB();             //REMINDER: Remove this only if database is updated and tblenduser is added
+    //dlDB();             //REMINDER: Remove this only if database is updated and tblenduser is added
   }
 
   @override
@@ -102,7 +103,7 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
                     colors: [Theme
                         .of(context)
                         .primaryColor, Colors.blue[800], Colors.blue[600]]),
-                style: TextStyle(fontFamily: 'AllerBold',
+                style: customTextStyle(fontFamily: appFontBold,
                     letterSpacing: -1.5,
                     fontSize: 25.0),
                 textAlign: TextAlign.center),
@@ -110,7 +111,7 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
               Stack(
                 children: [
                   IconButton(
-                    color: Colors.blue[800],
+                    color: Colors.blue,
                     icon: Icon(OMIcons.chat),
                     onPressed: () {
                       Navigator.push(
@@ -128,7 +129,7 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
                         backgroundColor: Colors.red,
                         child: Text(
                           '${_announcement.length}',
-                          style: TextStyle(
+                          style: customTextStyle(
                               fontSize: 8.0, color: Colors.white),
                         )),
                   )
@@ -170,7 +171,7 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
                   ),
                   Tab(
                     icon: Icon(
-                      OMIcons.settings,
+                      Icons.menu,
                       color: _tabController.index == 3 ? Theme
                           .of(context)
                           .primaryColor : Colors.grey[500],
