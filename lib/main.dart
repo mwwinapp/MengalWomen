@@ -56,6 +56,7 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
           backgroundColor: Colors.white,
             appBar: AppBar(
               centerTitle: true,
+              leading: Container(),
               actions: [
                 IconButton(
                   icon: Icon(Icons.close),

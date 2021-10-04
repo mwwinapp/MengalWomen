@@ -37,6 +37,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                   if(value) {
                     customDialog(context, 'Confirm', 'Database will be downloaded and updated.\nDo you want to continue?', false, onPressedYes: () {
                       downloadDatabase(context);
+                      Navigator.of(context, rootNavigator: true).pop();
                       customDialog(context, 'Download complete.', 'Database successfully downloaded and updated.', true,onPressedOk: () => Navigator.of(context, rootNavigator: true).pop());
                     }, onPressedNo: () => Navigator.of(context, rootNavigator: true).pop());
                   } else {
