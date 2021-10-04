@@ -102,7 +102,7 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
                 gradient: LinearGradient(
                     colors: [Theme
                         .of(context)
-                        .primaryColor, Colors.blue[800], Colors.blue[600]]),
+                        .primaryColor, Colors.blue, Colors.blue]),
                 style: customTextStyle(fontFamily: appFontBold,
                     letterSpacing: -1.5,
                     fontSize: 25.0),
