@@ -150,8 +150,9 @@ class _MemberScreenState extends State<MemberScreen> {
                                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                                         children: [
                                           Text(
-                                            '${members[index].insurancestatus}',
+                                            members[index].insurancestatus == 'PREMIUM' ? '   👑 ${members[index].insurancestatus}' : '${members[index].insurancestatus}',
                                             style: customTextStyle(
+                                                color: members[index].insurancestatus == 'PREMIUM' ? Colors.amber[800] : Colors.black,
                                                 fontSize: 14.0,
                                                 fontWeight: FontWeight.bold,
                                                 fontFamily: appFont),
