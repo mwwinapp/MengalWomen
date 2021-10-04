@@ -54,6 +54,27 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                 onPressedYes: () => SystemNavigator.pop()),
         child: Scaffold(
           backgroundColor: Colors.white,
+            appBar: AppBar(
+              centerTitle: true,
+              actions: [
+                IconButton(
+                  icon: Icon(Icons.close),
+                  onPressed: () => SystemNavigator.pop(),
+                ),
+              ],
+              flexibleSpace: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Colors.blue,
+                      Theme.of(context).primaryColor,
+                    ],
+                  ),
+                ),
+              ),
+            ),
           body: Container(
             decoration: BoxDecoration(
             //image: DecorationImage(
@@ -71,7 +92,7 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                       gradient: LinearGradient(
                           colors: [Theme
                               .of(context)
-                              .primaryColor, Colors.blue[800], Colors.blue[600]]),
+                              .primaryColor, Colors.blue, Colors.blue]),
                       style: customTextStyle(
                           fontFamily: appFontBold,
                           letterSpacing: -1.5,
@@ -165,7 +186,7 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                       child: Text(
                         "Log in",
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontFamily: appFont),
+                        style: TextStyle(fontFamily: appFontBold),
                       ),
                       style: ButtonStyle(
                         foregroundColor: MaterialStateProperty.all<Color>(Colors.white),

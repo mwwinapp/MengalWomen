@@ -147,7 +147,7 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
                 tabs: [
                   Tab(
                     icon: Icon(
-                      OMIcons.home,
+                      OMIcons.timeline,
                       color: _tabController.index == 0 ? Theme
                           .of(context)
                           .primaryColor : Colors.grey[500],

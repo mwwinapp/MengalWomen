@@ -212,7 +212,7 @@ class _SearchScreenState extends State<SearchScreen>
                               Navigator.of(context, rootNavigator: true).pop();
                             },
                             child: Text(
-                              "Cancel",
+                              "Close",
                               textAlign: TextAlign.center,
                               style: customTextStyle(fontFamily: appFontBold, color: Colors.blue),
                             ),
