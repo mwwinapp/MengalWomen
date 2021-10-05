@@ -164,7 +164,7 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                     controlAffinity: ListTileControlAffinity.leading,
                     contentPadding: EdgeInsets.all(0),
                     title: Text(
-                      'Save my Credentials',
+                      'Save my Log in Credentials',
                       style: customTextStyle(fontFamily: appFontBold, color: Colors.grey[700]),
                     ),
                     value: _isChecked,
@@ -188,7 +188,7 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                       child: Text(
                         "Log in",
                         textAlign: TextAlign.center,
-                        style: TextStyle(fontFamily: appFontBold),
+                        style: customTextStyle(fontFamily: appFontBold, fontSize: 16.0, color: Colors.white),
                       ),
                       style: ButtonStyle(
                         foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
@@ -210,6 +210,7 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                         style: customTextStyle(
                           fontFamily: appFontBold,
                           color: Colors.blue[600],
+                          fontSize: 12.0,
                           decoration: TextDecoration.underline,
                         ),
                         recognizer: TapGestureRecognizer()..onTap = ((){

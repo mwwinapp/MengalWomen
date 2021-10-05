@@ -262,6 +262,7 @@ class _SearchScreenState extends State<SearchScreen>
                   prefixIcon: Icon(Icons.search),
                   suffixIcon: IconButton(
                     icon: Icon(Icons.more_vert),
+                    tooltip: 'Click here for search options.',
                     onPressed: () {
                       usertype == 'admin' ? searchOptionsDialog() : customDialog(context, 'Access Denied', 'Guest users have limited access.', true, onPressedOk: () {Navigator.of(context, rootNavigator: true).pop();});
                     },
