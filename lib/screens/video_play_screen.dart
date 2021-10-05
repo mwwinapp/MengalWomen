@@ -40,6 +40,7 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
       builder: (context, player) {
         return Scaffold(
           appBar: AppBar(
+            elevation: 0.0,
             centerTitle: true,
             leading: IconButton(
               icon: Icon(Icons.arrow_back_ios),

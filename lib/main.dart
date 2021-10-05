@@ -16,7 +16,7 @@ void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     title: 'Mengal Women',
-    theme: ThemeData(primaryColor: Colors.blue),
+    //theme: ThemeData(primaryColor: themeScaffoldColor()),
     home: MainApp(),
   ));
 }
@@ -55,6 +55,7 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
         child: Scaffold(
           backgroundColor: Colors.white,
             appBar: AppBar(
+              elevation: 0.0,
               centerTitle: true,
               leading: Container(),
               actions: [

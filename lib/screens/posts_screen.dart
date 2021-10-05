@@ -16,6 +16,7 @@ class PostScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        elevation: 0.0,
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios),

@@ -8,6 +8,8 @@ const String appFont = 'Aller';
 const String appFontBold = 'AllerBold';
 const Color appFontColorPrimary = Colors.black;
 const Color appFontColorSecondary = Colors.grey;
+const Color appColorPrimary = Colors.blue;
+const Color appBackgroundColorPrimary = Colors.white;
 
 TextStyle customTextStyle({String fontFamily = appFont, double fontSize = 14.0, Color color = appFontColorPrimary, FontWeight fontWeight = FontWeight.normal, overflow = TextOverflow.ellipsis, double letterSpacing = 0.0, TextDecoration decoration = TextDecoration.none}) {
   return TextStyle(
@@ -19,4 +21,8 @@ TextStyle customTextStyle({String fontFamily = appFont, double fontSize = 14.0, 
     letterSpacing: letterSpacing,
     decoration: decoration,
   );
+}
+
+Color themeScaffoldColor() {
+  return appBackgroundColorPrimary;
 }
