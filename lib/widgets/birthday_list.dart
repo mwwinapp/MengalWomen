@@ -117,7 +117,7 @@ class _BirthdayListState extends State<BirthdayList> {
                       child: Text(
                         'Hide',
                         style: customTextStyle(
-                            color: Colors.blue,
+                            color: appColorPrimary,
                             fontFamily: appFontBold),
                       ),
                     ),
@@ -168,7 +168,7 @@ class _BirthdayListState extends State<BirthdayList> {
                                         ),
                                       ),
                                     ),
-                                    placeholder: (context, url) => CircularProgressIndicator(),
+                                    placeholder: (context, url) => CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(appColorPrimary)),
                                     errorWidget: (context, url, error) => Icon(Icons.person, color: Colors.grey, size: 40.0,),
                                   ) : Icon(Icons.person, color: Colors.grey, size: 40.0,),
                                   SizedBox(height: 5.0),
@@ -221,7 +221,7 @@ class _BirthdayListState extends State<BirthdayList> {
             child: Text(
               'Show All',
               style: customTextStyle(
-                  color: Colors.blue,
+                  color: appColorPrimary,
                   fontFamily: appFontBold),
             ),
           ),

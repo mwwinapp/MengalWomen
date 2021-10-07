@@ -53,8 +53,8 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
                   begin: Alignment.topLeft,
                   end: Alignment.bottomRight,
                   colors: [
-                    Colors.blue,
-                    Theme.of(context).primaryColor,
+                    appColorPrimary,
+                    appColorPrimary,
                   ],
                 ),
               ),

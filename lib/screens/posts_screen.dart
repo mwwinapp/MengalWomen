@@ -29,8 +29,8 @@ class PostScreen extends StatelessWidget {
                 end: Alignment.bottomRight,
                 colors: [
 
-                  Colors.blue,
-                  Theme.of(context).primaryColor,
+                  appColorPrimary,
+                  appColorPrimary,
                 ],
               ),
             ),

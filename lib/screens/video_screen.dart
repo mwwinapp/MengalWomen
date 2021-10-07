@@ -237,9 +237,7 @@ class _VideoScreenState extends State<VideoScreen>
         : Center(
       child: CircularProgressIndicator(
         valueColor:
-        AlwaysStoppedAnimation<Color>(Theme
-            .of(context)
-            .primaryColor),
+        AlwaysStoppedAnimation<Color>(appColorPrimary),
       ),
     );
   }

@@ -27,8 +27,8 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                 end: Alignment.bottomRight,
                 colors: [
 
-                  Colors.blue,
-                  Theme.of(context).primaryColor,
+                  appColorPrimary,
+                  appColorPrimary,
                 ],
               ),
             ),

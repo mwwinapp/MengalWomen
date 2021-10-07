@@ -34,11 +34,11 @@ Future customDialog(
                           ),
                           style: ButtonStyle(
                             foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                            backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                            backgroundColor: MaterialStateProperty.all<Color>(appColorPrimary),
                             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                               RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(25.0),
-                                side: BorderSide(color: Colors.blue),
+                                side: BorderSide(color: appColorPrimary),
                               ),
                             ),
                           ),
@@ -60,11 +60,11 @@ Future customDialog(
                     ),
                     style: ButtonStyle(
                       foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                      backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                      backgroundColor: MaterialStateProperty.all<Color>(appColorPrimary),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25.0),
-                          side: BorderSide(color: Colors.blue),
+                          side: BorderSide(color: appColorPrimary),
                         ),
                       ),
                     ),
@@ -80,15 +80,15 @@ Future customDialog(
                     child: Text(
                       "No",
                       textAlign: TextAlign.center,
-                      style: customTextStyle(fontFamily: appFontBold, color: Colors.blue),
+                      style: customTextStyle(fontFamily: appFontBold, color: appColorPrimary),
                     ),
                     style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                      foregroundColor: MaterialStateProperty.all<Color>(appColorPrimary),
                       backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25.0),
-                          side: BorderSide(color: Colors.blue),
+                          side: BorderSide(color: appColorPrimary),
                         ),
                       ),
                     ),

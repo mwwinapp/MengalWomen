@@ -44,8 +44,8 @@ class _MemberScreenState extends State<MemberScreen> {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                Colors.blue,
-                Theme.of(context).primaryColor,
+                appColorPrimary,
+                appColorPrimary,
               ],
             ),
           ),
@@ -285,7 +285,7 @@ class _MemberScreenState extends State<MemberScreen> {
                                           Column(
                                             children: [
                                               Container(
-                                                color: Colors.blue,
+                                                color: appColorPrimary,
                                                 height: 40.0,
                                                 child: Center(
                                                   child: Text(

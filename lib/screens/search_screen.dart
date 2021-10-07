@@ -192,11 +192,11 @@ class _SearchScreenState extends State<SearchScreen>
                             ),
                             style: ButtonStyle(
                               foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                              backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                              backgroundColor: MaterialStateProperty.all<Color>(appColorPrimary),
                               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(25.0),
-                                  side: BorderSide(color: Colors.blue),
+                                  side: BorderSide(color: appColorPrimary),
                                 ),
                               ),
                             ),
@@ -214,15 +214,15 @@ class _SearchScreenState extends State<SearchScreen>
                             child: Text(
                               "Close",
                               textAlign: TextAlign.center,
-                              style: customTextStyle(fontFamily: appFontBold, color: Colors.blue),
+                              style: customTextStyle(fontFamily: appFontBold, color: appColorPrimary),
                             ),
                             style: ButtonStyle(
-                              foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                              foregroundColor: MaterialStateProperty.all<Color>(appColorPrimary),
                               backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
                               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(25.0),
-                                  side: BorderSide(color: Colors.blue),
+                                  side: BorderSide(color: appColorPrimary),
                                 ),
                               ),
                             ),
@@ -256,16 +256,23 @@ class _SearchScreenState extends State<SearchScreen>
                 textCapitalization: TextCapitalization.characters,
                 controller: _searchController,
                 decoration: InputDecoration(
+                  focusedBorder:OutlineInputBorder(
+                    borderSide: const BorderSide(color: appColorPrimary, width: 2.0),
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
                   fillColor: Colors.white,
                   filled: true,
                   isDense: true,
-                  prefixIcon: Icon(Icons.search),
-                  suffixIcon: IconButton(
-                    icon: Icon(Icons.more_vert),
-                    tooltip: 'Click here for search options.',
-                    onPressed: () {
-                      usertype == 'admin' ? searchOptionsDialog() : customDialog(context, 'Access Denied', 'Guest users have limited access.', true, onPressedOk: () {Navigator.of(context, rootNavigator: true).pop();});
-                    },
+                  prefixIcon: IconTheme(data: IconThemeData(color: appColorPrimary), child: Icon(Icons.search)),
+                  suffixIcon: IconTheme(
+                    data: IconThemeData(color: appColorPrimary),
+                    child: IconButton(
+                      icon: Icon(Icons.more_vert),
+                      tooltip: 'Click here for search options.',
+                      onPressed: () {
+                        usertype == 'admin' ? searchOptionsDialog() : customDialog(context, 'Access Denied', 'Guest users have limited access.', true, onPressedOk: () {Navigator.of(context, rootNavigator: true).pop();});
+                      },
+                    ),
                   ),
                   hintText: 'Type keyword here',
                   hintStyle: customTextStyle(fontFamily: appFont, color: appFontColorSecondary),
@@ -391,7 +398,7 @@ class _SearchScreenState extends State<SearchScreen>
                                           ),
                                         ),
                                       ),
-                                      placeholder: (context, url) => CircularProgressIndicator(),
+                                      placeholder: (context, url) => CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(appColorPrimary)),
                                       errorWidget: (context, url, error) => Icon(Icons.person, color: Colors.grey, size: 40.0,),
                                     ) : Icon(Icons.person, color: Colors.grey, size: 40.0,),
                                     dense: true,

@@ -100,9 +100,7 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
             elevation: 0.75,
             title: GradientText("Mengal Women",
                 gradient: LinearGradient(
-                    colors: [Theme
-                        .of(context)
-                        .primaryColor, Colors.blue, Colors.blue]),
+                    colors: [appColorPrimary, appColorPrimary, appColorPrimary]),
                 style: customTextStyle(fontFamily: appFontBold,
                     letterSpacing: -1.5,
                     fontSize: 25.0),
@@ -111,7 +109,7 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
               Stack(
                 children: [
                   IconButton(
-                    color: Colors.blue,
+                    color: appColorPrimary,
                     icon: Icon(OMIcons.chat),
                     onPressed: () {
                       Navigator.push(
@@ -141,40 +139,30 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
             bottom: TabBar(
                 controller: _tabController,
                 indicatorWeight: 5.0,
-                indicatorColor: Theme
-                    .of(context)
-                    .primaryColor,
+                indicatorColor: appColorPrimary,
                 tabs: [
                   Tab(
                     icon: Icon(
                       OMIcons.timeline,
-                      color: _tabController.index == 0 ? Theme
-                          .of(context)
-                          .primaryColor : Colors.grey[500],
+                      color: _tabController.index == 0 ? appColorPrimary : Colors.grey[500],
                     ),
                   ),
                   Tab(
                     icon: Icon(
                       OMIcons.videoLibrary,
-                      color: _tabController.index == 1 ? Theme
-                          .of(context)
-                          .primaryColor : Colors.grey[500],
+                      color: _tabController.index == 1 ? appColorPrimary : Colors.grey[500],
                     ),
                   ),
                   Tab(
                     icon: Icon(
                       Icons.search,
-                      color: _tabController.index == 2 ? Theme
-                          .of(context)
-                          .primaryColor : Colors.grey[500],
+                      color: _tabController.index == 2 ? appColorPrimary : Colors.grey[500],
                     ),
                   ),
                   Tab(
                     icon: Icon(
                       Icons.menu,
-                      color: _tabController.index == 3 ? Theme
-                          .of(context)
-                          .primaryColor : Colors.grey[500],
+                      color: _tabController.index == 3 ? appColorPrimary : Colors.grey[500],
                     ),
                   ),
                 ]),

@@ -16,7 +16,7 @@ void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     title: 'Mengal Women',
-    //theme: ThemeData(primaryColor: themeScaffoldColor()),
+    theme: ThemeData(primaryColor: appColorPrimary),
     home: MainApp(),
   ));
 }
@@ -70,8 +70,8 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                     begin: Alignment.topLeft,
                     end: Alignment.bottomRight,
                     colors: [
-                      Colors.blue,
-                      Theme.of(context).primaryColor,
+                      appColorPrimary,
+                      appColorPrimary,
                     ],
                   ),
                 ),
@@ -92,9 +92,7 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                   //Image(image: AssetImage("assets/images/mw.logo.png"), width: 100.0, height: 100.0,),
                   GradientText("Mengal Women",
                       gradient: LinearGradient(
-                          colors: [Theme
-                              .of(context)
-                              .primaryColor, Colors.blue, Colors.blue]),
+                          colors: [appColorPrimary, appColorPrimary, appColorPrimary]),
                       style: customTextStyle(
                           fontFamily: appFontBold,
                           letterSpacing: -1.5,
@@ -102,7 +100,7 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                       textAlign: TextAlign.center),
                   Text('Organization Inc.',
                       style: customTextStyle(
-                          color: Colors.blue[600],
+                          color: appColorPrimary,
                           fontFamily: appFontBold,
                           letterSpacing: 5.0,
                           fontSize: 15.0),
@@ -114,10 +112,14 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                     //textCapitalization: TextCapitalization.characters,
                     controller: _username,
                     decoration: InputDecoration(
+                      focusedBorder:OutlineInputBorder(
+                        borderSide: const BorderSide(color: appColorPrimary, width: 2.0),
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
                       fillColor: Colors.white,
                       filled: true,
                       isDense: true,
-                      prefixIcon: Icon(Icons.person),
+                      prefixIcon: IconTheme(data: IconThemeData(color: appColorPrimary), child: Icon(Icons.person)),
                       hintText: 'Username...',
                       hintStyle: TextStyle(fontFamily: appFont),
                       border: OutlineInputBorder(
@@ -135,17 +137,21 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                     controller: _password,
                     obscureText: !_passwordVisible,
                     decoration: InputDecoration(
+                      focusedBorder:OutlineInputBorder(
+                        borderSide: const BorderSide(color: appColorPrimary, width: 2.0),
+                        borderRadius: BorderRadius.circular(25.0),
+                      ),
                       fillColor: Colors.white,
                       filled: true,
                       isDense: true,
-                      prefixIcon: Icon(Icons.lock),
+                      prefixIcon: IconTheme(data: IconThemeData(color: appColorPrimary), child: Icon(Icons.lock)),
                       suffixIcon: IconButton(
                         icon: Icon(
                           // Based on passwordVisible state choose the icon
                           _passwordVisible
                               ? Icons.visibility
                               : Icons.visibility_off,
-                          color: Colors.blue,
+                          color: appColorPrimary,
                         ),
                         onPressed: () {
                           setState(() {
@@ -161,6 +167,7 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                   ),
                   SizedBox(height: 20.0,),
                   CheckboxListTile(
+                    activeColor: appColorPrimary,
                     controlAffinity: ListTileControlAffinity.leading,
                     contentPadding: EdgeInsets.all(0),
                     title: Text(
@@ -192,11 +199,11 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                       ),
                       style: ButtonStyle(
                         foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                        backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                        backgroundColor: MaterialStateProperty.all<Color>(appColorPrimary),
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(25.0),
-                            side: BorderSide(color: Colors.blue),
+                            side: BorderSide(color: appColorPrimary),
                           ),
                         ),
                       ),
@@ -209,7 +216,7 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                         text: 'Log in as Guest?',
                         style: customTextStyle(
                           fontFamily: appFontBold,
-                          color: Colors.blue[600],
+                          color: appColorPrimary,
                           fontSize: 12.0,
                           decoration: TextDecoration.underline,
                         ),
