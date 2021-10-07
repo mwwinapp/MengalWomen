@@ -85,7 +85,7 @@ class _BirthdayListState extends State<BirthdayList> {
           padding: EdgeInsets.only(bottom: 10.0),
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: appBackgroundColorPrimary,
             boxShadow: [
               BoxShadow(
                 color: Colors.grey.withOpacity(0.05),

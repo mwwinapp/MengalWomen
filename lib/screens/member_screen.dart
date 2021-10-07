@@ -27,16 +27,17 @@ class _MemberScreenState extends State<MemberScreen> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: appBackgroundColorPrimary,
       appBar: AppBar(
         elevation: 0.0,
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
+          icon: Icon(Icons.arrow_back_ios, color: appBackgroundColorPrimary,),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(
           'Member Info',
-          style: customTextStyle(fontFamily: appFontBold, color: Colors.white, fontSize: 18),
+          style: customTextStyle(fontFamily: appFontBold, color: appBackgroundColorPrimary, fontSize: 18),
         ),
         flexibleSpace: Container(
           decoration: BoxDecoration(
@@ -291,7 +292,7 @@ class _MemberScreenState extends State<MemberScreen> {
                                                   child: Text(
                                                     'Personal Info',
                                                     style: customTextStyle(
-                                                        color: Colors.white,
+                                                        color: appBackgroundColorPrimary,
                                                         fontSize: 14.0,
                                                         fontWeight: FontWeight.bold,
                                                         fontFamily: appFont),
@@ -433,7 +434,7 @@ class _MemberScreenState extends State<MemberScreen> {
                                                   members[index].contactnumber != '' ? CircleAvatar(
                                                     backgroundColor: Colors.green,
                                                     child: IconButton(
-                                                      color: Colors.white,
+                                                      color: appBackgroundColorPrimary,
                                                       iconSize: 18.0,
                                                       icon: Icon(Icons.call_rounded),
                                                       onPressed: () {
@@ -445,7 +446,7 @@ class _MemberScreenState extends State<MemberScreen> {
                                                   members[index].contactnumber != '' ? CircleAvatar(
                                                     backgroundColor: Colors.yellow[800],
                                                     child: IconButton(
-                                                      color: Colors.white,
+                                                      color: appBackgroundColorPrimary,
                                                       iconSize: 18.0,
                                                       icon: Icon(Icons.sms_outlined),
                                                       onPressed: () {

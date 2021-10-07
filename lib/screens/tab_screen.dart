@@ -63,7 +63,7 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
   List<Announcement> _announcement = <Announcement>[];
 
   Future<List<Announcement>> fetchAnnouncements() async {
-    var url = 'https://mwapp.imfast.io/announcements/announcements.json';
+    var url = 'https://drive.google.com/uc?export=download&id=1Wno_h7_U481E8aR4y7bR-CY1ZuHYpnnO';
     var response = await http.get(url);
     var announcement = <Announcement>[];
 
@@ -97,7 +97,7 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
           backgroundColor: appBackgroundColorPrimary,
           appBar: AppBar(
             automaticallyImplyLeading: false,
-            backgroundColor: Colors.white,
+            backgroundColor: appBackgroundColorPrimary,
             elevation: 0.75,
             title: GradientText("Mengal Women",
                 gradient: LinearGradient(
@@ -113,6 +113,7 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
                     color: appColorPrimary,
                     icon: Icon(OMIcons.chat),
                     onPressed: () {
+                      print(_announcement.length);
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -129,7 +130,7 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
                         child: Text(
                           '${_announcement.length}',
                           style: customTextStyle(
-                              fontSize: 8.0, color: Colors.white),
+                              fontSize: 8.0, color: appBackgroundColorPrimary),
                         )),
                   )
                       : SizedBox.shrink(),

@@ -86,6 +86,7 @@ class _SearchScreenState extends State<SearchScreen>
           return StatefulBuilder(
             builder: (context, setState) {
               return AlertDialog(
+                backgroundColor: appBackgroundColorPrimary,
                 actionsPadding: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 10.0),
                 titleTextStyle: customTextStyle(fontFamily: appFont),
                 contentTextStyle: customTextStyle(fontFamily: appFont),
@@ -102,6 +103,7 @@ class _SearchScreenState extends State<SearchScreen>
                       style: customTextStyle(color: appFontColorSecondary, fontFamily: appFont),
                     ),
                     SwitchListTile(
+                      activeColor: appColorPrimary,
                       controlAffinity: ListTileControlAffinity.leading,
                       contentPadding: EdgeInsets.all(0),
                       title: Text(
@@ -120,6 +122,7 @@ class _SearchScreenState extends State<SearchScreen>
                     Padding(
                       padding: EdgeInsets.all(10.0),
                       child: DropdownButton<String>(
+                        dropdownColor: appBackgroundColorPrimary,
                         isExpanded: true,
                         disabledHint: Text(
                           'Select Barangay',
@@ -136,6 +139,7 @@ class _SearchScreenState extends State<SearchScreen>
                       ),
                     ),
                     SwitchListTile(
+                      activeColor: appColorPrimary,
                       controlAffinity: ListTileControlAffinity.leading,
                       contentPadding: EdgeInsets.all(0),
                       title: Text(
@@ -154,6 +158,7 @@ class _SearchScreenState extends State<SearchScreen>
                     Padding(
                       padding: EdgeInsets.all(10.0),
                       child: DropdownButton(
+                        dropdownColor: appBackgroundColorPrimary,
                         isExpanded: true,
                           disabledHint: Text(
                             'Select Status',
@@ -188,10 +193,10 @@ class _SearchScreenState extends State<SearchScreen>
                             child: Text(
                               "Apply",
                               textAlign: TextAlign.center,
-                              style: customTextStyle(fontFamily: appFontBold, color: Colors.white),
+                              style: customTextStyle(fontFamily: appFontBold, color: appBackgroundColorPrimary),
                             ),
                             style: ButtonStyle(
-                              foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                              foregroundColor: MaterialStateProperty.all<Color>(appBackgroundColorPrimary),
                               backgroundColor: MaterialStateProperty.all<Color>(appColorPrimary),
                               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
@@ -218,7 +223,7 @@ class _SearchScreenState extends State<SearchScreen>
                             ),
                             style: ButtonStyle(
                               foregroundColor: MaterialStateProperty.all<Color>(appColorPrimary),
-                              backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                              backgroundColor: MaterialStateProperty.all<Color>(appBackgroundColorPrimary),
                               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(25.0),
@@ -260,7 +265,7 @@ class _SearchScreenState extends State<SearchScreen>
                     borderSide: const BorderSide(color: appColorPrimary, width: 2.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
-                  fillColor: Colors.white,
+                  fillColor: appBackgroundColorPrimary,
                   filled: true,
                   isDense: true,
                   prefixIcon: IconTheme(data: IconThemeData(color: appColorPrimary), child: Icon(Icons.search)),

@@ -15,11 +15,12 @@ class PostScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: appBackgroundColorPrimary,
       appBar: AppBar(
         elevation: 0.0,
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
+          icon: Icon(Icons.arrow_back_ios, color: appBackgroundColorPrimary,),
           onPressed: () => Navigator.of(context).pop(),
         ),
           flexibleSpace: Container(
@@ -35,7 +36,7 @@ class PostScreen extends StatelessWidget {
               ),
             ),
           ),
-        title: Text('${utf8convert(title)}', style: customTextStyle(fontFamily: appFontBold, color: Colors.white, fontSize: 18),),
+        title: Text('${utf8convert(title)}', style: customTextStyle(fontFamily: appFontBold, color: appBackgroundColorPrimary, fontSize: 18),),
       ),
       body: ListView(
         physics: BouncingScrollPhysics(),
@@ -70,7 +71,7 @@ class PostScreen extends StatelessWidget {
             child: Text(
               '${utf8convert(content)}',
               style: customTextStyle(
-                  fontSize: 18.0, fontFamily: appFont, color: Colors.black54, overflow: TextOverflow.visible),
+                  fontSize: 18.0, fontFamily: appFont, color: appFontColorSecondary, overflow: TextOverflow.visible),
             ),
           ),
           SizedBox(height: 25.0),

@@ -14,7 +14,7 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
   @override
   void initState() {
     super.initState();
-    fetchPosts().then((value) {
+    fetchAnnouncements().then((value) {
       setState(() {
         _announcement.addAll(value);
       });
@@ -23,7 +23,7 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
 
   List<Announcement> _announcement = <Announcement>[];
 
-  Future<List<Announcement>> fetchPosts() async {
+  Future<List<Announcement>> fetchAnnouncements() async {
     var url = 'https://drive.google.com/uc?export=download&id=1Wno_h7_U481E8aR4y7bR-CY1ZuHYpnnO';
     var response = await http.get(url);
     var announcement = <Announcement>[];
@@ -54,7 +54,7 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
               margin: EdgeInsets.only(top: 15.0),
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: appBackgroundColorPrimary,
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.withOpacity(0.05),

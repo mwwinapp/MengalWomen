@@ -116,7 +116,7 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                         borderSide: const BorderSide(color: appColorPrimary, width: 2.0),
                         borderRadius: BorderRadius.circular(25.0),
                       ),
-                      fillColor: Colors.white,
+                      fillColor: appBackgroundColorPrimary,
                       filled: true,
                       isDense: true,
                       prefixIcon: IconTheme(data: IconThemeData(color: appColorPrimary), child: Icon(Icons.person)),
@@ -141,7 +141,7 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                         borderSide: const BorderSide(color: appColorPrimary, width: 2.0),
                         borderRadius: BorderRadius.circular(25.0),
                       ),
-                      fillColor: Colors.white,
+                      fillColor: appBackgroundColorPrimary,
                       filled: true,
                       isDense: true,
                       prefixIcon: IconTheme(data: IconThemeData(color: appColorPrimary), child: Icon(Icons.lock)),
@@ -167,6 +167,7 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                   ),
                   SizedBox(height: 20.0,),
                   CheckboxListTile(
+                    checkColor: appBackgroundColorPrimary,
                     activeColor: appColorPrimary,
                     controlAffinity: ListTileControlAffinity.leading,
                     contentPadding: EdgeInsets.all(0),
@@ -195,10 +196,10 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                       child: Text(
                         "Log in",
                         textAlign: TextAlign.center,
-                        style: customTextStyle(fontFamily: appFontBold, fontSize: 16.0, color: Colors.white),
+                        style: customTextStyle(fontFamily: appFontBold, fontSize: 16.0, color: appBackgroundColorPrimary),
                       ),
                       style: ButtonStyle(
-                        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                        foregroundColor: MaterialStateProperty.all<Color>(appBackgroundColorPrimary),
                         backgroundColor: MaterialStateProperty.all<Color>(appColorPrimary),
                         shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(

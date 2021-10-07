@@ -28,6 +28,7 @@ class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMi
                   : Expanded(
                       child: GestureDetector(
                           child: Container(
+                            color: appBackgroundColorPrimary,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [

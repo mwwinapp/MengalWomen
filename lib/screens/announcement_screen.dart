@@ -12,11 +12,12 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: appBackgroundColorPrimary,
         appBar: AppBar(
           elevation: 0.0,
           centerTitle: true,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
+            icon: Icon(Icons.arrow_back_ios, color: appBackgroundColorPrimary,),
             onPressed: () => Navigator.of(context).pop(),
           ),
           title: Text('Announcements', style: customTextStyle(fontFamily: appFontBold, color: Colors.white, fontSize: 18)),
