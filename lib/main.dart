@@ -53,7 +53,7 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                     Navigator.of(context, rootNavigator: true).pop(),
                 onPressedYes: () => SystemNavigator.pop()),
         child: Scaffold(
-          backgroundColor: Colors.white,
+          backgroundColor: appBackgroundColorPrimary,
             appBar: AppBar(
               elevation: 0.0,
               centerTitle: true,
@@ -217,7 +217,6 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                         style: customTextStyle(
                           fontFamily: appFontBold,
                           color: appColorPrimary,
-                          fontSize: 12.0,
                           decoration: TextDecoration.underline,
                         ),
                         recognizer: TapGestureRecognizer()..onTap = ((){

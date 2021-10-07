@@ -10,6 +10,7 @@ const Color appFontColorPrimary = Colors.black;
 const Color appFontColorSecondary = Colors.grey;
 const Color appColorPrimary = Color.fromARGB(255, 0, 90, 225);
 const Color appBackgroundColorPrimary = Colors.white;
+const Color appBackgroundColorSecondary = Colors.grey;
 
 TextStyle customTextStyle({String fontFamily = appFont, double fontSize = 14.0, Color color = appFontColorPrimary, FontWeight fontWeight = FontWeight.normal, overflow = TextOverflow.ellipsis, double letterSpacing = 0.0, TextDecoration decoration = TextDecoration.none}) {
   return TextStyle(
