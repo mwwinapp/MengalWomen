@@ -141,9 +141,11 @@ class _BirthdayListState extends State<BirthdayList> {
                         itemCount: members.length,
                         itemBuilder: (context, index) {
                           return Container(
+
                             margin: EdgeInsets.all(5.0),
                             width: 100.0,
                             decoration: BoxDecoration(
+                              color: appBackgroundColorSecondary,
                               borderRadius: BorderRadius.circular(15.0),
                               border: Border.all(
                                 color: Colors.grey,

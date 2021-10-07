@@ -154,7 +154,7 @@ class _MemberScreenState extends State<MemberScreen> {
                                           Text(
                                             members[index].insurancestatus == 'PREMIUM' ? '   👑 ${members[index].insurancestatus}' : '${members[index].insurancestatus}',
                                             style: customTextStyle(
-                                                color: members[index].insurancestatus == 'PREMIUM' ? Colors.amber[800] : Colors.black,
+                                                color: members[index].insurancestatus == 'PREMIUM' ? Colors.amber[800] : appFontColorPrimary,
                                                 fontSize: 14.0,
                                                 fontWeight: FontWeight.bold,
                                                 fontFamily: appFont),
@@ -248,7 +248,9 @@ class _MemberScreenState extends State<MemberScreen> {
                                             style: TextStyle(
                                                 fontSize: 14.0,
                                                 fontWeight: FontWeight.bold,
-                                                fontFamily: appFont),
+                                                fontFamily: appFont,
+                                                color: appFontColorPrimary,
+                                            ),
                                             overflow:
                                             TextOverflow.ellipsis,
                                           ),

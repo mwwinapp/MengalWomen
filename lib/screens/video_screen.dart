@@ -41,7 +41,7 @@ class _VideoScreenState extends State<VideoScreen>
       margin: EdgeInsets.all(20.0),
       padding: EdgeInsets.all(20.0),
       height: 100.0,
-      decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(10.0), boxShadow: [
+      decoration: BoxDecoration(color: appBackgroundColorSecondary, borderRadius: BorderRadius.circular(10.0), boxShadow: [
         BoxShadow(
             color: Colors.grey[200], offset: Offset(0, 1), blurRadius: 6.0),
       ]),
@@ -61,7 +61,7 @@ class _VideoScreenState extends State<VideoScreen>
                 Text(
                   _channel.title,
                   style: customTextStyle(
-                      color: Colors.black,
+                      color: appFontColorPrimary,
                       fontSize: 20.0,
                       fontWeight: FontWeight.w600,
                       fontFamily: appFontBold),

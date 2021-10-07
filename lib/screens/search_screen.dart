@@ -265,6 +265,13 @@ class _SearchScreenState extends State<SearchScreen>
                     borderSide: const BorderSide(color: appColorPrimary, width: 2.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                    borderSide: BorderSide(
+                      color: appFontColorSecondary,
+                      width: 1.0,
+                    ),
+                  ),
                   fillColor: appBackgroundColorPrimary,
                   filled: true,
                   isDense: true,

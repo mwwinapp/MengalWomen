@@ -45,7 +45,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                   }
                 });
               },
-              leading: FaIcon(FontAwesomeIcons.database),
+              leading: FaIcon(FontAwesomeIcons.database, color: Colors.grey,),
               title: Text(
                 'Update Database',
                 style: customTextStyle(
@@ -64,7 +64,7 @@ class _SettingsScreenState extends State<SettingsScreen>
               onTap: () {
                 launch('tel:09176790327');
               },
-              leading: Icon(Icons.info),
+              leading: Icon(Icons.info, color: Colors.grey,),
               title: Row(
                 children: [
                   Text(
@@ -116,7 +116,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                   },
                 );
               },
-              leading: Icon(Icons.logout),
+              leading: Icon(Icons.logout, color: Colors.grey,),
               title: Text(
                 'Logout',
                 style: customTextStyle(

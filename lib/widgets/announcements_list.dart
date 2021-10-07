@@ -54,7 +54,7 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
               margin: EdgeInsets.only(top: 15.0),
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
-                color: appBackgroundColorPrimary,
+                color: appBackgroundColorSecondary,
                 boxShadow: [
                   BoxShadow(
                     color: Colors.grey.withOpacity(0.05),

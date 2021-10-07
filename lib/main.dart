@@ -108,7 +108,7 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                   SizedBox(height: 80.0,),
                   TextFormField(
                     textInputAction: TextInputAction.next,
-                    style: TextStyle(fontFamily: appFont),
+                    style: TextStyle(fontFamily: appFontBold, color: appFontColorSecondary),
                     //textCapitalization: TextCapitalization.characters,
                     controller: _username,
                     decoration: InputDecoration(
@@ -116,12 +116,19 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                         borderSide: const BorderSide(color: appColorPrimary, width: 2.0),
                         borderRadius: BorderRadius.circular(25.0),
                       ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                        borderSide: BorderSide(
+                          color: appFontColorSecondary,
+                          width: 1.0,
+                        ),
+                      ),
                       fillColor: appBackgroundColorPrimary,
                       filled: true,
                       isDense: true,
                       prefixIcon: IconTheme(data: IconThemeData(color: appColorPrimary), child: Icon(Icons.person)),
                       hintText: 'Username...',
-                      hintStyle: TextStyle(fontFamily: appFont),
+                      hintStyle: TextStyle(fontFamily: appFont, color: appFontColorSecondary),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(90.0)), borderSide: BorderSide(color: Colors.transparent)),
                     ),
@@ -132,7 +139,7 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                     onFieldSubmitted: (term) {
                       doLogin();
                     },
-                    style: TextStyle(fontFamily: appFont),
+                    style: TextStyle(fontFamily: appFontBold, color: appFontColorSecondary),
                     //textCapitalization: TextCapitalization.characters,
                     controller: _password,
                     obscureText: !_passwordVisible,
@@ -140,6 +147,13 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                       focusedBorder:OutlineInputBorder(
                         borderSide: const BorderSide(color: appColorPrimary, width: 2.0),
                         borderRadius: BorderRadius.circular(25.0),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(25.0),
+                        borderSide: BorderSide(
+                          color: appFontColorSecondary,
+                          width: 1.0,
+                        ),
                       ),
                       fillColor: appBackgroundColorPrimary,
                       filled: true,
@@ -160,7 +174,7 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                         },
                       ),
                       hintText: 'Password...',
-                      hintStyle: TextStyle(fontFamily: appFont),
+                      hintStyle: TextStyle(fontFamily: appFont, color: appFontColorSecondary),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(90.0)), borderSide: BorderSide(color: Colors.transparent)),
                     ),
