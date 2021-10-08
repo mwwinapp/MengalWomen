@@ -23,7 +23,3 @@ TextStyle customTextStyle({String fontFamily = appFont, double fontSize = 14.0, 
     decoration: decoration,
   );
 }
-
-void darkMode() {
-
-}

@@ -269,10 +269,6 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
       var password = _prefs.getString('password');
       var rememberMe = _prefs.getBool('remember_me');
 
-      print(username);
-      print(password);
-      print(rememberMe);
-
       if (rememberMe) {
         setState((){
           _isChecked = true;
