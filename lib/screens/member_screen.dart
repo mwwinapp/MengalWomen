@@ -32,7 +32,7 @@ class _MemberScreenState extends State<MemberScreen> {
         elevation: 0.0,
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: appBackgroundColorPrimary,),
+          icon: Icon(Icons.arrow_back, color: appBackgroundColorPrimary,),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text(

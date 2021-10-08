@@ -110,7 +110,7 @@ class _VideoScreenState extends State<VideoScreen>
                 ),
                 Expanded(
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
@@ -226,12 +226,10 @@ class _VideoScreenState extends State<VideoScreen>
         physics: BouncingScrollPhysics(),
         itemCount: 1 + _channel.videos.length,
         itemBuilder: (context, index) {
-          /*
           if (index == 0) {
-            return _buildProfileInfo();
+            return SizedBox.shrink();//_buildProfileInfo();
           }
-           */
-          Video video = _channel.videos[index];//-1
+          Video video = _channel.videos[index - 1];
           return _buildVideo(video);
         },
       ),

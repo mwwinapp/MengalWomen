@@ -46,12 +46,15 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
             backgroundColor: Colors.transparent,
             elevation: 0.0,
             centerTitle: true,
-            leading: CircleAvatar(
-              maxRadius: 1.0,
-              backgroundColor: Colors.black45,
-              child: IconButton(
-                icon: Icon(Icons.arrow_back, color: appFontColorPrimary),
-                onPressed: () => Navigator.of(context).pop(),
+            leading: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CircleAvatar(
+                maxRadius: 1.0,
+                backgroundColor: Colors.black45,
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back, color: appFontColorPrimary),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
               ),
             ),
           ),
@@ -64,7 +67,7 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
                 padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 20.0,),
                 child: Text(
                   widget.title,
-                  style: customTextStyle(fontFamily: appFontBold, fontSize: 20.0),
+                  style: customTextStyle(fontFamily: appFontBold, fontSize: 20.0, overflow: TextOverflow.visible),
                 ),
               ),
               Padding(
@@ -88,6 +91,7 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
                   ],
                 ),
               ),
+              Divider(),
               Padding(
                 padding: EdgeInsets.all(20.0),
                 child: Text(

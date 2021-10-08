@@ -22,12 +22,15 @@ class PostScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         centerTitle: true,
-        leading: CircleAvatar(
-          maxRadius: 1.0,
-          backgroundColor: Colors.black45,
-          child: IconButton(
-            icon: Icon(Icons.arrow_back, color: appFontColorPrimary),
-            onPressed: () => Navigator.of(context).pop(),
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CircleAvatar(
+            maxRadius: 1.0,
+            backgroundColor: Colors.black45,
+            child: IconButton(
+              icon: Icon(Icons.arrow_back, color: appFontColorPrimary),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
           ),
         ),
       ),

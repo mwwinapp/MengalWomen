@@ -517,10 +517,10 @@ class _SearchScreenState extends State<SearchScreen>
                 bottom: 20.0,
                 right: 20.0,
                 child: Opacity(
-                  opacity: .25,
+                  opacity: .75,
                   child: FloatingActionButton(
-                    child: Icon(Icons.keyboard_arrow_up),
-                    backgroundColor: Theme.of(context).primaryColor,
+                    child: Icon(Icons.arrow_upward),
+                    backgroundColor: appColorPrimary,
                     onPressed: () {
                       _scrollToTop();
                     },
