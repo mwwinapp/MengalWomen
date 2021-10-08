@@ -89,7 +89,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                 },
               );
             },
-            leading: Icon(Icons.facebook, color: Colors.blue),
+            leading: Icon(Icons.facebook, color: Colors.grey),
             title: Text(
               'Visit us on Facebook',
               style: customTextStyle(
