@@ -108,7 +108,7 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                   SizedBox(height: 80.0,),
                   TextFormField(
                     textInputAction: TextInputAction.next,
-                    style: TextStyle(fontFamily: appFontBold, color: appFontColorSecondary),
+                    style: TextStyle(fontFamily: appFontBold, color: appFontColorPrimary),
                     //textCapitalization: TextCapitalization.characters,
                     controller: _username,
                     decoration: InputDecoration(
@@ -139,7 +139,7 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                     onFieldSubmitted: (term) {
                       doLogin();
                     },
-                    style: TextStyle(fontFamily: appFontBold, color: appFontColorSecondary),
+                    style: TextStyle(fontFamily: appFontBold, color: appFontColorPrimary),
                     //textCapitalization: TextCapitalization.characters,
                     controller: _password,
                     obscureText: !_passwordVisible,

@@ -42,6 +42,7 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+        padding: EdgeInsets.only(top: 0),
         physics: BouncingScrollPhysics(),
         itemCount: _announcement.length,
         itemBuilder: (context, index) {
@@ -68,6 +69,16 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          width: .25,
+                          color: Colors.grey.withOpacity(0.75)),
+                    ),
+                    child: Hero(tag: _announcement[index].imageUrl,child: Image.network('${_announcement[index].imageUrl}')),
+                  ),
+                  SizedBox(height: 5.0),
+                  Container(
                     margin: EdgeInsets.only(
                         left: 15.0, top: 20.0),
                     child: Text(
@@ -91,16 +102,6 @@ class _AnnouncementsListState extends State<AnnouncementsList> {
                       ],
                     ),
                   ),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          width: .25,
-                          color: Colors.grey.withOpacity(0.75)),
-                    ),
-                    child: Hero(tag: _announcement[index].imageUrl,child: Image.network('${_announcement[index].imageUrl}')),
-                  ),
-                  SizedBox(height: 5.0),
                   Container(
                     margin: EdgeInsets.symmetric(
                         horizontal: 15.0, vertical: 10.0),

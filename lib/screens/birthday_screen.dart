@@ -32,7 +32,7 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
         elevation: 0.0,
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios),
+          icon: Icon(Icons.arrow_back, color: appBackgroundColorPrimary,),
           onPressed: () => Navigator.of(context).pop(),
         ),
         title: Text('🎂  Today\'s birthdays', style: customTextStyle(fontFamily: appFontBold, color: appBackgroundColorPrimary, fontSize: 18.0),),
@@ -62,7 +62,7 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
                 return Column(
                   children: [
                     ListTile(
-                      leading:                                 usertype == 'admin' ? CachedNetworkImage(
+                      leading: usertype == 'admin' ? CachedNetworkImage(
                         fit: BoxFit.cover,
                         imageUrl: 'https://drv.tw/~mwwinapp@gmail.com/gd/Fast.io/mwapp.imfast.io/images/photo/${members[index].mid}.jpg',
                         imageBuilder: (context, imageProvider) => Container(

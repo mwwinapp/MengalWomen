@@ -31,6 +31,7 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var topPadding = MediaQuery.of(context).padding.top;
     return YoutubePlayerBuilder(
       player: YoutubePlayer(
         controller: _controller,
@@ -39,28 +40,23 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
       ),
       builder: (context, player) {
         return Scaffold(
+          extendBodyBehindAppBar: true,
+          backgroundColor: appBackgroundColorSecondary,
           appBar: AppBar(
+            backgroundColor: Colors.transparent,
             elevation: 0.0,
             centerTitle: true,
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back_ios),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-            title: Text(widget.title, style: customTextStyle(fontFamily: appFontBold, color: Colors.white, fontSize: 18)),
-            flexibleSpace: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    appColorPrimary,
-                    appColorPrimary,
-                  ],
-                ),
+            leading: CircleAvatar(
+              maxRadius: 1.0,
+              backgroundColor: Colors.black45,
+              child: IconButton(
+                icon: Icon(Icons.arrow_back, color: appFontColorPrimary),
+                onPressed: () => Navigator.of(context).pop(),
               ),
             ),
           ),
           body: ListView(
+            padding: EdgeInsets.only(top: topPadding),
             physics: BouncingScrollPhysics(),
             children: [
               player,

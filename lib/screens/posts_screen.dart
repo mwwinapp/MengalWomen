@@ -14,31 +14,25 @@ class PostScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var topPadding = MediaQuery.of(context).padding.top;
     return Scaffold(
+      extendBodyBehindAppBar: true,
       backgroundColor: appBackgroundColorSecondary,
       appBar: AppBar(
+        backgroundColor: Colors.transparent,
         elevation: 0.0,
         centerTitle: true,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: appBackgroundColorPrimary,),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-
-                  appColorPrimary,
-                  appColorPrimary,
-                ],
-              ),
-            ),
+        leading: CircleAvatar(
+          maxRadius: 1.0,
+          backgroundColor: Colors.black45,
+          child: IconButton(
+            icon: Icon(Icons.arrow_back, color: appFontColorPrimary),
+            onPressed: () => Navigator.of(context).pop(),
           ),
-        title: Text('${utf8convert(title)}', style: customTextStyle(fontFamily: appFontBold, color: appBackgroundColorPrimary, fontSize: 18),),
+        ),
       ),
       body: ListView(
+        padding: EdgeInsets.only(top: topPadding),
         physics: BouncingScrollPhysics(),
         children: [
           Container(
