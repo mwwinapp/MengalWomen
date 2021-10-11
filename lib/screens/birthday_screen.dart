@@ -27,27 +27,10 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: appBackgroundColorPrimary,
       appBar: AppBar(
         elevation: 0.0,
         centerTitle: true,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: appBackgroundColorPrimary,),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
         title: Text('🎂  Today\'s birthdays', style: customTextStyle(fontFamily: appFontBold, color: appBackgroundColorPrimary, fontSize: 18.0),),
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                appColorPrimary,
-                appColorPrimary,
-              ],
-            ),
-          ),
-        ),
       ),
       body: FutureBuilder(
         future: members,

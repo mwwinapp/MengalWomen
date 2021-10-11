@@ -16,7 +16,7 @@ void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     title: 'Mengal Women',
-    theme: ThemeData(primaryColor: appColorPrimary, fontFamily: 'Aller'),
+    theme: customTheme(true),
     home: MainApp(),
   ));
 }
@@ -54,7 +54,7 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                     Navigator.of(context, rootNavigator: true).pop(),
                 onPressedYes: () => SystemNavigator.pop()),
         child: Scaffold(
-          backgroundColor: appBackgroundColorPrimary,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             appBar: AppBar(
               elevation: 0.0,
               centerTitle: true,
@@ -71,18 +71,6 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                   },
                 ),
               ],
-              flexibleSpace: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      appColorPrimary,
-                      appColorPrimary,
-                    ],
-                  ),
-                ),
-              ),
             ),
           body: Container(
             //decoration: BoxDecoration(

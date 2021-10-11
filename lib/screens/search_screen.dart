@@ -86,21 +86,18 @@ class _SearchScreenState extends State<SearchScreen>
           return StatefulBuilder(
             builder: (context, setState) {
               return AlertDialog(
-                backgroundColor: appBackgroundColorPrimary,
                 actionsPadding: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 10.0),
-                titleTextStyle: customTextStyle(fontFamily: appFont),
-                contentTextStyle: customTextStyle(fontFamily: appFont),
                 scrollable: true,
                 title: Text(
                   'Search Options:',
                   style: customTextStyle(
-                      color: appFontColorSecondary, fontFamily: appFont, fontSize: 18.0),
+                      color: appFontColorSecondary,fontSize: 18.0),
                 ),
                 content: ListBody(
                   children: [
                     Text(
                       'Filter by:',
-                      style: customTextStyle(color: appFontColorSecondary, fontFamily: appFont),
+                      style: customTextStyle(color: appFontColorSecondary),
                     ),
                     SwitchListTile(
                       activeColor: appColorPrimary,
@@ -195,16 +192,6 @@ class _SearchScreenState extends State<SearchScreen>
                               textAlign: TextAlign.center,
                               style: customTextStyle(fontFamily: appFontBold, color: appBackgroundColorPrimary),
                             ),
-                            style: ButtonStyle(
-                              foregroundColor: MaterialStateProperty.all<Color>(appBackgroundColorPrimary),
-                              backgroundColor: MaterialStateProperty.all<Color>(appColorPrimary),
-                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(25.0),
-                                  side: BorderSide(color: appColorPrimary),
-                                ),
-                              ),
-                            ),
                           ),
                         ),
                       ),
@@ -223,7 +210,7 @@ class _SearchScreenState extends State<SearchScreen>
                             ),
                             style: ButtonStyle(
                               foregroundColor: MaterialStateProperty.all<Color>(appColorPrimary),
-                              backgroundColor: MaterialStateProperty.all<Color>(appBackgroundColorPrimary),
+                              backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
                               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                                 RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(25.0),

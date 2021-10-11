@@ -41,7 +41,6 @@ class _VideoPlayScreenState extends State<VideoPlayScreen> {
       builder: (context, player) {
         return Scaffold(
           extendBodyBehindAppBar: true,
-          backgroundColor: appBackgroundColorSecondary,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0.0,

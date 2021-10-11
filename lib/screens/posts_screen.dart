@@ -17,7 +17,6 @@ class PostScreen extends StatelessWidget {
     var topPadding = MediaQuery.of(context).padding.top;
     return Scaffold(
       extendBodyBehindAppBar: true,
-      backgroundColor: appBackgroundColorSecondary,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0.0,

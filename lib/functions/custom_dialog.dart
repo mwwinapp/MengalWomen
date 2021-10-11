@@ -9,7 +9,6 @@ Future customDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: appBackgroundColorPrimary,
           actionsPadding: EdgeInsets.only(left: 8.0, right: 8.0, bottom: 10.0),
           title: Column(
             children: [
@@ -33,16 +32,6 @@ Future customDialog(
                             textAlign: TextAlign.center,
                             style: customTextStyle(fontFamily: appFontBold, color: appBackgroundColorPrimary),
                           ),
-                          style: ButtonStyle(
-                            foregroundColor: MaterialStateProperty.all<Color>(appBackgroundColorPrimary),
-                            backgroundColor: MaterialStateProperty.all<Color>(appColorPrimary),
-                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(25.0),
-                                side: BorderSide(color: appColorPrimary),
-                              ),
-                            ),
-                          ),
                         ),
                       ),
                     ),
@@ -58,16 +47,6 @@ Future customDialog(
                       "Yes",
                       textAlign: TextAlign.center,
                       style: customTextStyle(fontFamily: appFontBold, color: appBackgroundColorPrimary),
-                    ),
-                    style: ButtonStyle(
-                      foregroundColor: MaterialStateProperty.all<Color>(appBackgroundColorPrimary),
-                      backgroundColor: MaterialStateProperty.all<Color>(appColorPrimary),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25.0),
-                          side: BorderSide(color: appColorPrimary),
-                        ),
-                      ),
                     ),
                   ),
                 ),
@@ -85,7 +64,7 @@ Future customDialog(
                     ),
                     style: ButtonStyle(
                       foregroundColor: MaterialStateProperty.all<Color>(appColorPrimary),
-                      backgroundColor: MaterialStateProperty.all<Color>(appBackgroundColorPrimary),
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                         RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25.0),

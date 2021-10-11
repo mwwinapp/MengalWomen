@@ -44,7 +44,6 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
     var topPadding = MediaQuery.of(context).padding.top;
     return Scaffold(
         extendBodyBehindAppBar: true,
-        backgroundColor: appBackgroundColorPrimary,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0.0,
@@ -75,7 +74,6 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                 margin: EdgeInsets.only(top: 15.0),
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
-                  color: appBackgroundColorSecondary,
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.05),

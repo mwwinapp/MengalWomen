@@ -27,29 +27,12 @@ class _MemberScreenState extends State<MemberScreen> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: appBackgroundColorPrimary,
       appBar: AppBar(
         elevation: 0.0,
         centerTitle: true,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: appBackgroundColorPrimary,),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
         title: Text(
           'Member Info',
           style: customTextStyle(fontFamily: appFontBold, color: appBackgroundColorPrimary, fontSize: 18),
-        ),
-        flexibleSpace: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                appColorPrimary,
-                appColorPrimary,
-              ],
-            ),
-          ),
         ),
       ),
       body: Container(

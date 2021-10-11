@@ -24,3 +24,33 @@ TextStyle customTextStyle({String fontFamily = appFont, double fontSize = 14.0, 
   );
 }
 
+ThemeData customTheme(bool isDark) {
+  return ThemeData(
+    scaffoldBackgroundColor: appBackgroundColorPrimary,
+    fontFamily: 'Aller',
+    appBarTheme: AppBarTheme(
+      backgroundColor: appColorPrimary,
+    ),
+    textTheme: TextTheme(
+      //
+    ),
+    textButtonTheme: TextButtonThemeData(
+      style: ButtonStyle(
+        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+        backgroundColor: MaterialStateProperty.all<Color>(appColorPrimary),
+          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(25.0),
+              side: BorderSide(color: appColorPrimary),
+            ),
+          )
+      ),
+    ),
+    iconTheme: IconThemeData(
+      color: appColorPrimary,
+    ),
+    dialogBackgroundColor: appBackgroundColorPrimary,
+  );
+}
+
+/**/

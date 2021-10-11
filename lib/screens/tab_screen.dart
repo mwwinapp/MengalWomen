@@ -94,7 +94,6 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
                     Navigator.of(context, rootNavigator: true).pop(),
                 onPressedYes: () => SystemNavigator.pop()),
         child: Scaffold(
-          backgroundColor: appBackgroundColorPrimary,
           appBar: AppBar(
             automaticallyImplyLeading: false,
             backgroundColor: appBackgroundColorPrimary,
