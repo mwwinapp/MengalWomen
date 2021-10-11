@@ -34,15 +34,18 @@ class _SearchScreenState extends State<SearchScreen>
   }
 
   search(String keyword,
-      [String filterBarangay = '', String filterStatus = '']) {
+      [String filterBarangay = '', String filterStatus = '', String filterMemberType = '']) {
     if (isCheckedBarangay) {
       filterBarangay = " AND barangay = '$_selectedBarangay'";
     }
     if (isCheckedStatus) {
       filterStatus = " AND status = '$_selectedStatus'";
     }
+    if (isCheckedMemberType) {
+      filterMemberType = " AND insurancestatus = '$_selectedMemberType'";
+    }
     setState(() {
-      members = dBHelper.search(keyword, filterBarangay, filterStatus);
+      members = dBHelper.search(keyword, filterBarangay, filterStatus, filterMemberType);
     });
     //_isScrollable = true;
   }
@@ -75,8 +78,26 @@ class _SearchScreenState extends State<SearchScreen>
     return null;
   }
 
+  List<DropdownMenuItem> memberTypeList() {
+    if (isCheckedMemberType) {
+      return [
+        DropdownMenuItem(
+          value: 'REGULAR',
+          child: Text('REGULAR'),
+        ),
+        DropdownMenuItem(
+          value: 'PREMIUM',
+          child: Text('PREMIUM'),
+        ),
+      ];
+    }
+    return null;
+  }
+
   bool isCheckedBarangay = false;
   bool isCheckedStatus = false;
+  bool isCheckedMemberType = false;
+  String _selectedMemberType = 'REGULAR';
   String _selectedBarangay = 'ANGOLUAN';
   String _selectedStatus = 'ACTIVE';
 
@@ -166,6 +187,42 @@ class _SearchScreenState extends State<SearchScreen>
                         onChanged: (value) {
                           setState(() {
                             _selectedStatus = value;
+                          });
+                        },
+                      ),
+                    ),
+                    SwitchListTile(
+                      activeColor: appColorPrimary,
+                      controlAffinity: ListTileControlAffinity.leading,
+                      contentPadding: EdgeInsets.all(0),
+                      title: Text(
+                        'Member Type',
+                        style: customTextStyle(fontFamily: appFont),
+                      ),
+                      value: isCheckedMemberType,
+                      onChanged: (value) {
+                        setState(
+                              () {
+                              isCheckedMemberType = value;
+                          },
+                        );
+                      },
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(10.0),
+                      child: DropdownButton(
+                        dropdownColor: appBackgroundColorPrimary,
+                        isExpanded: true,
+                        disabledHint: Text(
+                          'Select Membertype',
+                          style: customTextStyle(fontFamily: appFont, color: appFontColorSecondary),
+                        ),
+                        style: customTextStyle(fontFamily: appFont),
+                        items: memberTypeList(),
+                        value: _selectedMemberType,
+                        onChanged: (value) {
+                          setState(() {
+                            _selectedMemberType = value;
                           });
                         },
                       ),
@@ -302,6 +359,23 @@ class _SearchScreenState extends State<SearchScreen>
                             fontSize: 12.0),
                       )
                       : SizedBox.shrink(),
+                  isCheckedBarangay || isCheckedStatus ?
+                  Text(', ',
+                      style: customTextStyle(
+                          fontFamily: appFont,
+                          color: appFontColorSecondary,
+                          fontSize: 12.0)) :
+                  SizedBox.shrink(),
+                  isCheckedMemberType
+                      ? Text(
+                    'Membertype: $_selectedMemberType',
+                    overflow: TextOverflow.ellipsis,
+                    style: customTextStyle(
+                        fontFamily: appFont,
+                        color: appFontColorSecondary,
+                        fontSize: 12.0),
+                  )
+                      : SizedBox.shrink()
                 ],
               ),
             ),
