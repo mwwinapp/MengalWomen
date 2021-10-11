@@ -143,7 +143,7 @@ class _VideoScreenState extends State<VideoScreen>
                             fontSize: 15.0,
                             fontFamily: appFont),
                         overflow: TextOverflow.ellipsis,
-                        maxLines: 2,
+                        maxLines: 3,
                       ),
                     ],
                   ),
