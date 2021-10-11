@@ -26,13 +26,41 @@ TextStyle customTextStyle({String fontFamily = appFont, double fontSize = 14.0, 
 
 ThemeData customTheme(bool isDark) {
   return ThemeData(
+    //colorScheme: ColorScheme.fromSwatch().copyWith(secondary: appColorPrimary),
     scaffoldBackgroundColor: appBackgroundColorPrimary,
+    dialogBackgroundColor: appBackgroundColorPrimary,
     fontFamily: 'Aller',
     appBarTheme: AppBarTheme(
       backgroundColor: appColorPrimary,
     ),
     textTheme: TextTheme(
-      //
+      bodyText1: TextStyle(
+        fontFamily: 'AllerBold',
+      ),
+      bodyText2: TextStyle(
+        color: Colors.grey,
+      ),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      fillColor: appBackgroundColorPrimary,
+      filled: true,
+      isDense: true,
+      labelStyle: TextStyle(color: Colors.grey),
+      hintStyle: TextStyle(color: Colors.grey),
+      floatingLabelStyle: TextStyle(color: appColorPrimary),
+      focusedBorder:OutlineInputBorder(
+        borderSide: const BorderSide(color: appColorPrimary, width: 2.0),
+        borderRadius: BorderRadius.circular(25.0),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(25.0),
+        borderSide: BorderSide(
+          color: appFontColorSecondary,
+          width: 1.0,
+        ),
+      ),
+      border:  OutlineInputBorder(
+          borderRadius: BorderRadius.circular(35.0),),
     ),
     textButtonTheme: TextButtonThemeData(
       style: ButtonStyle(
@@ -49,7 +77,9 @@ ThemeData customTheme(bool isDark) {
     iconTheme: IconThemeData(
       color: appColorPrimary,
     ),
-    dialogBackgroundColor: appBackgroundColorPrimary,
+    checkboxTheme: CheckboxThemeData(
+      fillColor: MaterialStateProperty.all<Color>(appColorPrimary),
+    ),
   );
 }
 

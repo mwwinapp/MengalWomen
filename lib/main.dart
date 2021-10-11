@@ -112,29 +112,11 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                       },
                       textInputAction: TextInputAction.next,
                       style: TextStyle(fontFamily: appFontBold, color: appFontColorPrimary),
-                      //textCapitalization: TextCapitalization.characters,
                       controller: _username,
                       decoration: InputDecoration(
-                        focusedBorder:OutlineInputBorder(
-                          borderSide: const BorderSide(color: appColorPrimary, width: 2.0),
-                          borderRadius: BorderRadius.circular(25.0),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25.0),
-                          borderSide: BorderSide(
-                            color: appFontColorSecondary,
-                            width: 1.0,
-                          ),
-                        ),
-                        fillColor: appBackgroundColorPrimary,
-                        filled: true,
-                        isDense: true,
                         prefixIcon: IconTheme(data: IconThemeData(color: appColorPrimary), child: Icon(Icons.person)),
                         labelText: 'Username',
-                        labelStyle: TextStyle(fontFamily: appFont),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(90.0)), borderSide: BorderSide(color: Colors.transparent)),
-                      ),
+                        ),
                     ),
                     SizedBox(height: 20.0,),
                     TextFormField(
@@ -146,21 +128,9 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                           return null;
                         },
                       style: TextStyle(fontFamily: appFontBold, color: appFontColorPrimary),
-                      //textCapitalization: TextCapitalization.characters,
                       controller: _password,
                       obscureText: !_passwordVisible,
                       decoration: InputDecoration(
-                        focusedBorder:OutlineInputBorder(
-                          borderSide: const BorderSide(color: appColorPrimary, width: 2.0),
-                          borderRadius: BorderRadius.circular(25.0),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(25.0),
-                          borderSide: BorderSide(
-                            color: appFontColorSecondary,
-                            width: 1.0,
-                          ),
-                        ),
                         fillColor: appBackgroundColorPrimary,
                         filled: true,
                         isDense: true,
@@ -180,15 +150,10 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                           },
                         ),
                         labelText: 'Password',
-                        labelStyle: TextStyle(fontFamily: appFont),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(90.0)), borderSide: BorderSide(color: Colors.transparent)),
                       ),
                     ),
                     SizedBox(height: 20.0,),
                     CheckboxListTile(
-                      checkColor: appBackgroundColorPrimary,
-                      activeColor: appColorPrimary,
                       controlAffinity: ListTileControlAffinity.leading,
                       contentPadding: EdgeInsets.all(0),
                       title: Text(
@@ -221,16 +186,6 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                           "Log in",
                           textAlign: TextAlign.center,
                           style: customTextStyle(fontFamily: appFontBold, fontSize: 16.0, color: appBackgroundColorPrimary),
-                        ),
-                        style: ButtonStyle(
-                          foregroundColor: MaterialStateProperty.all<Color>(appBackgroundColorPrimary),
-                          backgroundColor: MaterialStateProperty.all<Color>(appColorPrimary),
-                          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                            RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(25.0),
-                              side: BorderSide(color: appColorPrimary),
-                            ),
-                          ),
                         ),
                       ),
                     ),

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -103,10 +105,7 @@ class _SearchScreenState extends State<SearchScreen>
                       activeColor: appColorPrimary,
                       controlAffinity: ListTileControlAffinity.leading,
                       contentPadding: EdgeInsets.all(0),
-                      title: Text(
-                        'Barangay',
-                        style: customTextStyle(fontFamily: appFont),
-                      ),
+                      title: Text('Barangay'),
                       value: isCheckedBarangay,
                       onChanged: (value) {
                         setState(
@@ -248,20 +247,6 @@ class _SearchScreenState extends State<SearchScreen>
                 textCapitalization: TextCapitalization.characters,
                 controller: _searchController,
                 decoration: InputDecoration(
-                  focusedBorder:OutlineInputBorder(
-                    borderSide: const BorderSide(color: appColorPrimary, width: 2.0),
-                    borderRadius: BorderRadius.circular(25.0),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(25.0),
-                    borderSide: BorderSide(
-                      color: appFontColorSecondary,
-                      width: 1.0,
-                    ),
-                  ),
-                  fillColor: appBackgroundColorPrimary,
-                  filled: true,
-                  isDense: true,
                   prefixIcon: IconTheme(data: IconThemeData(color: appColorPrimary), child: Icon(Icons.search)),
                   suffixIcon: IconTheme(
                     data: IconThemeData(color: appColorPrimary),
@@ -274,9 +259,6 @@ class _SearchScreenState extends State<SearchScreen>
                     ),
                   ),
                   hintText: 'Type keyword here',
-                  hintStyle: customTextStyle(fontFamily: appFont, color: appFontColorSecondary),
-                  border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(35.0)),
                 ),
               ),
             ),
@@ -331,13 +313,13 @@ class _SearchScreenState extends State<SearchScreen>
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       List<Member> members = snapshot.data;
+                      _checkScrollable();
                       return ListView.builder(
                         controller: _scrollController,
                         physics: BouncingScrollPhysics(),
                         itemCount: snapshot.data.length,
                         itemBuilder: (context, index) {
                           if (snapshot.hasData) {
-                            _checkScrollable();
                             return Padding(
                               padding:
                                   EdgeInsets.only(left: 20.0, right: 20.0),
