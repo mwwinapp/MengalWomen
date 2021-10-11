@@ -23,7 +23,7 @@ class _SearchScreenState extends State<SearchScreen>
   var dBHelper = DbHelper();
   TextEditingController _searchController = TextEditingController();
   ScrollController _scrollController = ScrollController();
-  bool _searchExecuted = false;
+  bool _isScrollable = false;
 
   @override
   void initState() {
@@ -42,7 +42,7 @@ class _SearchScreenState extends State<SearchScreen>
     setState(() {
       members = dBHelper.search(keyword, filterBarangay, filterStatus);
     });
-    _searchExecuted = true;
+    //_isScrollable = true;
   }
 
   List<DropdownMenuItem> barangayList() {
@@ -184,7 +184,7 @@ class _SearchScreenState extends State<SearchScreen>
                           height: 50.0,
                           child: TextButton(
                             onPressed: () {
-                              if(_searchExecuted) {
+                              if(_isScrollable) {
                                 _scrollToTop();
                               }
                               search(_searchController.text);
@@ -350,6 +350,7 @@ class _SearchScreenState extends State<SearchScreen>
                         itemCount: snapshot.data.length,
                         itemBuilder: (context, index) {
                           if (snapshot.hasData) {
+                            _checkScrollable();
                             return Padding(
                               padding:
                                   EdgeInsets.only(left: 20.0, right: 20.0),
@@ -512,7 +513,7 @@ class _SearchScreenState extends State<SearchScreen>
             ),
           ],
         ),
-        _searchExecuted
+        _isScrollable
             ? Positioned(
                 bottom: 20.0,
                 right: 20.0,
@@ -530,6 +531,20 @@ class _SearchScreenState extends State<SearchScreen>
             : SizedBox.shrink(),
       ],
     );
+  }
+
+  void _checkScrollable() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      if (_scrollController.position.maxScrollExtent > 0) {
+        setState(() {
+          _isScrollable = true;
+        });
+      } else {
+        setState(() {
+          _isScrollable = false;
+        });
+      }
+    });
   }
 
   void _scrollToTop() {

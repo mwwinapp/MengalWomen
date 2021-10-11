@@ -16,7 +16,7 @@ void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     title: 'Mengal Women',
-    theme: ThemeData(primaryColor: appColorPrimary),
+    theme: ThemeData(primaryColor: appColorPrimary, fontFamily: 'Aller'),
     home: MainApp(),
   ));
 }
@@ -142,8 +142,8 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                         filled: true,
                         isDense: true,
                         prefixIcon: IconTheme(data: IconThemeData(color: appColorPrimary), child: Icon(Icons.person)),
-                        hintText: 'Username...',
-                        hintStyle: TextStyle(fontFamily: appFont, color: appFontColorSecondary),
+                        labelText: 'Username',
+                        labelStyle: TextStyle(fontFamily: appFont),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(90.0)), borderSide: BorderSide(color: Colors.transparent)),
                       ),
@@ -191,8 +191,8 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                             });
                           },
                         ),
-                        hintText: 'Password...',
-                        hintStyle: TextStyle(fontFamily: appFont, color: appFontColorSecondary),
+                        labelText: 'Password',
+                        labelStyle: TextStyle(fontFamily: appFont),
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.all(Radius.circular(90.0)), borderSide: BorderSide(color: Colors.transparent)),
                       ),
