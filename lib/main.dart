@@ -72,141 +72,138 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
                 ),
               ],
             ),
-          body: Container(
-            //decoration: BoxDecoration(
-            //image: DecorationImage(
-              //image: AssetImage("assets/images/bg.jpg"),
-              //fit: BoxFit.cover,
-              //),
-            //),
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    //Image(image: AssetImage("assets/images/mw.logo.png"), width: 100.0, height: 100.0,),
-                    GradientText("Mengal Women",
-                        gradient: LinearGradient(
-                            colors: [appColorPrimary, appColorPrimary, appColorPrimary]),
-                        style: customTextStyle(
-                            fontFamily: appFontBold,
-                            letterSpacing: -1.5,
-                            fontSize: 40.0),
-                        textAlign: TextAlign.center),
-                    Text('Organization Inc.',
-                        style: customTextStyle(
-                            color: appColorPrimary,
-                            fontFamily: appFontBold,
-                            letterSpacing: 5.0,
-                            fontSize: 15.0),
-                    ),
-                    SizedBox(height: 80.0,),
-                    TextFormField(
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter username.';
-                        }
-                        return null;
-                      },
-                      textInputAction: TextInputAction.next,
-                      style: TextStyle(fontFamily: appFontBold, color: appFontColorPrimary),
-                      controller: _username,
-                      decoration: InputDecoration(
-                        prefixIcon: IconTheme(data: IconThemeData(color: appColorPrimary), child: Icon(Icons.person)),
-                        labelText: 'Username',
-                        ),
-                    ),
-                    SizedBox(height: 20.0,),
-                    TextFormField(
-                      textInputAction: TextInputAction.done,
+          body: Center(
+            child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30.0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      //Image(image: AssetImage("assets/images/mw.logo.png"), width: 100.0, height: 100.0,),
+                      GradientText("Mengal Women",
+                          gradient: LinearGradient(
+                              colors: [appColorPrimary, appColorPrimary, appColorPrimary]),
+                          style: customTextStyle(
+                              fontFamily: appFontBold,
+                              letterSpacing: -1.5,
+                              fontSize: 40.0),
+                          textAlign: TextAlign.center),
+                      Text('Organization Inc.',
+                          style: customTextStyle(
+                              color: appColorPrimary,
+                              fontFamily: appFontBold,
+                              letterSpacing: 5.0,
+                              fontSize: 15.0),
+                      ),
+                      SizedBox(height: 80.0,),
+                      TextFormField(
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please enter password.';
+                            return 'Please enter username.';
                           }
                           return null;
                         },
-                      style: TextStyle(fontFamily: appFontBold, color: appFontColorPrimary),
-                      controller: _password,
-                      obscureText: !_passwordVisible,
-                      decoration: InputDecoration(
-                        fillColor: appBackgroundColorPrimary,
-                        filled: true,
-                        isDense: true,
-                        prefixIcon: IconTheme(data: IconThemeData(color: appColorPrimary), child: Icon(Icons.lock)),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            // Based on passwordVisible state choose the icon
-                            _passwordVisible
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                            color: appColorPrimary,
+                        textInputAction: TextInputAction.next,
+                        style: TextStyle(fontFamily: appFontBold, color: appFontColorPrimary),
+                        controller: _username,
+                        decoration: InputDecoration(
+                          prefixIcon: IconTheme(data: IconThemeData(color: appColorPrimary), child: Icon(Icons.person)),
+                          labelText: 'Username',
                           ),
-                          onPressed: () {
-                            setState(() {
-                              _passwordVisible = !_passwordVisible;
-                            });
-                          },
-                        ),
-                        labelText: 'Password',
                       ),
-                    ),
-                    SizedBox(height: 20.0,),
-                    CheckboxListTile(
-                      controlAffinity: ListTileControlAffinity.leading,
-                      contentPadding: EdgeInsets.all(0),
-                      title: Text(
-                        'Save my Log in Credentials',
-                        style: customTextStyle(fontFamily: appFontBold, color: Colors.grey[700]),
-                      ),
-                      value: _isChecked,
-                      onChanged: (value) {
-                        setState(
-                              () {
-                            _isChecked = value;
-                          },
-                        );
-                      },
-                    ),
-                    SizedBox(height: 50.0,),
-                    Container(
-                      height: 50.0,
-                      width: double.infinity,
-                      child: TextButton(
-                        onPressed: () {
-                          if (_formKey.currentState.validate()) {
-                            if (_username.text != '' && _password.text != '') {
-                              _rememberMe(_isChecked);
-                              doLogin();
+                      SizedBox(height: 20.0,),
+                      TextFormField(
+                        textInputAction: TextInputAction.done,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter password.';
                             }
-                          }
-                        },
-                        child: Text(
-                          "Log in",
-                          textAlign: TextAlign.center,
-                          style: customTextStyle(fontFamily: appFontBold, fontSize: 16.0, color: appBackgroundColorPrimary),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 20.0,),
-                    Center(
-                      child: RichText(
-                        text: TextSpan(
-                          text: 'Log in as Guest?',
-                          style: customTextStyle(
-                            fontFamily: appFontBold,
-                            color: appColorPrimary,
-                            decoration: TextDecoration.underline,
+                            return null;
+                          },
+                        style: TextStyle(fontFamily: appFontBold, color: appFontColorPrimary),
+                        controller: _password,
+                        obscureText: !_passwordVisible,
+                        decoration: InputDecoration(
+                          fillColor: appBackgroundColorPrimary,
+                          filled: true,
+                          isDense: true,
+                          prefixIcon: IconTheme(data: IconThemeData(color: appColorPrimary), child: Icon(Icons.lock)),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              // Based on passwordVisible state choose the icon
+                              _passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: appColorPrimary,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _passwordVisible = !_passwordVisible;
+                              });
+                            },
                           ),
-                          recognizer: TapGestureRecognizer()..onTap = ((){
-                            usertype = 'guest';
-                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TabScreen(),),);
-                          }),
+                          labelText: 'Password',
                         ),
                       ),
-                    ),
-                  ],
+                      SizedBox(height: 20.0,),
+                      CheckboxListTile(
+                        controlAffinity: ListTileControlAffinity.leading,
+                        contentPadding: EdgeInsets.all(0),
+                        title: Text(
+                          'Save my Log in Credentials',
+                          style: customTextStyle(fontFamily: appFontBold, color: Colors.grey[700]),
+                        ),
+                        value: _isChecked,
+                        onChanged: (value) {
+                          setState(
+                                () {
+                              _isChecked = value;
+                            },
+                          );
+                        },
+                      ),
+                      SizedBox(height: 50.0,),
+                      Container(
+                        height: 50.0,
+                        width: double.infinity,
+                        child: TextButton(
+                          onPressed: () {
+                            if (_formKey.currentState.validate()) {
+                              if (_username.text != '' && _password.text != '') {
+                                _rememberMe(_isChecked);
+                                doLogin();
+                              }
+                            }
+                          },
+                          child: Text(
+                            "Log in",
+                            textAlign: TextAlign.center,
+                            style: customTextStyle(fontFamily: appFontBold, fontSize: 16.0, color: appBackgroundColorPrimary),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 20.0,),
+                      Center(
+                        child: RichText(
+                          text: TextSpan(
+                            text: 'Log in as Guest?',
+                            style: customTextStyle(
+                              fontFamily: appFontBold,
+                              color: appColorPrimary,
+                              decoration: TextDecoration.underline,
+                            ),
+                            recognizer: TapGestureRecognizer()..onTap = ((){
+                              usertype = 'guest';
+                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => TabScreen(),),);
+                            }),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -263,5 +260,4 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
       });
     });
   }
-
 }

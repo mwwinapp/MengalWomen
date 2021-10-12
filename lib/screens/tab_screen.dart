@@ -14,10 +14,12 @@ import 'package:mw/models/announcement_model.dart';
 import 'package:mw/models/member_model.dart';
 import 'package:mw/screens/announcement_screen.dart';
 import 'package:mw/screens/home_screen.dart';
-import 'package:mw/screens/search_screen.dart';
+import 'package:mw/screens/searchbar_screen.dart';
 import 'package:mw/screens/settings_screen.dart';
 import 'package:mw/screens/video_screen.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
+
+import 'dashboard_screen.dart';
 
 class TabScreen extends StatefulWidget {
   @override
@@ -32,7 +34,7 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
 
   void initState() {
     super.initState();
-    _tabController = TabController(vsync: this, length: 4, initialIndex: 2);
+    _tabController = TabController(vsync: this, length: 4, initialIndex: 0);
     _tabController.addListener(() => _handleTabSelection());
     // initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
     var initializationSettingsAndroid =
@@ -106,13 +108,24 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
                     fontSize: 25.0),
                 textAlign: TextAlign.center),
             actions: [
+              IconButton(
+                color: appColorPrimary,
+                icon: Icon(Icons.search),
+                onPressed: () {
+                  print(_announcement.length);
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => SearchBarScreen()));
+                },
+              ),
               Stack(
                 children: [
                   IconButton(
                     color: appColorPrimary,
                     icon: Icon(OMIcons.chat),
                     onPressed: () {
-                      print(_announcement.length);
+                      //print(_announcement.length);
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -144,6 +157,12 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
                 tabs: [
                   Tab(
                     icon: Icon(
+                      OMIcons.dashboard,
+                      color: _tabController.index == 0 ? appColorPrimary : Colors.grey[500],
+                    ),
+                  ),
+                  Tab(
+                    icon: Icon(
                       OMIcons.timeline,
                       color: _tabController.index == 0 ? appColorPrimary : Colors.grey[500],
                     ),
@@ -154,12 +173,12 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
                       color: _tabController.index == 1 ? appColorPrimary : Colors.grey[500],
                     ),
                   ),
-                  Tab(
+                  /*Tab(
                     icon: Icon(
                       Icons.search,
                       color: _tabController.index == 2 ? appColorPrimary : Colors.grey[500],
                     ),
-                  ),
+                  ),*/
                   Tab(
                     icon: Icon(
                       Icons.menu,
@@ -171,9 +190,9 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
           body: TabBarView(
             controller: _tabController,
             children: [
+              DashBoardScreen(),
               HomeScreen(),
               VideoScreen(),
-              SearchScreen(),
               SettingsScreen()
             ],
           ),

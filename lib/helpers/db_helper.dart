@@ -79,10 +79,9 @@ class DbHelper {
     return db;
   }
 
-  Future<List<Member>> getMembers() async {
+  Future<List<Member>> getDatabaseData(String query) async {
     var dBClient = await db;
-    List<Map> maps = await dBClient.rawQuery(
-        "SELECT mid, lastrenewal, lastname || ', ' || firstname || ' ' || CASE mi WHEN '' THEN '' ELSE mi || '.' END AS fullname, dob, barangay, CASE WHEN DATE(substr(lastrenewal,7,4)||'-'||substr(lastrenewal,1,2)||'-'||substr(lastrenewal,4,2), '+1 year') <= date('now','start of month','+1 month','-1 day') THEN 'EXPIRED' ELSE 'ACTIVE' END AS status FROM tblmembers");
+    List<Map> maps = await dBClient.rawQuery(query);
     List<Member> members = [];
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {

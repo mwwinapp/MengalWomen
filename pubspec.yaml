@@ -44,6 +44,7 @@ dependencies:
   pointycastle: ^3.0.1
   shared_preferences: ^0.5.12+4
   url_launcher: ^6.0.5
+  percent_indicator: ^3.4.0
 
 flutter_icons:
   image_path: "icon/icon.png"
