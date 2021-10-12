@@ -117,7 +117,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
                       ),
                       child: CircularPercentIndicator(
                         radius: MediaQuery.of(context).size.width / 2 - 60,
-                        lineWidth: 20.0,
+                        lineWidth: 30.0,
                         animation: true,
                         percent: activePercentValue * .01,
                         center: Text('${activePercentValue.round()}%',
@@ -153,7 +153,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
                       ),
                       child: CircularPercentIndicator(
                         radius: MediaQuery.of(context).size.width / 2 - 60,
-                        lineWidth: 20.0,
+                        lineWidth: 30.0,
                         animation: true,
                         percent: expiredPercentValue * .01,
                         center: Text('${expiredPercentValue.round()}%',
@@ -267,47 +267,55 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
                   ),
                 ),
                 SizedBox(height: 20.0),
-                Text('Premium Members',
-                  style: customTextStyle(
-                    fontFamily: 'AllerBold',
-                    color: appFontColorSecondary,
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Premium Members',
+                        style: customTextStyle(
+                          fontFamily: 'AllerBold',
+                          color: appFontColorSecondary,
+                        ),
+                      ),
+                      SizedBox(height: 10.0),
+                      LinearPercentIndicator(
+                        animation: true,
+                        lineHeight: 20.0,
+                        animationDuration: 1000,
+                        percent: premiumPercentValue * .01,
+                        center: Text('$_totalPremiumMembers',
+                          style: customTextStyle(
+                            color: appBackgroundColorPrimary,
+                          ),
+                        ),
+                        linearStrokeCap: LinearStrokeCap.butt,
+                        progressColor: Colors.amber,
+                      ),
+                      //---------------------------
+                      SizedBox(height: 20.0),
+                      Text('Regular Members',
+                        style: customTextStyle(
+                          fontFamily: 'AllerBold',
+                          color: appFontColorSecondary,
+                        ),
+                      ),
+                      SizedBox(height: 10.0),
+                      LinearPercentIndicator(
+                        animation: true,
+                        lineHeight: 20.0,
+                        animationDuration: 1000,
+                        percent: regularPercentValue * .01,
+                        center: Text('$regularMembers',
+                          style: customTextStyle(
+                            color: appBackgroundColorPrimary,
+                          ),
+                        ),
+                        linearStrokeCap: LinearStrokeCap.butt,
+                        progressColor: Colors.blue,
+                      ),
+                    ],
                   ),
-                ),
-                SizedBox(height: 10.0),
-                LinearPercentIndicator(
-                  animation: true,
-                  lineHeight: 20.0,
-                  animationDuration: 1000,
-                  percent: premiumPercentValue * .01,
-                  center: Text('$_totalPremiumMembers',
-                    style: customTextStyle(
-                      color: appBackgroundColorPrimary,
-                    ),
-                  ),
-                  linearStrokeCap: LinearStrokeCap.roundAll,
-                  progressColor: Colors.amber,
-                ),
-                //---------------------------
-                SizedBox(height: 20.0),
-                Text('Regular Members',
-                  style: customTextStyle(
-                    fontFamily: 'AllerBold',
-                    color: appFontColorSecondary,
-                  ),
-                ),
-                SizedBox(height: 10.0),
-                LinearPercentIndicator(
-                  animation: true,
-                  lineHeight: 20.0,
-                  animationDuration: 1000,
-                  percent: regularPercentValue * .01,
-                  center: Text('$regularMembers',
-                    style: customTextStyle(
-                      color: appBackgroundColorPrimary,
-                    ),
-                  ),
-                  linearStrokeCap: LinearStrokeCap.roundAll,
-                  progressColor: Colors.blue,
                 ),
                 //---------------------------
               ],

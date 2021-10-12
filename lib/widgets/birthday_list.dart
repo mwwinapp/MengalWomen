@@ -17,7 +17,7 @@ class _BirthdayListState extends State<BirthdayList> {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
   Future<List<Member>> members;
   var dBHelper = DbHelper();
-  bool _hideBirthday = false;
+  bool _hideBirthday = true;
 
   String text;
   int length;
