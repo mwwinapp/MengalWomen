@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:mw/functions/custom_dialog.dart';
 import 'package:mw/functions/downloader.dart';
 import 'package:mw/functions/globals.dart';
@@ -27,7 +26,6 @@ class TabScreen extends StatefulWidget {
 }
 
 class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
   Future<List<Member>> members;
   var dBHelper = DbHelper();
   TabController _tabController;
@@ -36,16 +34,6 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
     super.initState();
     _tabController = TabController(vsync: this, length: 4, initialIndex: 0);
     _tabController.addListener(() => _handleTabSelection());
-    // initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
-    var initializationSettingsAndroid =
-    AndroidInitializationSettings('app_icon');
-    var initializationSettingsIOS = IOSInitializationSettings(onDidReceiveLocalNotification: onDidReceiveLocalNotification);
-    var initializationSettings = InitializationSettings(initializationSettingsAndroid, initializationSettingsIOS);
-
-    flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: selectNotification);
-
-    _showNotification();
-
     fetchAnnouncements().then((value) {
       setState(() {
         _announcement.addAll(value);
@@ -211,65 +199,6 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
         //customDialog(context, 'Download complete.', 'Database successfully downloaded and updated.', true,onPressedOk: () => Navigator.of(context, rootNavigator: true).pop());
       }
     });
-  }
-
-  Future _showNotification() async {
-    //For instant notification
-    //var androidDetails = AndroidNotificationDetails("Mengal Women Notification", "Mengal Women", "Mengal Women Notification Channel", importance: Importance.Max);
-    //var iosDetails = IOSNotificationDetails();
-    //var generalNotificationDetails = NotificationDetails(androidDetails, iosDetails);
-
-    //await flutterLocalNotificationsPlugin.show(0,"Title", "Content", generalNotificationDetails);
-
-//SCHEDULED NOTIFICATION - DAILY
-    var time = Time(8, 0, 0);
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'Mengal Women Notification',
-        'Mengal Women',
-        'Mengal Women Notification Channel');
-    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
-    var platformChannelSpecifics = NotificationDetails(
-        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.showDailyAtTime(
-        0,
-        'Good morning ka-Mengal Women!',
-        'Have a great day today!',
-        time,
-        platformChannelSpecifics);
-  }
-
-  Future selectNotification(String payload) async {
-    //if (payload != null) {
-    //debugPrint('notification payload: ' + payload);
-    //}
-    //await Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()),);
-  }
-
-  Future onDidReceiveLocalNotification(int id, String title, String body,
-      String payload) async {
-    // display a dialog with the notification details, tap ok to go to another page
-//    showDialog(
-//      context: context,
-//      builder: (BuildContext context) => CupertinoAlertDialog(
-//        title: Text(title),
-//        content: Text(body),
-//        actions: [
-//          CupertinoDialogAction(
-//            isDefaultAction: true,
-//            child: Text('Ok'),
-//            onPressed: () async {
-//             Navigator.of(context, rootNavigator: true).pop();
-//              await Navigator.push(
-//                context,
-//                MaterialPageRoute(
-//                  builder: (context) => HomeScreen(),
-//                ),
-//              );
-//            },
-//          )
-//        ],
-//      ),
-//    );
   }
 
 //==================================================================================================================================================

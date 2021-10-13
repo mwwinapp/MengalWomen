@@ -75,7 +75,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
       expiredPercentValue = expiredMembersToPercent(_totalMembers - _totalActiveMembers, _totalMembers);
       premiumPercentValue = premiumMembersToPercent(_totalPremiumMembers, _totalMembers);
       regularPercentValue = regularMembersToPercent(_totalMembers - _totalPremiumMembers, _totalMembers);
-      regularMembers = getRegularMembers(_totalMembers, _totalPremiumMembers);
+      regularMembers = getRegularMembers(_totalActiveMembers, _totalPremiumMembers);
       _totalExpiredMembers = _totalMembers - _totalActiveMembers;
       return SingleChildScrollView(
         physics: BouncingScrollPhysics(),
