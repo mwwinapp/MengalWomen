@@ -60,8 +60,8 @@ class _MemberScreenState extends State<MemberScreen> {
                                   fit: BoxFit.cover,
                                   imageUrl: 'https://drv.tw/~mwwinapp@gmail.com/gd/Fast.io/mwapp.imfast.io/images/photo/${members[index].mid}.jpg',
                                   imageBuilder: (context, imageProvider) => Container(
-                                    width: 200.0,
-                                    height: 200.0,
+                                    width: MediaQuery.of(context).size.width * .5,
+                                    height: MediaQuery.of(context).size.width * .5,
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
                                       image: DecorationImage(

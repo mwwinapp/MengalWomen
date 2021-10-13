@@ -101,7 +101,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
                   ),
                 ),
               ),
-                SizedBox(height: 5.0),
+                SizedBox(height: 20.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -117,7 +117,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
                       ),
                       child: CircularPercentIndicator(
                         radius: MediaQuery.of(context).size.width / 2 - 60,
-                        lineWidth: 30.0,
+                        lineWidth: MediaQuery.of(context).size.width / 15,
                         animation: true,
                         percent: activePercentValue * .01,
                         center: Text('${activePercentValue.round()}%',
@@ -153,7 +153,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
                       ),
                       child: CircularPercentIndicator(
                         radius: MediaQuery.of(context).size.width / 2 - 60,
-                        lineWidth: 30.0,
+                        lineWidth: MediaQuery.of(context).size.width / 15,
                         animation: true,
                         percent: expiredPercentValue * .01,
                         center: Text('${expiredPercentValue.round()}%',
@@ -181,139 +181,177 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
                   ],
                 ),
                 SizedBox(height: 20.0),
-                Container(
-                  width: double.infinity,
-                  color: appColorPrimary,
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Text('Total Members',
-                      style: customTextStyle(
-                        fontFamily: 'AllerBold',
-                        color: Colors.white,
-                        fontSize: 15.0,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Column(
+                    children: [
+                      Container(
+                        width: double.infinity,
+                        color: appColorPrimary,
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text('Members',
+                            style: customTextStyle(
+                              fontFamily: 'AllerBold',
+                              color: Colors.white,
+                              fontSize: 15.0,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: appBackgroundColorSecondary,
-                    border: Border.all(
-                      color: Colors.grey,
-                      width: .25,
-                    ),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Active Members'),
-                            Text('$_totalActiveMembers',
-                              style: customTextStyle(
-                                fontFamily: 'AllerBold',
-                              ),
-                            ),
-                          ],
+                      Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: appBackgroundColorSecondary,
+                          border: Border.all(
+                            color: Colors.grey,
+                            width: .25,
+                          ),
                         ),
-                        SizedBox(height: 5.0,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('Expired Members'),
-                            Text('$_totalExpiredMembers',
-                              style: customTextStyle(
-                                fontFamily: 'AllerBold',
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('Active Members'),
+                                  Text('$_totalActiveMembers',
+                                    style: customTextStyle(
+                                      fontFamily: 'AllerBold',
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 5.0,),
-                        Divider(),
-                        SizedBox(height: 5.0,),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text('TOTAL'),
-                            Text('$_totalMembers',
-                              style: customTextStyle(
-                                fontFamily: 'AllerBold',
+                              SizedBox(height: 5.0,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('Expired Members'),
+                                  Text('$_totalExpiredMembers',
+                                    style: customTextStyle(
+                                      fontFamily: 'AllerBold',
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
+                              SizedBox(height: 5.0,),
+                              Divider(),
+                              SizedBox(height: 5.0,),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('TOTAL'),
+                                  Text('$_totalMembers',
+                                    style: customTextStyle(
+                                      fontFamily: 'AllerBold',
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 5.0,),
+                            ],
+                          ),
                         ),
-                        SizedBox(height: 5.0,),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
                 //---------------------------
                 SizedBox(height: 20.0),
-                Container(
-                  width: double.infinity,
-                  color: appColorPrimary,
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Text('Member Type',
-                      style: customTextStyle(
-                        fontFamily: 'AllerBold',
-                        color: Colors.white,
-                        fontSize: 15.0,
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 20.0),
                 Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('Premium Members',
-                        style: customTextStyle(
-                          fontFamily: 'AllerBold',
-                          color: appFontColorSecondary,
-                        ),
-                      ),
-                      SizedBox(height: 10.0),
-                      LinearPercentIndicator(
-                        animation: true,
-                        lineHeight: 20.0,
-                        animationDuration: 1000,
-                        percent: premiumPercentValue * .01,
-                        center: Text('$_totalPremiumMembers',
-                          style: customTextStyle(
-                            color: appBackgroundColorPrimary,
+                      Container(
+                        width: double.infinity,
+                        color: appColorPrimary,
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text('Active Member Types',
+                            style: customTextStyle(
+                              fontFamily: 'AllerBold',
+                              color: Colors.white,
+                              fontSize: 15.0,
+                            ),
                           ),
                         ),
-                        linearStrokeCap: LinearStrokeCap.butt,
-                        progressColor: Colors.amber,
                       ),
-                      //---------------------------
-                      SizedBox(height: 20.0),
-                      Text('Regular Members',
-                        style: customTextStyle(
-                          fontFamily: 'AllerBold',
-                          color: appFontColorSecondary,
-                        ),
-                      ),
-                      SizedBox(height: 10.0),
-                      LinearPercentIndicator(
-                        animation: true,
-                        lineHeight: 20.0,
-                        animationDuration: 1000,
-                        percent: regularPercentValue * .01,
-                        center: Text('$regularMembers',
-                          style: customTextStyle(
-                            color: appBackgroundColorPrimary,
+                      Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: appBackgroundColorSecondary,
+                          border: Border.all(
+                            color: Colors.grey,
+                            width: .25,
                           ),
                         ),
-                        linearStrokeCap: LinearStrokeCap.butt,
-                        progressColor: Colors.blue,
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('Premium Members'),
+                                  Text('$_totalPremiumMembers',
+                                    style: customTextStyle(
+                                      fontFamily: 'AllerBold',
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 10.0),
+                              LinearPercentIndicator(
+                                padding: EdgeInsets.all(0.0),
+                                animation: true,
+                                lineHeight: 20.0,
+                                animationDuration: 1000,
+                                percent: premiumPercentValue * .01,
+                                center: Text('${premiumPercentValue.round()}%',
+                                  style: customTextStyle(
+                                    color: appBackgroundColorPrimary,
+                                  ),
+                                ),
+                                linearStrokeCap: LinearStrokeCap.butt,
+                                progressColor: Colors.amber,
+                              ),
+                              //---------------------------
+                              SizedBox(height: 10.0),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text('Regular Members'),
+                                  Text('$regularMembers',
+                                    style: customTextStyle(
+                                      fontFamily: 'AllerBold',
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(height: 10.0),
+                              LinearPercentIndicator(
+                                padding: EdgeInsets.all(0.0),
+                                animation: true,
+                                lineHeight: 20.0,
+                                animationDuration: 1000,
+                                percent: regularPercentValue * .01,
+                                center: Text('${regularPercentValue.round()}%',
+                                  style: customTextStyle(
+                                    color: appBackgroundColorPrimary,
+                                  ),
+                                ),
+                                linearStrokeCap: LinearStrokeCap.butt,
+                                progressColor: Colors.blue,
+                              ),
+                              SizedBox(height: 10.0),
+                            ],
+                          ),
+                        ),
                       ),
+                      // SizedBox(height: 10.0),
+                      // Text('*Statistics are based on currently uploaded database to the server.'),
                     ],
                   ),
                 ),

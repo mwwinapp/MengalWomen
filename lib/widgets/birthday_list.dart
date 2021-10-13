@@ -161,7 +161,7 @@ class _BirthdayListState extends State<BirthdayList> {
                                         ),
                                       ),
                                     ),
-                                    placeholder: (context, url) => CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(appColorPrimary)),
+                                    placeholder: (context, url) => Icon(Icons.person, color: Colors.grey, size: 40.0,),//CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(appColorPrimary)),
                                     errorWidget: (context, url, error) => Icon(Icons.person, color: Colors.grey, size: 40.0,),
                                   ) : Icon(Icons.person, color: Colors.grey, size: 40.0,),
                                   SizedBox(height: 5.0),

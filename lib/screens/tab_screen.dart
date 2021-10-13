@@ -164,13 +164,13 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
                   Tab(
                     icon: Icon(
                       OMIcons.timeline,
-                      color: _tabController.index == 0 ? appColorPrimary : Colors.grey[500],
+                      color: _tabController.index == 1 ? appColorPrimary : Colors.grey[500],
                     ),
                   ),
                   Tab(
                     icon: Icon(
                       OMIcons.videoLibrary,
-                      color: _tabController.index == 1 ? appColorPrimary : Colors.grey[500],
+                      color: _tabController.index == 2 ? appColorPrimary : Colors.grey[500],
                     ),
                   ),
                   /*Tab(
