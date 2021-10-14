@@ -29,7 +29,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
   int _totalPremiumMembers;
   int _totalExpiredMembers;
   bool _isBarangayStatisticsCollapsed = false;
-  bool isProcessDone = false;
+  bool isProcessBarangayCountDone = false;
   var dBHelper = DbHelper();
 
   double activePercentValue;
@@ -79,7 +79,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
     // print('active count: ${totalBarangayActiveMembers.length}');
     // print('expired count: ${totalBarangayExpiredMembers.length}');
     setState(() {
-      isProcessDone = true;
+      isProcessBarangayCountDone = true;
     });
   }
 
@@ -511,7 +511,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
               ],
             ),
             //```````````````````````````````````````````````````````````````````````
-            isProcessDone ? getBarangayWidgets(barangay, totalBarangayActiveMembers, totalBarangayExpiredMembers) : Center(
+            isProcessBarangayCountDone ? getBarangayWidgets(barangay, totalBarangayActiveMembers, totalBarangayExpiredMembers) : Center(
               child: Column(
                 children: [
                   SizedBox(height: 10.0),
