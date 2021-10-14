@@ -79,6 +79,18 @@ class DbHelper {
     return db;
   }
 
+  Future<List<Member>> getBarangayData(String status, String brgy) async {
+    var dBClient = await db;
+    List<Map> maps = await dBClient.rawQuery("SELECT CASE WHEN DATE(substr(tblmembers.lastrenewal,7,4)||'-'||substr(tblmembers.lastrenewal,1,2)||'-'||substr(tblmembers.lastrenewal,4,2), '+1 year') <= date('now','start of month','+1 month','-1 day') THEN 'EXPIRED' ELSE 'ACTIVE' END AS Status FROM tblmembers WHERE Status='$status' AND barangay='$brgy'");
+    List<Member> members = [];
+    if (maps.length > 0) {
+      for (int i = 0; i < maps.length; i++) {
+        members.add(Member.fromMap(maps[i]));
+      }
+    }
+    return members;
+  }
+
   Future<List<Member>> getDatabaseData(String query) async {
     var dBClient = await db;
     List<Map> maps = await dBClient.rawQuery(query);

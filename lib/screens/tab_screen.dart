@@ -40,7 +40,7 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
       });
     });
     //
-    downloaderInit();
+    //downloaderInit();
     //dlDB();             //REMINDER: Remove this only if database is updated and tblenduser is added
   }
 

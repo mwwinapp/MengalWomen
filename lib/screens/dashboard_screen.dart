@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mw/functions/globals.dart';
 import 'package:mw/helpers/db_helper.dart';
 import 'package:mw/models/member_model.dart';
+import 'package:mw/strings/strings.dart';
 import 'package:mw/widgets/birthday_list.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
@@ -21,10 +22,14 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
   Future<List<Member>> totalActiveMembers;
   Future<List<Member>> totalPremiumMembers;
   Future<List<Member>> members;
+  List<int> totalBarangayActiveMembers;
+  List<int> totalBarangayExpiredMembers;
   int _totalMembers;
   int _totalActiveMembers;
   int _totalPremiumMembers;
   int _totalExpiredMembers;
+  bool _isBarangayStatisticsCollapsed = false;
+  bool isProcessDone = false;
   var dBHelper = DbHelper();
 
   double activePercentValue;
@@ -55,6 +60,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
 
   @override
   void initState() {
+    processBarangayCount();
     super.initState();
     setState(() {
       totalMembers = dBHelper.getDatabaseData("SELECT * FROM tblmembers WHERE tblmembers.deceased IS NULL");
@@ -67,10 +73,154 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
     });
   }
 
+  void processBarangayCount() async {
+    totalBarangayActiveMembers = await getActiveBarangayInfo('ACTIVE', barangay);
+    totalBarangayExpiredMembers = await getExpiredBarangayInfo('EXPIRED', barangay);
+    // print('active count: ${totalBarangayActiveMembers.length}');
+    // print('expired count: ${totalBarangayExpiredMembers.length}');
+    setState(() {
+      isProcessDone = true;
+    });
+  }
+
+  Future<List<int>> getActiveBarangayInfo(String status, List<String> brgy) async {
+    List<int> list = <int>[];
+    for(var i = 0; i < brgy.length; i++) {
+      await dBHelper.getBarangayData(status, brgy[i]).then((value) {
+        list.add(value.length);
+        //print('active: ${list[i]}');
+      });
+    }
+    return list;
+  }
+
+  Future<List<int>> getExpiredBarangayInfo(String status, List<String> brgy) async {
+    List<int> list = <int>[];
+    for(var i = 0; i < brgy.length; i++) {
+      await dBHelper.getBarangayData(status, brgy[i]).then((value) {
+        list.add(value.length);
+        //print('expired: ${list[i]}');
+      });
+    }
+    return list;
+  }
+
+  Widget getBarangayWidgets(List<String> brgy, List<int> active, List<int> expired) {
+    List<Widget> list = <Widget>[];
+    for(var i = 0; i < brgy.length; i++){
+      int total = active[i] + expired[i];
+      double activePercent = (active[i] / total) * 100;
+      double expiredPercent = (expired[i] / total) * 100;
+      list.add(Column(
+        children: [
+          Table(columnWidths: {
+            0: FlexColumnWidth(2),
+            1: FlexColumnWidth(5),
+          },
+            children: [
+              TableRow(
+                children: [
+                  Text(brgy[i], overflow: TextOverflow.ellipsis,),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      LinearPercentIndicator(
+                        padding: EdgeInsets.all(0.0),
+                        animation: true,
+                        lineHeight: 20.0,
+                        animationDuration: 1000,
+                        percent: activePercent * .01,
+                        center: Text('${active[i]} / ${activePercent.round()}%',
+                          style: customTextStyle(
+                            color: appBackgroundColorPrimary,
+                          ),
+                        ),
+                        linearStrokeCap: LinearStrokeCap.butt,
+                        progressColor: Colors.green,
+                      ),
+                      SizedBox(height: 2.0,),
+                      LinearPercentIndicator(
+                        padding: EdgeInsets.all(0.0),
+                        animation: true,
+                        lineHeight: 20.0,
+                        animationDuration: 1000,
+                        percent: expiredPercent * .01,
+                        center: Text('${expired[i]} / ${expiredPercent.round()}%',
+                          style: customTextStyle(
+                            color: appBackgroundColorPrimary,
+                          ),
+                        ),
+                        linearStrokeCap: LinearStrokeCap.butt,
+                        progressColor: Colors.red,
+                      ),
+                      SizedBox(height: 10.0,),
+                    ],
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ],
+      ),
+      );
+    }
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 10.0),
+      child: Column(
+        children: [
+          SizedBox(height: 20.0),
+          Container(
+            width: double.infinity,
+            color: appColorPrimary,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Barangay Statistics',
+                    style: customTextStyle(
+                      fontFamily: 'AllerBold',
+                      color: Colors.white,
+                      fontSize: 15.0,
+                    ),
+                  ),
+                  IconButton(
+                      icon: _isBarangayStatisticsCollapsed ? Icon(Icons.arrow_drop_up_sharp) : Icon(Icons.arrow_drop_down_circle),
+                      color: Colors.white,
+                      onPressed: () {
+                        setState(() {
+                          _isBarangayStatisticsCollapsed = !_isBarangayStatisticsCollapsed;
+                          print(_isBarangayStatisticsCollapsed);
+                        });
+                      }
+                  )
+                ],
+              ),
+            ),
+          ),
+          _isBarangayStatisticsCollapsed ? Container(
+            padding: EdgeInsets.all(10.0),
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: appBackgroundColorSecondary,
+              border: Border.all(
+                color: Colors.grey,
+                width: .25,
+              ),
+            ),
+            child: Column(
+              children: list,
+            ),
+          ) : SizedBox.shrink(),
+        ],
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    if(_totalActiveMembers != null) {
+    if(_totalMembers != null) {//_totalMembers != null
       activePercentValue = activeMembersToPercent(_totalActiveMembers, _totalMembers);
       expiredPercentValue = expiredMembersToPercent(_totalMembers - _totalActiveMembers, _totalMembers);
       premiumPercentValue = premiumMembersToPercent(_totalPremiumMembers, _totalMembers);
@@ -87,20 +237,23 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-            Container(
-                width: double.infinity,
-                color: appColorPrimary,
-                child: Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text('Statistics',
-                    style: customTextStyle(
-                      fontFamily: 'AllerBold',
-                      color: Colors.white,
-                      fontSize: 21.0,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Container(
+                  width: double.infinity,
+                  color: appColorPrimary,
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text('Statistics',
+                      style: customTextStyle(
+                        fontFamily: 'AllerBold',
+                        color: Colors.white,
+                        fontSize: 21.0,
+                      ),
                     ),
                   ),
                 ),
-              ),
+            ),
                 SizedBox(height: 20.0),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -345,7 +498,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
                                 linearStrokeCap: LinearStrokeCap.butt,
                                 progressColor: Colors.blue,
                               ),
-                              SizedBox(height: 10.0),
                             ],
                           ),
                         ),
@@ -357,6 +509,15 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
                 ),
                 //---------------------------
               ],
+            ),
+            //```````````````````````````````````````````````````````````````````````
+            isProcessDone ? getBarangayWidgets(barangay, totalBarangayActiveMembers, totalBarangayExpiredMembers) : Center(
+              child: Column(
+                children: [
+                  SizedBox(height: 10.0),
+                  CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(appColorPrimary)),
+                ],
+              ),
             ),
           ],
         ),

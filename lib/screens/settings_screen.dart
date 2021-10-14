@@ -18,7 +18,7 @@ class _SettingsScreenState extends State<SettingsScreen>
 
   @override
   void initState() {
-    downloaderInit();
+    //downloaderInit();
     super.initState();
   }
 

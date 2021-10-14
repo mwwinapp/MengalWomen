@@ -5,14 +5,15 @@ import 'package:flutter/services.dart';
 import 'package:gradient_text/gradient_text.dart';
 import 'package:mw/functions/cryptography.dart';
 import 'package:mw/functions/custom_dialog.dart';
+import 'package:mw/functions/downloader.dart';
 import 'package:mw/helpers/db_helper.dart';
 import 'package:mw/models/end_user_model.dart';
 import 'package:mw/screens/tab_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'functions/globals.dart';
 
 void main() {
+  downloaderInit();
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
     title: 'Mengal Women',
@@ -216,7 +217,6 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
   void _rememberMe(bool value) {
 
     print(_isChecked);
-
     SharedPreferences.getInstance().then(
         (prefs) {
           prefs.setBool('remember_me', value);
@@ -227,17 +227,17 @@ class _MainAppState extends State<MainApp> with TickerProviderStateMixin {
   }
 
   void _loadUsernamePassword() async {
-      SharedPreferences _prefs = await SharedPreferences.getInstance();
-      var username = _prefs.getString('username');
-      var password = _prefs.getString('password');
-      var rememberMe = _prefs.getBool('remember_me');
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+    var username = _prefs.getString('username') ?? '';
+    var password = _prefs.getString('password') ?? '';
+    var rememberMe = _prefs.getBool('remember_me') ?? false;
 
-      if (rememberMe) {
-        setState((){
-          _isChecked = true;
-          _username.text = username ?? '';
-          _password.text = password ?? '';
-        });
+    if (rememberMe) {
+      setState((){
+        _isChecked = true;
+        _username.text = username ?? '';
+        _password.text = password ?? '';
+      });
     }
   }
 

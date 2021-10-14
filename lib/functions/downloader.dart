@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
-import 'package:mw/functions/custom_dialog.dart';
 import 'package:sqflite/sqflite.dart';
 
 downloaderInit() async {

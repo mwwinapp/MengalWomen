@@ -170,6 +170,7 @@ class _VideoScreenState extends State<VideoScreen>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return FutureBuilder<bool>(
       future: hasInternetConnection(),
       builder: (context, snapshot) {

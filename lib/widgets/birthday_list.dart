@@ -1,12 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:intl/intl.dart';
 import 'package:mw/functions/globals.dart';
 import 'package:mw/helpers/db_helper.dart';
 import 'package:mw/models/member_model.dart';
 import 'package:mw/screens/birthday_screen.dart';
-import 'package:mw/functions/recase.dart';
 
 class BirthdayList extends StatefulWidget {
   @override
@@ -14,7 +12,6 @@ class BirthdayList extends StatefulWidget {
 }
 
 class _BirthdayListState extends State<BirthdayList> {
-  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
   Future<List<Member>> members;
   var dBHelper = DbHelper();
   bool _hideBirthday = true;
@@ -25,51 +22,14 @@ class _BirthdayListState extends State<BirthdayList> {
   @override
   void initState() {
     super.initState();
-    // initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
-    var initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
-    var initializationSettingsIOS = IOSInitializationSettings(onDidReceiveLocalNotification: onDidReceiveLocalNotification);
-    var initializationSettings = InitializationSettings(initializationSettingsAndroid, initializationSettingsIOS);
-
-    flutterLocalNotificationsPlugin.initialize(initializationSettings, onSelectNotification: selectNotification);
-
-    setState(() {
+     setState(() {
       members = dBHelper.birthday();
       members.then((value) {
         text = value.first.fullname;
         length = value.length;
-        _showBirthdayNotification(text: properCase(text), length: length);
-        print(properCase(text));
       });
   });
 }
-
-  Future _showBirthdayNotification({String text, int length}) async {
-
-    //SCHEDULED NOTIFICATION - DAILY
-    var time = Time(8, 1, 0);
-    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'Mengal Women Birthday Notification',
-        'Mengal Women',
-        'Mengal Women Birthday Notification Channel');
-    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
-    var platformChannelSpecifics = NotificationDetails(
-        androidPlatformChannelSpecifics, iOSPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.showDailyAtTime(
-        0,
-        'Happy birthday mga ka-Mengal Women!',
-        '🎂 $text and $length other members have birthdays today.',
-        time,
-        platformChannelSpecifics);
-  }
-
-
-  Future selectNotification(String payload) async {
-    //await Navigator.push(context, MaterialPageRoute(builder: (context) => BirthdayScreen()),);
-  }
-
-  Future onDidReceiveLocalNotification(int id, String title, String body, String payload) async {
-   //
-  }
 
   @override
   Widget build(BuildContext context) {
