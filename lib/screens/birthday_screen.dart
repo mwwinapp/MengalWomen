@@ -76,12 +76,12 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
                             Icon(
                               Icons.place,
                               color: Colors.grey,
-                              size: 12.0,
+                              size: 10.0,
                             ),
                             Text(
                               '${members[index].barangay}',
                               style: customTextStyle(
-                                  fontSize: 12.0,
+                                  fontSize: 10.0,
                                   color: appFontColorSecondary,
                                   fontFamily: appFont),
                               overflow: TextOverflow.ellipsis,
@@ -90,12 +90,12 @@ class _BirthdayScreenState extends State<BirthdayScreen> {
                             Icon(
                               Icons.update,
                               color: Colors.grey,
-                              size: 12.0,
+                              size: 10.0,
                             ),
                             Text(
                               '${members[index].validity}',
                               style: customTextStyle(
-                                  fontSize: 12.0,
+                                  fontSize: 10.0,
                                   color: appFontColorSecondary,
                                   fontFamily: appFont),
                               overflow: TextOverflow.ellipsis,

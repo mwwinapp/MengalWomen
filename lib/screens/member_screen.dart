@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:mw/functions/globals.dart';
 import 'package:mw/helpers/db_helper.dart';
 import 'package:mw/models/member_model.dart';
@@ -356,7 +357,7 @@ class _MemberScreenState extends State<MemberScreen> {
                                                     TextOverflow.ellipsis,
                                                   ),
                                                   Text(
-                                                    '${members[index].dob}',
+                                                    DateFormat("MM/dd").format(DateTime.now()).toString() == members[index].dob.substring(0, 5) ? '${members[index].dob}   🎂' : '${members[index].dob}',
                                                     style: customTextStyle(
                                                         fontSize: 14.0,
                                                         fontWeight: FontWeight.bold,

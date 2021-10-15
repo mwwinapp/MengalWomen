@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:intl/intl.dart';
 import 'package:mw/functions/custom_dialog.dart';
 import 'package:mw/functions/globals.dart';
 import 'package:mw/helpers/db_helper.dart';
@@ -310,12 +311,12 @@ class _SearchBarScreenState extends State<SearchBarScreen> {
                                             Icon(
                                               Icons.place,
                                               color: Colors.grey,
-                                              size: 12.0,
+                                              size: 10.0,
                                             ),
                                             Text(
                                               '${members[index].barangay}',
                                               style: customTextStyle(
-                                                  fontSize: 12.0,
+                                                  fontSize: 10.0,
                                                   color: appFontColorSecondary,
                                                   fontFamily: appFont),
                                               overflow: TextOverflow.ellipsis,
@@ -324,12 +325,12 @@ class _SearchBarScreenState extends State<SearchBarScreen> {
                                             Icon(
                                               Icons.update,
                                               color: Colors.grey,
-                                              size: 12.0,
+                                              size: 10.0,
                                             ),
                                             Text(
                                               '${members[index].validity}',
                                               style: customTextStyle(
-                                                  fontSize: 12.0,
+                                                  fontSize: 10.0,
                                                   color: appFontColorSecondary,
                                                   fontFamily: appFont),
                                               overflow: TextOverflow.ellipsis,
@@ -352,12 +353,18 @@ class _SearchBarScreenState extends State<SearchBarScreen> {
                                             ),
                                           ]
                                       ),
-                                      trailing: Icon(
-                                        Icons.brightness_1,
-                                        color: members[index].status == 'ACTIVE'
-                                            ? Colors.green
-                                            : Colors.red,
-                                        size: 10.0,
+                                      trailing: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          DateFormat("MM/dd").format(DateTime.now()).toString() == members[index].dob.substring(0, 5) ? Text('🎂  ') : SizedBox.shrink(),
+                                          Icon(
+                                            Icons.brightness_1,
+                                            color: members[index].status == 'ACTIVE'
+                                                ? Colors.green
+                                                : Colors.red,
+                                            size: 10.0,
+                                          ),
+                                        ],
                                       ),
                                       onTap: () {
                                         Navigator.push(
