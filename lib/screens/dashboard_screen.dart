@@ -24,6 +24,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
   Future<List<Member>> members;
   List<int> totalBarangayActiveMembers;
   List<int> totalBarangayExpiredMembers;
+  List<int> totalAgeRange;
   int _totalMembers;
   int _totalActiveMembers;
   int _totalPremiumMembers;
@@ -60,7 +61,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
 
   @override
   void initState() {
-    processBarangayCount();
+    processBarangayAndAgeRangeInfo();
     super.initState();
     setState(() {
       totalMembers = dBHelper.getDatabaseData("SELECT * FROM tblmembers WHERE tblmembers.deceased IS NULL");
@@ -73,12 +74,45 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
     });
   }
 
-  void processBarangayCount() async {
+  void processBarangayAndAgeRangeInfo() async {
+    totalAgeRange = await getAgeRangeInfo();
     totalBarangayActiveMembers = await getActiveBarangayInfo('ACTIVE', barangay);
     totalBarangayExpiredMembers = await getExpiredBarangayInfo('EXPIRED', barangay);
     setState(() {
       isProcessBarangayCountDone = true;
     });
+  }
+
+  Future<List<int>> getAgeRangeInfo() async {
+    print('executed');
+    List<int> ageMinMax = <int>[];
+    List<int> list = <int>[];
+    var ageRange = [
+      [13, 19],
+      [20, 30],
+      [31, 40],
+      [41, 50],
+      [51, 60],
+      [61, 70],
+      [71, 80],
+      [81, 99]
+    ];
+
+    for (var i = 0; i < ageRange.length; i++){
+
+      for (var j = 0; j < ageRange[i].length; j++) {
+        print(ageRange[i][j]);
+        ageMinMax.add(ageRange[i][j]);
+      }
+      print('--------------');
+      await dBHelper.getAgeRange(ageMinMax[0], ageMinMax[1]).then((value) {
+        list.add(value.length);
+      });
+      print('ageMinMax: $ageMinMax');
+      ageMinMax.clear();
+    }
+    print(list);
+    return list;
   }
 
   Future<List<int>> getActiveBarangayInfo(String status, List<String> brgy) async {
@@ -213,6 +247,52 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
     );
   }
 
+  Widget getAgeRangeTableWidget(List<int> ageRangeCount) {
+    List<Widget> list = <Widget>[];
+    for(var i = 0; i < ageRangeCount.length; i++){
+      list.add(
+        Table(
+
+        ),
+      );
+    }
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 10.0),
+      child: Column(
+        children: [
+          SizedBox(height: 20.0),
+          Container(
+            width: double.infinity,
+            color: appColorPrimary,
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Text('Age Range Statistics',
+                style: customTextStyle(
+                  fontFamily: 'AllerBold',
+                  color: Colors.white,
+                  fontSize: 15.0,
+                ),
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(10.0),
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: appBackgroundColorSecondary,
+              border: Border.all(
+                color: Colors.grey,
+                width: .25,
+              ),
+            ),
+            child: Column(
+              children: list,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
   Widget getBarangayTableWidget(List<String> brgy, List<int> active, List<int> expired) {
     List<Widget> list = <Widget>[];
     for(var i = 0; i < brgy.length; i++){
@@ -651,12 +731,16 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
                 ],
               ),
             ),*/
+            getAgeRangeTableWidget(totalAgeRange),
             isProcessBarangayCountDone ? getBarangayTableWidget(barangay, totalBarangayActiveMembers, totalBarangayExpiredMembers) : Center(
-              child: Column(
-                children: [
-                  SizedBox(height: 10.0),
-                  CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(appColorPrimary)),
-                ],
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Column(
+                  children: [
+                    SizedBox(height: 10.0),
+                    LinearProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(appColorPrimary)),
+                  ],
+                ),
               ),
             ),
           ],
