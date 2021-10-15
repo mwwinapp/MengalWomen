@@ -28,7 +28,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
   int _totalActiveMembers;
   int _totalPremiumMembers;
   int _totalExpiredMembers;
-  bool _isBarangayStatisticsCollapsed = false;
+  bool _isBarangayStatisticsCollapsed = true;
   bool isProcessBarangayCountDone = false;
   var dBHelper = DbHelper();
 
@@ -76,8 +76,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
   void processBarangayCount() async {
     totalBarangayActiveMembers = await getActiveBarangayInfo('ACTIVE', barangay);
     totalBarangayExpiredMembers = await getExpiredBarangayInfo('EXPIRED', barangay);
-    // print('active count: ${totalBarangayActiveMembers.length}');
-    // print('expired count: ${totalBarangayExpiredMembers.length}');
     setState(() {
       isProcessBarangayCountDone = true;
     });
@@ -88,7 +86,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
     for(var i = 0; i < brgy.length; i++) {
       await dBHelper.getBarangayData(status, brgy[i]).then((value) {
         list.add(value.length);
-        //print('active: ${list[i]}');
       });
     }
     return list;
@@ -99,7 +96,6 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
     for(var i = 0; i < brgy.length; i++) {
       await dBHelper.getBarangayData(status, brgy[i]).then((value) {
         list.add(value.length);
-        //print('expired: ${list[i]}');
       });
     }
     return list;
@@ -157,6 +153,142 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
                     ],
                   ),
                 ],
+              ),
+            ],
+          ),
+        ],
+      ),
+      );
+    }
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 10.0),
+      child: Column(
+        children: [
+          SizedBox(height: 20.0),
+          Container(
+            width: double.infinity,
+            color: appColorPrimary,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text('Barangay Statistics',
+                    style: customTextStyle(
+                      fontFamily: 'AllerBold',
+                      color: Colors.white,
+                      fontSize: 15.0,
+                    ),
+                  ),
+                  IconButton(
+                      icon: _isBarangayStatisticsCollapsed ? Icon(Icons.arrow_drop_up_sharp) : Icon(Icons.arrow_drop_down_circle),
+                      color: Colors.white,
+                      onPressed: () {
+                        setState(() {
+                          _isBarangayStatisticsCollapsed = !_isBarangayStatisticsCollapsed;
+                          print(_isBarangayStatisticsCollapsed);
+                        });
+                      }
+                  )
+                ],
+              ),
+            ),
+          ),
+          _isBarangayStatisticsCollapsed ? Container(
+            padding: EdgeInsets.all(10.0),
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: appBackgroundColorSecondary,
+              border: Border.all(
+                color: Colors.grey,
+                width: .25,
+              ),
+            ),
+            child: Column(
+              children: list,
+            ),
+          ) : SizedBox.shrink(),
+        ],
+      ),
+    );
+  }
+
+  Widget getBarangayTableWidget(List<String> brgy, List<int> active, List<int> expired) {
+    List<Widget> list = <Widget>[];
+    for(var i = 0; i < brgy.length; i++){
+      int total = active[i] + expired[i];
+      double activePercent = (active[i] / total) * 100;
+      double expiredPercent = (expired[i] / total) * 100;
+      list.add(Table(
+        border: TableBorder(
+            verticalInside: BorderSide(
+                width: 0.35,
+                color: Colors.grey.withOpacity(0.35),
+                style: BorderStyle.solid,
+            ),
+            horizontalInside: BorderSide(
+              width: 0.35,
+              color: Colors.grey.withOpacity(0.35),
+              style: BorderStyle.solid,
+            )
+        ),
+        columnWidths: {
+        0: FlexColumnWidth(1.75),
+        1: FlexColumnWidth(1),
+        2: FlexColumnWidth(1),
+      },
+        children: [
+          i == 0 ? TableRow(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(7.0),
+                child: Text('BARANGAY',
+                  style: customTextStyle(
+                    overflow: TextOverflow.ellipsis,
+                    fontFamily: appFontBold,
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(7.0),
+                child: Text('ACTIVE',
+                    style: customTextStyle(
+                      fontFamily: appFontBold,
+                    ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(7.0),
+                child: Text('EXPIRED',
+                    style: customTextStyle(
+                      fontFamily: appFontBold,
+                    )
+                ),
+              ),
+            ],
+          ) : TableRow(
+            children: [
+              SizedBox.shrink(),
+              SizedBox.shrink(),
+              SizedBox.shrink(),
+            ]
+          ),
+          TableRow(
+            decoration: BoxDecoration(
+              color: i.isEven ? Colors.grey.withOpacity(0.15) : Colors.transparent,
+            ),
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 7.0),
+                child: Text(brgy[i], overflow: TextOverflow.ellipsis,),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 7.0),
+                child: Text('${active[i]} / ${activePercent.round()}%',),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 7.0),
+                child: Text('${expired[i]} / ${expiredPercent.round()}%',),
               ),
             ],
           ),
@@ -511,7 +643,15 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
               ],
             ),
             //```````````````````````````````````````````````````````````````````````
-            isProcessBarangayCountDone ? getBarangayWidgets(barangay, totalBarangayActiveMembers, totalBarangayExpiredMembers) : Center(
+/*            isProcessBarangayCountDone ? getBarangayWidgets(barangay, totalBarangayActiveMembers, totalBarangayExpiredMembers) : Center(
+              child: Column(
+                children: [
+                  SizedBox(height: 10.0),
+                  CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(appColorPrimary)),
+                ],
+              ),
+            ),*/
+            isProcessBarangayCountDone ? getBarangayTableWidget(barangay, totalBarangayActiveMembers, totalBarangayExpiredMembers) : Center(
               child: Column(
                 children: [
                   SizedBox(height: 10.0),
