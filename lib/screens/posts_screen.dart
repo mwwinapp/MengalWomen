@@ -44,7 +44,7 @@ class PostScreen extends StatelessWidget {
             margin: EdgeInsets.only(left: 25.0, right: 25.0, top: 10.0),
             child: Text(
               '${utf8convert(title)}',
-              style: customTextStyle(fontSize: 25.0, fontFamily: appFontBold),
+              style: customTextStyle(fontSize: 25.0, fontFamily: appFontBold, overflow: TextOverflow.visible),
             ),
           ),
           Container(

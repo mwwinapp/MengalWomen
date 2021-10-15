@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:mw/functions/globals.dart';
 import 'package:mw/helpers/db_helper.dart';
@@ -248,11 +249,33 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
   }
 
   Widget getAgeRangeTableWidget(List<int> ageRangeCount) {
-    List<Widget> list = <Widget>[];
+    List<BarChartGroupData> list = <BarChartGroupData>[];
+    List<String> ageRangeLabel = [
+      '13-19',
+      '20-30',
+      '31-40',
+      '41-50',
+      '51-60',
+      '61-70',
+      '71-80',
+      '81-99'
+    ];
+
     for(var i = 0; i < ageRangeCount.length; i++){
       list.add(
-        Table(
-
+        BarChartGroupData(
+          x: i + 1,
+          barRods: [
+            BarChartRodData(
+              y: ageRangeCount[i].toDouble(),
+              colors: [
+                Colors.blue,
+                appColorPrimary,
+              ],
+              width: 30.0,
+              borderRadius: BorderRadius.circular(0.0),
+            ),
+          ]
         ),
       );
     }
@@ -266,7 +289,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
             color: appColorPrimary,
             child: Padding(
               padding: const EdgeInsets.all(10.0),
-              child: Text('Age Range Statistics',
+              child: Text('Age Range',
                 style: customTextStyle(
                   fontFamily: 'AllerBold',
                   color: Colors.white,
@@ -277,7 +300,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
           ),
           Container(
             padding: EdgeInsets.all(10.0),
-            width: double.infinity,
+            width: MediaQuery.of(context).size.width,
+            height: 400.0,
             decoration: BoxDecoration(
               color: appBackgroundColorSecondary,
               border: Border.all(
@@ -285,14 +309,58 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
                 width: .25,
               ),
             ),
-            child: Column(
+            //======================================================
+            /*child: Column(
               children: list,
+            ),*/
+            child: BarChart(
+              BarChartData(
+                titlesData: FlTitlesData(
+                    bottomTitles: SideTitles(
+                      getTextStyles: (context, value) => const TextStyle(
+                        color: appFontColorSecondary,
+                        fontSize: 10.0,
+                      ),
+                      showTitles: true,
+                      getTitles: (double value) {
+                        switch (value.toInt()) {
+                          case 0:
+                            return '';
+                          case 1:
+                            return ageRangeLabel[0];
+                          case 2:
+                            return ageRangeLabel[1];
+                          case 3:
+                            return ageRangeLabel[2];
+                          case 4:
+                            return ageRangeLabel[3];
+                          case 5:
+                            return ageRangeLabel[4];
+                          case 6:
+                            return ageRangeLabel[5];
+                          case 7:
+                            return ageRangeLabel[6];
+                          case 8:
+                            return ageRangeLabel[7];
+                          case 9:
+                            return ageRangeLabel[8];
+                          default:
+                            return '';
+                        }
+                      },
+                    ),
+                  leftTitles: SideTitles(showTitles: false),
+                  topTitles: SideTitles(showTitles: false),
+                ),
+                barGroups: list,
+              )
             ),
           ),
         ],
       ),
     );
   }
+
   Widget getBarangayTableWidget(List<String> brgy, List<int> active, List<int> expired) {
     List<Widget> list = <Widget>[];
     for(var i = 0; i < brgy.length; i++){
@@ -389,7 +457,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text('Barangay Statistics',
+                  Text('Barangay',
                     style: customTextStyle(
                       fontFamily: 'AllerBold',
                       color: Colors.white,
@@ -731,6 +799,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
                 ],
               ),
             ),*/
+            //```````````````````````````````````````````````````````````````````````````
             getAgeRangeTableWidget(totalAgeRange),
             isProcessBarangayCountDone ? getBarangayTableWidget(barangay, totalBarangayActiveMembers, totalBarangayExpiredMembers) : Center(
               child: Padding(

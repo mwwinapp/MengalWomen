@@ -102,7 +102,7 @@ class _AnnouncementScreenState extends State<AnnouncementScreen> {
                       child: Text(
                         '${utf8convert(_announcement[index].title)}',
                         style: customTextStyle(
-                            fontSize: 20.0, fontFamily: appFontBold),
+                            fontSize: 20.0, fontFamily: appFontBold, overflow: TextOverflow.visible),
                       ),
                     ),
                     Container(
