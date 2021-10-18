@@ -109,50 +109,60 @@ class _MemberScreenState extends State<MemberScreen> {
                                       SizedBox(height: 10.0),
                                       Divider(),
                                       //1----------------------------------------------------------------------------------------------------------
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                      Table(
                                         children: [
-                                          Text(
-                                            'Member Type',
-                                            style: customTextStyle(
-                                                color: appFontColorSecondary,
-                                                fontSize: 14.0,
-                                                fontFamily: appFont),
-                                            overflow:
-                                            TextOverflow.ellipsis,
+                                          TableRow(
+                                            children: [
+                                              Center(
+                                                child: Text(
+                                                  'Member Type',
+                                                  style: customTextStyle(
+                                                      color: appFontColorSecondary,
+                                                      fontSize: 14.0,
+                                                      fontFamily: appFont),
+                                                  overflow:
+                                                  TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                              Center(
+                                                child: Text(
+                                                  'Validity',
+                                                  style: customTextStyle(
+                                                      color: appFontColorSecondary,
+                                                      fontSize: 14.0,
+                                                      fontFamily: appFont),
+                                                  overflow:
+                                                  TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                          Text(
-                                            'Validity',
-                                            style: customTextStyle(
-                                                color: appFontColorSecondary,
-                                                fontSize: 14.0,
-                                                fontFamily: appFont),
-                                            overflow:
-                                            TextOverflow.ellipsis,
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                        children: [
-                                          Text(
-                                            members[index].insurancestatus == 'PREMIUM' ? '   👑 ${members[index].insurancestatus}' : '${members[index].insurancestatus}',
-                                            style: customTextStyle(
-                                                color: members[index].insurancestatus == 'PREMIUM' ? Colors.amber[800] : appFontColorPrimary,
-                                                fontSize: 14.0,
-                                                fontWeight: FontWeight.bold,
-                                                fontFamily: appFont),
-                                            overflow:
-                                            TextOverflow.ellipsis,
-                                          ),
-                                          Text(
-                                            '  ${members[index].validity}',
-                                            style: customTextStyle(
-                                                fontSize: 14.0,
-                                                fontWeight: FontWeight.bold,
-                                                fontFamily: appFont),
-                                            overflow:
-                                            TextOverflow.ellipsis,
+                                          TableRow(
+                                            children: [
+                                              Center(
+                                                child: Text(
+                                                  members[index].insurancestatus == 'PREMIUM' ? '👑 ${members[index].insurancestatus}' : '${members[index].insurancestatus}',
+                                                  style: customTextStyle(
+                                                      color: members[index].insurancestatus == 'PREMIUM' ? Colors.amber[800] : appFontColorPrimary,
+                                                      fontSize: 14.0,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontFamily: appFont),
+                                                  overflow:
+                                                  TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                              Center(
+                                                child: Text(
+                                                  '  ${members[index].validity}',
+                                                  style: customTextStyle(
+                                                      fontSize: 14.0,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontFamily: appFont),
+                                                  overflow:
+                                                  TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
@@ -303,14 +313,16 @@ class _MemberScreenState extends State<MemberScreen> {
                                                     overflow:
                                                     TextOverflow.ellipsis,
                                                   ),
-                                                  Text(
-                                                    '${members[index].barangay}, ECHAGUE, ISABELA',
-                                                    style: customTextStyle(
-                                                        fontSize: 14.0,
-                                                        fontWeight: FontWeight.bold,
-                                                        fontFamily: appFont),
-                                                    overflow:
-                                                    TextOverflow.ellipsis,
+                                                  Expanded(
+                                                    child: Text(
+                                                      '${members[index].barangay}, ECHAGUE, ISABELA',
+                                                      style: customTextStyle(
+                                                          fontSize: 14.0,
+                                                          fontWeight: FontWeight.bold,
+                                                          fontFamily: appFont),
+                                                      overflow:
+                                                      TextOverflow.ellipsis,
+                                                    ),
                                                   ),
                                                 ],
                                               ),
@@ -458,14 +470,16 @@ class _MemberScreenState extends State<MemberScreen> {
                                                     overflow:
                                                     TextOverflow.ellipsis,
                                                   ),
-                                                  Text(
-                                                    members[index].occupation != '' ? '${members[index].occupation}' : 'N/A',
-                                                    style: customTextStyle(
-                                                        fontSize: 14.0,
-                                                        fontWeight: FontWeight.bold,
-                                                        fontFamily: appFont),
-                                                    overflow:
-                                                    TextOverflow.ellipsis,
+                                                  Expanded(
+                                                    child: Text(
+                                                      members[index].occupation != '' ? '${members[index].occupation}' : 'N/A',
+                                                      style: customTextStyle(
+                                                          fontSize: 14.0,
+                                                          fontWeight: FontWeight.bold,
+                                                          fontFamily: appFont),
+                                                      overflow:
+                                                      TextOverflow.ellipsis,
+                                                    ),
                                                   ),
                                                 ],
                                               ),
