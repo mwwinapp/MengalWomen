@@ -4,12 +4,12 @@ import 'package:mw/functions/globals.dart';
 import 'package:mw/functions/network_ping.dart';
 import 'package:mw/widgets/posts_list.dart';
 
-class HomeScreen extends StatefulWidget {
+class TimelineScreen extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _TimelineScreenState createState() => _TimelineScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with AutomaticKeepAliveClientMixin<HomeScreen> {
+class _TimelineScreenState extends State<TimelineScreen> with AutomaticKeepAliveClientMixin<TimelineScreen> {
   @override
   bool get wantKeepAlive => true;
 

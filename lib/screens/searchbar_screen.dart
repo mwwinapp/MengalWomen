@@ -212,14 +212,16 @@ class _SearchBarScreenState extends State<SearchBarScreen> {
                             fontSize: 12.0)) :
                     SizedBox.shrink(),
                     isCheckedMemberType
-                        ? Text(
+                        ? Expanded(
+                          child: Text(
                       'Membertype: $_selectedMemberType',
                       overflow: TextOverflow.ellipsis,
                       style: customTextStyle(
-                          fontFamily: appFont,
-                          color: appFontColorSecondary,
-                          fontSize: 12.0),
-                    )
+                            fontFamily: appFont,
+                            color: appFontColorSecondary,
+                            fontSize: 12.0),
+                    ),
+                        )
                         : SizedBox.shrink()
                   ],
                 ),

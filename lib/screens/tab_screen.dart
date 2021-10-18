@@ -12,7 +12,7 @@ import 'package:mw/helpers/db_helper.dart';
 import 'package:mw/models/announcement_model.dart';
 import 'package:mw/models/member_model.dart';
 import 'package:mw/screens/announcement_screen.dart';
-import 'package:mw/screens/home_screen.dart';
+import 'package:mw/screens/timeline_screen.dart';
 import 'package:mw/screens/searchbar_screen.dart';
 import 'package:mw/screens/settings_screen.dart';
 import 'package:mw/screens/video_screen.dart';
@@ -179,7 +179,7 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
             controller: _tabController,
             children: [
               DashBoardScreen(),
-              HomeScreen(),
+              TimelineScreen(),
               VideoScreen(),
               SettingsScreen()
             ],

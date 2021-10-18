@@ -264,7 +264,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
     for(var i = 0; i < ageRangeCount.length; i++){
       list.add(
         BarChartGroupData(
-          x: i + 1,
+          x: i,
           barRods: [
             BarChartRodData(
               y: ageRangeCount[i].toDouble(),
@@ -323,30 +323,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
                       ),
                       showTitles: true,
                       getTitles: (double value) {
-                        switch (value.toInt()) {
-                          case 0:
-                            return '';
-                          case 1:
-                            return ageRangeLabel[0];
-                          case 2:
-                            return ageRangeLabel[1];
-                          case 3:
-                            return ageRangeLabel[2];
-                          case 4:
-                            return ageRangeLabel[3];
-                          case 5:
-                            return ageRangeLabel[4];
-                          case 6:
-                            return ageRangeLabel[5];
-                          case 7:
-                            return ageRangeLabel[6];
-                          case 8:
-                            return ageRangeLabel[7];
-                          case 9:
-                            return ageRangeLabel[8];
-                          default:
-                            return '';
-                        }
+                        int index = value.toInt();
+                        return ageRangeLabel[index];
                       },
                     ),
                   leftTitles: SideTitles(showTitles: false),
