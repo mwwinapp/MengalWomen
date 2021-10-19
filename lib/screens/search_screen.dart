@@ -1,36 +1,57 @@
-import 'dart:async';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:intl/intl.dart';
 import 'package:mw/functions/custom_dialog.dart';
 import 'package:mw/functions/globals.dart';
 import 'package:mw/helpers/db_helper.dart';
 import 'package:mw/models/member_model.dart';
+import 'package:mw/screens/member_screen.dart';
 import 'package:mw/strings/strings.dart';
 
-import 'member_screen.dart';
-
 class SearchScreen extends StatefulWidget {
+
   @override
   _SearchScreenState createState() => _SearchScreenState();
 }
 
-class _SearchScreenState extends State<SearchScreen>
-    with AutomaticKeepAliveClientMixin {
-  @override
-  bool get wantKeepAlive => true;
+class _SearchScreenState extends State<SearchScreen> {
 
   Future<List<Member>> members;
   var dBHelper = DbHelper();
   TextEditingController _searchController = TextEditingController();
   ScrollController _scrollController = ScrollController();
-  bool _isSearchExecuted = false;
+  bool isCheckedBarangay = false;
+  bool isCheckedStatus = false;
+  bool isCheckedMemberType = false;
+  String _selectedMemberType = 'REGULAR';
+  String _selectedBarangay = 'ANGOLUAN';
+  String _selectedStatus = 'ACTIVE';
+  int resultCount = 0;
+  bool isScrolling = false;
 
   @override
   void initState() {
     super.initState();
-    //
+/*    _scrollController.addListener(() {
+      if(!_scrollController.position.atEdge) {
+        setState((){
+          isScrolling = true;
+        });
+      } else {
+        if(_scrollController.position.pixels == 0) {
+          setState((){
+            isScrolling = false;
+          });
+        }
+      }
+    });*/
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   search(String keyword,
@@ -46,8 +67,9 @@ class _SearchScreenState extends State<SearchScreen>
     }
     setState(() {
       members = dBHelper.search(keyword, filterBarangay, filterStatus, filterMemberType);
+      isScrolling = false;
+      _scrollToTop();
     });
-    _isSearchExecuted = true;
   }
 
   List<DropdownMenuItem> barangayList() {
@@ -94,12 +116,323 @@ class _SearchScreenState extends State<SearchScreen>
     return null;
   }
 
-  bool isCheckedBarangay = false;
-  bool isCheckedStatus = false;
-  bool isCheckedMemberType = false;
-  String _selectedMemberType = 'REGULAR';
-  String _selectedBarangay = 'ANGOLUAN';
-  String _selectedStatus = 'ACTIVE';
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(
+          elevation: 0.0,
+          title: TextFormField(
+            autofocus: true,
+            textInputAction: TextInputAction.search,
+            onFieldSubmitted: (term) {
+              search(_searchController.text);
+
+            },
+            style: customTextStyle(fontFamily: appFont),
+            textCapitalization: TextCapitalization.characters,
+            controller: _searchController,
+            decoration: InputDecoration(
+              prefixIcon: IconTheme(data: IconThemeData(color: appColorPrimary), child: Icon(Icons.search)),
+              suffixIcon: IconTheme(
+                data: IconThemeData(color: appColorPrimary),
+                child: IconButton(
+                  icon: Icon(Icons.clear),
+                  onPressed: () {
+                    setState(() {
+                      _searchController.text = '';
+              });
+                  },
+                ),
+              ),
+              hintText: 'Type keyword here',
+            ),
+          ),
+          actions: [
+            IconTheme(
+              data: IconThemeData(color: appBackgroundColorPrimary),
+              child: IconButton(
+                icon: Icon(Icons.more_vert),
+                tooltip: 'Click here for search options.',
+                onPressed: () {
+                  usertype == 'admin' ? searchOptionsDialog() : customDialog(context, 'Access Denied', 'Guest users have limited access.', true, onPressedOk: () {Navigator.of(context, rootNavigator: true).pop();});
+                },
+              ),
+            ),
+          ],
+        ),
+      body: Stack(
+        children: [
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 10.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    isCheckedBarangay || isCheckedStatus ?
+                    Text('Filtered by: ',
+                        style: customTextStyle(
+                            fontFamily: appFont,
+                            fontWeight: FontWeight.bold,
+                            color: appFontColorSecondary,
+                            fontSize: 12.0)) :
+                    SizedBox.shrink(),
+                    isCheckedBarangay
+                        ? Text(
+                      'Barangay: $_selectedBarangay',
+                      overflow: TextOverflow.ellipsis,
+                      style: customTextStyle(
+                          fontFamily: appFont,
+                          color: appFontColorSecondary,
+                          fontSize: 12.0),
+                    )
+                        : SizedBox.shrink(),
+                    isCheckedBarangay && isCheckedStatus ?
+                    Text(', ',
+                        style: customTextStyle(
+                            fontFamily: appFont,
+                            color: appFontColorSecondary,
+                            fontSize: 12.0)) :
+                    SizedBox.shrink(),
+                    isCheckedStatus
+                        ? Text(
+                      'Status: $_selectedStatus',
+                      overflow: TextOverflow.ellipsis,
+                      style: customTextStyle(
+                          fontFamily: appFont,
+                          color: appFontColorSecondary,
+                          fontSize: 12.0),
+                    )
+                        : SizedBox.shrink(),
+                    (isCheckedBarangay || isCheckedStatus) && isCheckedMemberType ?
+                    Text(', ',
+                        style: customTextStyle(
+                            fontFamily: appFont,
+                            color: appFontColorSecondary,
+                            fontSize: 12.0)) :
+                    SizedBox.shrink(),
+                    isCheckedMemberType
+                        ? Expanded(
+                          child: Text(
+                      'Membertype: $_selectedMemberType',
+                      overflow: TextOverflow.ellipsis,
+                      style: customTextStyle(
+                            fontFamily: appFont,
+                            color: appFontColorSecondary,
+                            fontSize: 12.0),
+                    ),
+                        )
+                        : SizedBox.shrink()
+                  ],
+                ),
+              ),
+              Expanded(
+                child: FutureBuilder(
+                  future: members,
+                  builder: (context, snapshot) {
+                      List<Member> members = snapshot.data;
+                      if (snapshot.hasData) {
+                        return ListView.builder(
+                          controller: _scrollController,
+                          physics: BouncingScrollPhysics(),
+                          itemCount: snapshot.data.length,
+                          itemBuilder: (context, index) {
+                              return Padding(
+                                padding:
+                                EdgeInsets.only(left: 20.0, right: 20.0),
+                                child: Column(
+                                  children: [
+                                    index == 0
+                                        ? Container(
+                                      margin: EdgeInsets.symmetric(
+                                          vertical: 20.0),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                'Result: ',
+                                                overflow: TextOverflow.ellipsis,
+                                                style: customTextStyle(
+                                                    color: appFontColorSecondary,
+                                                    fontSize: 15.0,
+                                                    fontFamily: appFont),
+                                              ),
+                                              Text(
+                                                '${members.length}',
+                                                overflow: TextOverflow.ellipsis,
+                                                style: customTextStyle(
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 15.0,
+                                                    fontFamily: appFont),
+                                              ),
+                                              Text(
+                                                ' member(s) found.',
+                                                overflow: TextOverflow.ellipsis,
+                                                style: customTextStyle(
+                                                    color: appFontColorSecondary,
+                                                    fontSize: 15.0,
+                                                    fontFamily: appFont),
+                                              ),
+                                            ],
+                                          ),
+                                          Divider(),
+                                        ],
+                                      ),
+                                    ) : SizedBox.shrink(),
+                                    ListTile(
+                                      leading: usertype == 'admin' ? CachedNetworkImage(
+                                        fit: BoxFit.cover,
+                                        imageUrl: 'https://drv.tw/~mwwinapp@gmail.com/gd/Fast.io/mwapp.imfast.io/images/photo/${members[index].mid}.jpg',
+                                        imageBuilder: (context, imageProvider) => Container(
+                                          width: 40.0,
+                                          height: 40.0,
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            image: DecorationImage(
+                                              image: imageProvider,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                        placeholder: (context, url) => Icon(Icons.person, color: Colors.grey, size: 40.0,),//CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(appColorPrimary)),
+                                        errorWidget: (context, url, error) => Icon(Icons.person, color: Colors.grey, size: 40.0,),
+                                      ) : Icon(Icons.person, color: Colors.grey, size: 40.0,),
+                                      dense: true,
+                                      title: Text(
+                                        '${members[index].fullname}',
+                                        style: customTextStyle(
+                                            fontSize: 15.0,
+                                            fontWeight: FontWeight.bold,
+                                            fontFamily: appFont),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      subtitle: usertype == 'admin' ? Row(
+                                          children: [
+                                            Icon(
+                                              Icons.place,
+                                              color: Colors.grey,
+                                              size: 10.0,
+                                            ),
+                                            Text(
+                                              '${members[index].barangay}',
+                                              style: customTextStyle(
+                                                  fontSize: 10.0,
+                                                  color: appFontColorSecondary,
+                                                  fontFamily: appFont),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                            SizedBox(width: 2.0),
+                                            Icon(
+                                              Icons.update,
+                                              color: Colors.grey,
+                                              size: 10.0,
+                                            ),
+                                            Text(
+                                              '${members[index].validity}',
+                                              style: customTextStyle(
+                                                  fontSize: 10.0,
+                                                  color: appFontColorSecondary,
+                                                  fontFamily: appFont),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ]
+                                      ) : Row(
+                                          children: [
+                                            Icon(
+                                              Icons.update,
+                                              color: Colors.grey,
+                                              size: 12.0,
+                                            ),
+                                            Text(
+                                              '${members[index].validity}',
+                                              style: customTextStyle(
+                                                  fontSize: 12.0,
+                                                  color: appFontColorSecondary,
+                                                  fontFamily: appFont),
+                                              overflow: TextOverflow.ellipsis,
+                                            ),
+                                          ]
+                                      ),
+                                      trailing: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          DateFormat("MM/dd").format(DateTime.now()).toString() == members[index].dob.substring(0, 5) ? Text('🎂  ') : SizedBox.shrink(),
+                                          Icon(
+                                            Icons.brightness_1,
+                                            color: members[index].status == 'ACTIVE'
+                                                ? Colors.green
+                                                : Colors.red,
+                                            size: 10.0,
+                                          ),
+                                        ],
+                                      ),
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => MemberScreen(mid: members[index].mid),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                    Divider(),
+                                  ],
+                                ),
+                              );
+                          },
+                        );
+                      }
+
+                      if (snapshot.data == null || snapshot.data.length == 0) {
+                        return Center(
+                          child: Text('Type keyword to start searching...'),
+                        );
+                      }
+
+                      return Center(
+                        child: Container(
+                          child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(appColorPrimary)),
+                          height: 50.0,
+                          width: 50.0,
+                        ),
+                      );
+                  },
+                ),
+              ),
+            ],
+          ),
+          //----------
+          isScrolling ? Positioned(
+            bottom: 20.0,
+            right: 20.0,
+            child: Opacity(
+              opacity: .75,
+              child: FloatingActionButton(
+                child: Icon(Icons.arrow_upward),
+                backgroundColor: appColorPrimary,
+                onPressed: () {
+                  _scrollToTop();
+                },
+              ),
+            ),
+          ) : SizedBox.shrink()
+        ],
+      ),
+    );
+  }
+
+  void _scrollToTop() {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      _scrollController.animateTo(
+        _scrollController.position.minScrollExtent,
+        duration: Duration(milliseconds: 300),
+        curve: Curves.elasticOut,
+      );
+    });
+  }
+
 
   Future searchOptionsDialog() {
     return showDialog(
@@ -177,10 +510,10 @@ class _SearchScreenState extends State<SearchScreen>
                       child: DropdownButton(
                         dropdownColor: appBackgroundColorPrimary,
                         isExpanded: true,
-                          disabledHint: Text(
-                            'Select Status',
-                            style: customTextStyle(fontFamily: appFont, color: appFontColorSecondary),
-                          ),
+                        disabledHint: Text(
+                          'Select Status',
+                          style: customTextStyle(fontFamily: appFont, color: appFontColorSecondary),
+                        ),
                         style: customTextStyle(fontFamily: appFont),
                         items: statusList(),
                         value: _selectedStatus,
@@ -203,7 +536,7 @@ class _SearchScreenState extends State<SearchScreen>
                       onChanged: (value) {
                         setState(
                               () {
-                              isCheckedMemberType = value;
+                            isCheckedMemberType = value;
                           },
                         );
                       },
@@ -237,9 +570,6 @@ class _SearchScreenState extends State<SearchScreen>
                           height: 50.0,
                           child: TextButton(
                             onPressed: () {
-                              if(_isSearchExecuted) {
-                                _scrollToTop();
-                              }
                               search(_searchController.text);
                               Navigator.of(context, rootNavigator: true).pop();
                             },
@@ -285,311 +615,4 @@ class _SearchScreenState extends State<SearchScreen>
           );
         });
   }
-
-  @override
-  Widget build(BuildContext context) {
-    super.build(context);
-    return Stack(
-      children: [
-        Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: TextFormField(
-                textInputAction: TextInputAction.search,
-                onFieldSubmitted: (term) {
-                  search(_searchController.text);
-                },
-                style: customTextStyle(fontFamily: appFont),
-                textCapitalization: TextCapitalization.characters,
-                controller: _searchController,
-                decoration: InputDecoration(
-                  prefixIcon: IconTheme(data: IconThemeData(color: appColorPrimary), child: Icon(Icons.search)),
-                  suffixIcon: IconTheme(
-                    data: IconThemeData(color: appColorPrimary),
-                    child: IconButton(
-                      icon: Icon(Icons.more_vert),
-                      tooltip: 'Click here for search options.',
-                      onPressed: () {
-                        usertype == 'admin' ? searchOptionsDialog() : customDialog(context, 'Access Denied', 'Guest users have limited access.', true, onPressedOk: () {Navigator.of(context, rootNavigator: true).pop();});
-                      },
-                    ),
-                  ),
-                  hintText: 'Type keyword here',
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  isCheckedBarangay || isCheckedStatus ?
-                      Text('Filtered by: ',
-                          style: customTextStyle(
-                          fontFamily: appFont,
-                          fontWeight: FontWeight.bold,
-                          color: appFontColorSecondary,
-                          fontSize: 12.0)) :
-                  SizedBox.shrink(),
-                  isCheckedBarangay
-                      ? Text(
-                        'Barangay: $_selectedBarangay',
-                        overflow: TextOverflow.ellipsis,
-                        style: customTextStyle(
-                            fontFamily: appFont,
-                            color: appFontColorSecondary,
-                            fontSize: 12.0),
-                      )
-                      : SizedBox.shrink(),
-                  isCheckedBarangay && isCheckedStatus ?
-                  Text(', ',
-                      style: customTextStyle(
-                          fontFamily: appFont,
-                          color: appFontColorSecondary,
-                          fontSize: 12.0)) :
-                  SizedBox.shrink(),
-                  isCheckedStatus
-                      ? Text(
-                        'Status: $_selectedStatus',
-                        overflow: TextOverflow.ellipsis,
-                        style: customTextStyle(
-                            fontFamily: appFont,
-                            color: appFontColorSecondary,
-                            fontSize: 12.0),
-                      )
-                      : SizedBox.shrink(),
-                  isCheckedBarangay || isCheckedStatus ?
-                  Text(', ',
-                      style: customTextStyle(
-                          fontFamily: appFont,
-                          color: appFontColorSecondary,
-                          fontSize: 12.0)) :
-                  SizedBox.shrink(),
-                  isCheckedMemberType
-                      ? Text(
-                    'Membertype: $_selectedMemberType',
-                    overflow: TextOverflow.ellipsis,
-                    style: customTextStyle(
-                        fontFamily: appFont,
-                        color: appFontColorSecondary,
-                        fontSize: 12.0),
-                  )
-                      : SizedBox.shrink()
-                ],
-              ),
-            ),
-            SizedBox(height: 10.0),
-            Expanded(
-              child: Container(
-                child: FutureBuilder(
-                  future: members,
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      List<Member> members = snapshot.data;
-                      return ListView.builder(
-                        controller: _scrollController,
-                        physics: BouncingScrollPhysics(),
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (context, index) {
-                          if (snapshot.hasData) {
-                            return Padding(
-                              padding:
-                                  EdgeInsets.only(left: 20.0, right: 20.0),
-                              child: Column(
-                                children: [
-                                  index == 0
-                                      ? Container(
-                                          margin: EdgeInsets.symmetric(
-                                              vertical: 20.0),
-                                          child: Column(
-                                            children: [
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    'Result: ',
-                                                    overflow: TextOverflow.ellipsis,
-                                                    style: customTextStyle(
-                                                        color: appFontColorSecondary,
-                                                        fontSize: 15.0,
-                                                        fontFamily: appFont),
-                                                  ),
-                                                  Text(
-                                                    '${members.length}',
-                                                    overflow: TextOverflow.ellipsis,
-                                                    style: customTextStyle(
-                                                        fontWeight: FontWeight.bold,
-                                                        fontSize: 15.0,
-                                                        fontFamily: appFont),
-                                                  ),
-                                                  Text(
-                                                    ' member(s) found.',
-                                                    overflow: TextOverflow.ellipsis,
-                                                    style: customTextStyle(
-                                                        color: appFontColorSecondary,
-                                                        fontSize: 15.0,
-                                                        fontFamily: appFont),
-                                                  ),
-                                                ],
-                                              ),
-                                              Divider(),
-                                            ],
-                                          ),
-                                        )
-                                      : SizedBox.shrink(),
-                                  ListTile(
-                                    leading: usertype == 'admin' ? CachedNetworkImage(
-                                      fit: BoxFit.cover,
-                                      imageUrl: 'https://drv.tw/~mwwinapp@gmail.com/gd/Fast.io/mwapp.imfast.io/images/photo/${members[index].mid}.jpg',
-                                      imageBuilder: (context, imageProvider) => Container(
-                                        width: 40.0,
-                                        height: 40.0,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          image: DecorationImage(
-                                            image: imageProvider,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                      ),
-                                      placeholder: (context, url) => CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(appColorPrimary)),
-                                      errorWidget: (context, url, error) => Icon(Icons.person, color: Colors.grey, size: 40.0,),
-                                    ) : Icon(Icons.person, color: Colors.grey, size: 40.0,),
-                                    dense: true,
-                                    title: Text(
-                                      '${members[index].fullname}',
-                                      style: customTextStyle(
-                                          fontSize: 15.0,
-                                          fontWeight: FontWeight.bold,
-                                          fontFamily: appFont),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    subtitle: usertype == 'admin' ? Row(
-                                      children: [
-                                        Icon(
-                                          Icons.place,
-                                          color: Colors.grey,
-                                          size: 12.0,
-                                        ),
-                                        Text(
-                                          '${members[index].barangay}',
-                                          style: customTextStyle(
-                                              fontSize: 12.0,
-                                              color: appFontColorSecondary,
-                                              fontFamily: appFont),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                        SizedBox(width: 2.0),
-                                        Icon(
-                                          Icons.update,
-                                          color: Colors.grey,
-                                          size: 12.0,
-                                        ),
-                                        Text(
-                                          '${members[index].validity}',
-                                          style: customTextStyle(
-                                              fontSize: 12.0,
-                                              color: appFontColorSecondary,
-                                              fontFamily: appFont),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ]
-                                    ) : Row(
-                                        children: [
-                                          Icon(
-                                            Icons.update,
-                                            color: Colors.grey,
-                                            size: 12.0,
-                                          ),
-                                          Text(
-                                            '${members[index].validity}',
-                                            style: customTextStyle(
-                                                fontSize: 12.0,
-                                                color: appFontColorSecondary,
-                                                fontFamily: appFont),
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                        ]
-                                    ),
-                                    trailing: Icon(
-                                      Icons.brightness_1,
-                                      color: members[index].status == 'ACTIVE'
-                                          ? Colors.green
-                                          : Colors.red,
-                                      size: 10.0,
-                                    ),
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => MemberScreen(mid: members[index].mid),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                  Divider(),
-                                ],
-                              ),
-                            );
-                          }
-                          return Text('No results found.');
-                        },
-                      );
-                    }
-
-                    if (snapshot.data == null || snapshot.data.length == 0) {
-                      return Center(
-                        child: Text(
-                          'Type keyword to start searching...',
-                          style: customTextStyle(
-                              color: appFontColorSecondary, fontFamily: appFont),
-                        ),
-                      );
-                    }
-
-                    return CircularProgressIndicator();
-                  },
-                ),
-              ),
-            ),
-          ],
-        ),
-        _isSearchExecuted
-            ? Positioned(
-                bottom: 20.0,
-                right: 20.0,
-                child: Opacity(
-                  opacity: .75,
-                  child: FloatingActionButton(
-                    child: Icon(Icons.arrow_upward),
-                    backgroundColor: appColorPrimary,
-                    onPressed: () {
-                      _scrollToTop();
-                    },
-                  ),
-                ),
-              )
-            : SizedBox.shrink(),
-      ],
-    );
-  }
-
-  void _scrollToTop() {
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      _scrollController.animateTo(
-        _scrollController.position.minScrollExtent,
-        duration: Duration(milliseconds: 300),
-        curve: Curves.elasticOut,
-      );
-    });
-  }
 }
-
-
-
-/*
-
-
-
-*/

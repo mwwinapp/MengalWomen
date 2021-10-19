@@ -272,7 +272,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
                 Colors.blue,
                 appColorPrimary,
               ],
-              width: 30.0,
+              width: MediaQuery.of(context).size.width * 0.070,
               borderRadius: BorderRadius.circular(0.0),
             ),
           ]
@@ -301,7 +301,7 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
           Container(
             padding: EdgeInsets.all(10.0),
             width: MediaQuery.of(context).size.width,
-            height: 400.0,
+            height: MediaQuery.of(context).size.width * .90,
             decoration: BoxDecoration(
               color: appBackgroundColorSecondary,
               border: Border.all(
@@ -527,8 +527,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
                         ),
                       ),
                       child: CircularPercentIndicator(
-                        radius: MediaQuery.of(context).size.width / 2 - 60,
-                        lineWidth: MediaQuery.of(context).size.width / 15,
+                        radius: (MediaQuery.of(context).size.width * .37) - 10.0,
+                        lineWidth: MediaQuery.of(context).size.width * .07,
                         animation: true,
                         percent: activePercentValue * .01,
                         center: Text('${activePercentValue.round()}%',
@@ -563,8 +563,8 @@ class _DashBoardScreenState extends State<DashBoardScreen> with AutomaticKeepAli
                         ),
                       ),
                       child: CircularPercentIndicator(
-                        radius: MediaQuery.of(context).size.width / 2 - 60,
-                        lineWidth: MediaQuery.of(context).size.width / 15,
+                        radius: (MediaQuery.of(context).size.width * .37) - 10.0,
+                        lineWidth: MediaQuery.of(context).size.width * .07,
                         animation: true,
                         percent: expiredPercentValue * .01,
                         center: Text('${expiredPercentValue.round()}%',

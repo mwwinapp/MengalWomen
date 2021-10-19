@@ -3,8 +3,9 @@ import 'package:mw/functions/custom_dialog.dart';
 import 'package:mw/functions/downloader.dart';
 import 'package:mw/functions/globals.dart';
 import 'package:mw/functions/network_ping.dart';
-import 'package:mw/main.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import 'login_screen.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override
@@ -109,7 +110,7 @@ class _SettingsScreenState extends State<SettingsScreen>
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MainApp(),
+                      builder: (context) => LoginScreen(),
                     ),
                   );
                 },

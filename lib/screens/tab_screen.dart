@@ -13,7 +13,7 @@ import 'package:mw/models/announcement_model.dart';
 import 'package:mw/models/member_model.dart';
 import 'package:mw/screens/announcement_screen.dart';
 import 'package:mw/screens/timeline_screen.dart';
-import 'package:mw/screens/searchbar_screen.dart';
+import 'package:mw/screens/search_screen.dart';
 import 'package:mw/screens/settings_screen.dart';
 import 'package:mw/screens/video_screen.dart';
 import 'package:outline_material_icons/outline_material_icons.dart';
@@ -104,7 +104,7 @@ class _TabScreenState extends State<TabScreen> with TickerProviderStateMixin {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (_) => SearchBarScreen()));
+                          builder: (_) => SearchScreen()));
                 },
               ),
               Stack(
